@@ -11,7 +11,6 @@ namespace ProjectManager.Domain.Entities
         public DateTime TaskEndDate { get; set; }
         public DateTime TaskStartDate { get; set; }
 
-
         public int TaskTypeId { get; set; }
         public virtual ProjectTaskType ProjectTaskType { get; set; }
 
