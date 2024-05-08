@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>36b4c4d8-ad3a-459a-806e-11c982d4e3e0</ProjectGuid>
+    <ProjectGuid>{36B4C4D8-AD3A-459A-806E-11C982D4E3E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ProjectManager.Domain</RootNamespace>
@@ -31,24 +31,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Common\Entity.cs" />
+    <Compile Include="Common\AuditableEntity.cs" />
+    <Compile Include="Common\IEntity.cs" />
+    <Compile Include="Entities\File.cs" />
+    <Compile Include="Entities\FileType.cs" />
+    <Compile Include="Entities\Priority.cs" />
+    <Compile Include="Entities\Project.cs" />
+    <Compile Include="Entities\ProjectState.cs" />
+    <Compile Include="Entities\ProjectTask.cs" />
+    <Compile Include="Entities\ProjectTaskState.cs" />
+    <Compile Include="Entities\ProjectTaskType.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\UserProject.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserProjectTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>
