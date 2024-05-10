@@ -1,4 +1,5 @@
 ﻿using ProjectManager.Domain.Common;
+using System;
 
 namespace ProjectManager.Domain.Entities
 {

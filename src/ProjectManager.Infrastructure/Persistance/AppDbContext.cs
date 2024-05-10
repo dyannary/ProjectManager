@@ -8,6 +8,12 @@ namespace ProjectManager.Infrastructure.Persistance
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
+
+        public AppDbContext() : base("DefaultConnection")
+        {
+            Database.SetInitializer(new DatabaseInitializer());
+        }
+
         public DbSet<User> User { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<UserProject> UserProject { get; set; }
@@ -23,9 +29,10 @@ namespace ProjectManager.Infrastructure.Persistance
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Configurations.Add(new RoleConfiguration());
             builder.Configurations.Add(new ProjectStateConfiguration());
-            builder.Configurations.Add(new RoleConfiguration());
             builder.Configurations.Add(new UserConfiguration());
             builder.Configurations.Add(new UserProjectConfiguration());
             builder.Configurations.Add(new UserProjectTaskConfiguration());

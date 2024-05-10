@@ -17,7 +17,6 @@ namespace ProjectManager.Presentation
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
 
             InfrastructureDependencyInjection.Register(builder);
-            ApplicationDependencyInjection.Register(builder);
 
             var container = builder.Build();
 
