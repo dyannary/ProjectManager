@@ -4,7 +4,7 @@ namespace ProjectManager.Domain.Entities
 {
     public class File : AuditableEntity<int>
     {
-        public int FileName { get; set; }
+        public string FileName { get; set; }
         public string FileData { get; set; }
         public bool IsDeleted { get; set; }
 
