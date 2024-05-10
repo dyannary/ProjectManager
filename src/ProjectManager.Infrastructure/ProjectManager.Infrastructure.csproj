@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Persistance\Configurations\PriorityConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\ProjectTaskConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\ProjectTaskStateConfiguration.cs" />
     <Compile Include="Persistance\Configurations\RoleConfiguration.cs" />
     <Compile Include="Persistance\Configurations\UserConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
