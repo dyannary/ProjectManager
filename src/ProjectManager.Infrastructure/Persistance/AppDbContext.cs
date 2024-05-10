@@ -2,6 +2,7 @@
 using ProjectManager.Domain.Entities;
 using ProjectManager.Infrastructure.Persistance.Configurations;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
@@ -28,7 +29,13 @@ namespace ProjectManager.Infrastructure.Persistance
             builder.Configurations.Add(new UserConfiguration());
             builder.Configurations.Add(new UserProjectConfiguration());
             builder.Configurations.Add(new UserProjectTaskConfiguration());
+            builder.Configurations.Add(new ProjectConfiguration());
+            builder.Configurations.Add(new ProjectTaskConfiguration());
+            builder.Configurations.Add(new ProjectTaskStateConfiguration());
+            builder.Configurations.Add(new ProjectTaskTypeConfiguration());
+            builder.Configurations.Add(new PriorityConfiguration());
+            builder.Configurations.Add(new FileConfiguration());
+            builder.Configurations.Add(new FileTypeConfiguration());
         }
-
     }
 }

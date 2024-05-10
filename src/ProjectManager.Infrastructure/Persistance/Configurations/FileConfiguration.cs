@@ -5,7 +5,7 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
 {
     public class FileConfiguration : EntityTypeConfiguration<File>
     {
-        public FileConfiguration() 
+        public FileConfiguration()
         {
             HasKey(f => f.Id);
 
