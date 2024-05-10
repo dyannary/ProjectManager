@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Persistance\AppDbContext.cs" />
+    <Compile Include="Persistance\Configurations\PriorityConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\ProjectTaskConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\ProjectTaskStateConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectStateConfiguration.cs" />
     <Compile Include="Persistance\Configurations\RoleConfiguration.cs" />
