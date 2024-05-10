@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\PriorityConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectTaskConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectTaskStateConfiguration.cs" />
