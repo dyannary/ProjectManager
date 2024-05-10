@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using Autofac;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
@@ -12,6 +13,9 @@ namespace ProjectManager.Presentation
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            DependencyConfig.RegisterDependencies();
+
         }
     }
 }
