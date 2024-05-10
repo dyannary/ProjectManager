@@ -7,13 +7,13 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
     {
         public ProjectTaskTypeConfiguration()
         {
-            HasKey(pt => pt.Id);
-            Property(pt => pt.Name);
-            Property(pt => pt.Description);
+            HasKey(ptt => ptt.Id);
+            Property(ptt => ptt.Name);
+            Property(ptt => ptt.Description);
 
-            HasMany(p => p.ProjectTask)
-                .WithRequired(pt=>pt.ProjectTaskType)
-                .HasForeignKey(t=>t.TaskTypeId);
+            HasMany(pt=>pt.ProjectTask)
+                .WithRequired(ptt=>ptt.ProjectTaskType)
+                .HasForeignKey(pt=>pt.TaskTypeId);
         }
     }
 }
