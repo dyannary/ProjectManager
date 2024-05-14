@@ -7,10 +7,6 @@ namespace ProjectManager.Infrastructure.Persistance
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
-        public AppDbContext() : base("name=ProjectManagerConnectionString")
-        {
-            Database.SetInitializer(new DatabaseInitializer());
-        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -25,6 +21,11 @@ namespace ProjectManager.Infrastructure.Persistance
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<FileType> FileTypes { get; set; }
         public DbSet<File> Files { get; set; }
+
+        public AppDbContext() : base("name=ProjectManagerConnectionString")
+        {
+            Database.SetInitializer(new DatabaseInitializer());
+        }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
