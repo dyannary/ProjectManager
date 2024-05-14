@@ -14,10 +14,6 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
             Property(f => f.IsDeleted).IsRequired();
             Property(f => f.ProjectTaskId).IsOptional();
             Property(f => f.FileTypeId).IsOptional();
-
-            Property(f => f.Created).IsOptional();
-            Property(f => f.LastModified).IsOptional();
-
         }
     }
 }

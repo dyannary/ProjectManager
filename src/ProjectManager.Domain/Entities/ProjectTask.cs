@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ProjectManager.Domain.Entities
 {
-    public class ProjectTask : AuditableEntity<int>
+    public class ProjectTask : AuditableEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }

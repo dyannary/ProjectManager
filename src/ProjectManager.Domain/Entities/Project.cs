@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ProjectManager.Domain.Entities
 {
-    public class Project : AuditableEntity<int>
+    public class Project : AuditableEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -15,8 +15,8 @@ namespace ProjectManager.Domain.Entities
         public int ProjectStateId { get; set; }
         public ProjectState ProjectState { get; set; }
 
-        public virtual ICollection<UserProject> UserProject { get; set; }
+        public virtual ICollection<UserProject> UserProjects { get; set; }
 
-        public virtual ICollection<ProjectTask> ProjectTask { get; set; }
+        public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
     }
 }

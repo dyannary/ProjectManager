@@ -11,7 +11,7 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
 
             Property(ft => ft.Type).IsRequired().HasMaxLength(30);
 
-            HasMany(ft => ft.File)
+            HasMany(ft => ft.Files)
                 .WithRequired(f => f.FileType)
                 .HasForeignKey(f => f.FileTypeId);
         }

@@ -2,30 +2,29 @@
 using ProjectManager.Domain.Entities;
 using ProjectManager.Infrastructure.Persistance.Configurations;
 using System.Data.Entity;
-using System.Threading.Tasks;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
-
-        public AppDbContext() : base("DefaultConnection")
+        public AppDbContext() : base("name=ProjectManagerConnectionString")
         {
             Database.SetInitializer(new DatabaseInitializer());
         }
 
-        public DbSet<User> User { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<UserProject> UserProject { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserProject> UserProjects { get; set; }
         public DbSet<UserProjectTask> UserProjectTasks { get; set; }
-        public DbSet<ProjectTaskType> ProjectTaskType { get; set; }
-        public DbSet<ProjectTaskState> ProjectTaskState { get; set; }
-        public DbSet<ProjectTask> ProjectTask { get; set; }
-        public DbSet<ProjectState> ProjectState { get; set; }
-        public DbSet<Project> Project { get; set; }
-        public DbSet<Priority> Priority { get; set; }
-        public DbSet<FileType> FileType { get; set; }
-        public DbSet<File> File { get; set; }
+        public DbSet<UserProjectRole> UserProjectRole { get; set; }
+        public DbSet<ProjectTaskType> ProjectTaskTypes { get; set; }
+        public DbSet<ProjectTaskState> ProjectTaskStates { get; set; }
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
+        public DbSet<ProjectState> ProjectStates { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
+        public DbSet<FileType> FileTypes { get; set; }
+        public DbSet<File> Files { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {

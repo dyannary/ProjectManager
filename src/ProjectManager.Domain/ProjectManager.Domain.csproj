@@ -78,7 +78,6 @@
   <ItemGroup>
     <Compile Include="Common\Entity.cs" />
     <Compile Include="Common\AuditableEntity.cs" />
-    <Compile Include="Common\IEntity.cs" />
     <Compile Include="Entities\File.cs" />
     <Compile Include="Entities\FileType.cs" />
     <Compile Include="Entities\Priority.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\UserProject.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserProjectRole.cs" />
     <Compile Include="Entities\UserProjectTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

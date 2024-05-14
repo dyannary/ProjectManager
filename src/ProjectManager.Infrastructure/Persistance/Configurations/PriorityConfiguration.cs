@@ -11,7 +11,7 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
             Property(pt => pt.Name).IsRequired();
             Property(pt => pt.PriorityValue).IsOptional();
 
-            HasMany(pt => pt.ProjectTask)
+            HasMany(pt => pt.ProjectTasks)
                 .WithRequired(p => p.Priority)
                 .HasForeignKey(p => p.PriorityId);
         }

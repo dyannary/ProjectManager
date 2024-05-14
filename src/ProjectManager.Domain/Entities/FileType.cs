@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ProjectManager.Domain.Entities
 {
-    public class FileType : Entity<int>
+    public class FileType : Entity
     {
         public string Type { get; set; }
 
-        public virtual ICollection<File> File { get; set; }
+        public virtual ICollection<File> Files { get; set; }
     }
 }

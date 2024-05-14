@@ -6,10 +6,12 @@ public class ProjectTaskTypeConfiguration : EntityTypeConfiguration<ProjectTaskT
     public ProjectTaskTypeConfiguration()
     {
         HasKey(ptt => ptt.Id);
-        Property(ptt => ptt.Name);
-        Property(ptt => ptt.Description);
+        Property(ptt => ptt.Name)
+            .HasMaxLength(100);
+        Property(ptt => ptt.Description)
+            .HasMaxLength(500);
 
-        HasMany(pt => pt.ProjectTask)
+        HasMany(pt => pt.ProjectTasks)
             .WithRequired(ptt => ptt.ProjectTaskType)
             .HasForeignKey(pt => pt.TaskTypeId);
     }

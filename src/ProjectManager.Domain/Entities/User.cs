@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProjectManager.Domain.Entities
 {
-    public class User : AuditableEntity<int>
+    public class User : AuditableEntity
     {
         public string UserName {  get; set; }
         public string Password { get; set; }
@@ -15,8 +15,8 @@ namespace ProjectManager.Domain.Entities
         public int RoleId { get; set; }
 
         public virtual Role Role { get; set; }
-        public virtual ICollection<UserProject> UserProject { get; set; }
+        public virtual ICollection<UserProject> UserProjects { get; set; }
 
-        public virtual ICollection<UserProjectTask> UserProjectTask { get; set; }
+        public virtual ICollection<UserProjectTask> UserProjectTasks { get; set; }
     }
 }

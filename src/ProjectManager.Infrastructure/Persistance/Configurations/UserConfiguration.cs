@@ -23,11 +23,11 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
             Property(u => u.Created).IsOptional();
             Property(u => u.LastModified).IsOptional();
 
-            HasMany(u => u.UserProject)
+            HasMany(u => u.UserProjects)
                 .WithRequired(up => up.User)
                 .HasForeignKey(up => up.UserId);
 
-            HasMany(u => u.UserProjectTask)
+            HasMany(u => u.UserProjectTasks)
                 .WithRequired(upt => upt.User)
                 .HasForeignKey(upt => upt.UserId);
         }

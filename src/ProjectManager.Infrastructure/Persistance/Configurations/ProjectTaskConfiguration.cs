@@ -8,10 +8,16 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
         public ProjectTaskConfiguration() 
         {
             HasKey(pt=>pt.Id);
-            Property(pt => pt.Name).IsRequired();
-            Property(pt=>pt.Description).IsOptional();
-            Property(pt=>pt.TaskTypeId).IsOptional();
-            Property(pt=>pt.ProjectId).IsRequired();
+            Property(pt => pt.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+            Property(pt=>pt.Description)
+                .IsOptional()
+                .HasMaxLength(1000);
+            Property(pt=>pt.TaskTypeId)
+                .IsOptional();
+            Property(pt=>pt.ProjectId)
+                .IsRequired();
 
             HasMany(f => f.Files)
                 .WithRequired(pt => pt.ProjectTask)

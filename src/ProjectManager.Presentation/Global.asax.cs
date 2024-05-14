@@ -15,7 +15,6 @@ namespace ProjectManager.Presentation
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             DependencyConfig.RegisterDependencies();
-
         }
     }
 }

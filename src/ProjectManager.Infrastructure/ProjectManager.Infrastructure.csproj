@@ -77,9 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfrastructureDependencyInjection.cs" />
-    <Compile Include="Migrations\202405101241289_Initialize.cs" />
-    <Compile Include="Migrations\202405101241289_Initialize.Designer.cs">
-      <DependentUpon>202405101241289_Initialize.cs</DependentUpon>
+    <Compile Include="Migrations\202405140825484_Init.cs" />
+    <Compile Include="Migrations\202405140825484_Init.Designer.cs">
+      <DependentUpon>202405140825484_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistance\AppDbContext.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Persistance\Configurations\RoleConfiguration.cs" />
     <Compile Include="Persistance\Configurations\UserConfiguration.cs" />
     <Compile Include="Persistance\Configurations\UserProjectConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\UserProjectRoleConfiguration.cs" />
     <Compile Include="Persistance\Configurations\UserProjectTaskConfiguration.cs" />
     <Compile Include="Persistance\DatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,8 +117,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405101241289_Initialize.resx">
-      <DependentUpon>202405101241289_Initialize.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405140825484_Init.resx">
+      <DependentUpon>202405140825484_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
