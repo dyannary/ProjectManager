@@ -1,11 +1,13 @@
 ﻿using ProjectManager.Domain.Entities;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ProjectManager.Application.interfaces
 {
     public interface IAppDbContext
     {
-        DbSet<User> Users { get; set; }
+        DbSet<Domain.Entities.User> Users { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<UserProject> UserProjects { get; set; }
         DbSet<UserProjectTask> UserProjectTasks { get; set; }
@@ -18,5 +20,8 @@ namespace ProjectManager.Application.interfaces
         DbSet<Priority> Priorities { get; set; }
         DbSet<FileType> FileTypes { get; set; }
         DbSet<File> Files { get; set; }
+
+        void Save();
+        Task<int> SaveAsync(CancellationToken cancellationToken);
     }
 }
