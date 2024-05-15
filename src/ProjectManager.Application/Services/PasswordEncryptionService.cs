@@ -1,5 +1,6 @@
 ﻿using ProjectManager.Application.Interfaces;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace ProjectManager.Application.Services
 {
@@ -7,22 +8,21 @@ namespace ProjectManager.Application.Services
     {
         public string HashPassword(string password)
         {
-            string hashedPasswordString = string.Empty;
-            
-            using(SHA256 sha256 = SHA256.Create())
+            using (SHA256 sha = SHA256.Create())
             {
-                byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
+                byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-                byte[] hashedPassword = sha256.ComputeHash(passwordBytes);
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                    builder.Append(bytes[i].ToString("x2"));
 
-                hashedPasswordString = System.BitConverter.ToString(hashedPassword).Replace("-", "");
+                return builder.ToString();
             }
-            return hashedPasswordString;
         }
 
         public bool VerifyPassword(string password, string hashedPassword)
         {
-            HashPassword(password);
+            password = HashPassword(password);
             return password.Equals(hashedPassword);
         }
     }
