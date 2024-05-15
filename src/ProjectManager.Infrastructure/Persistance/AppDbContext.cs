@@ -2,6 +2,8 @@
 using ProjectManager.Domain.Entities;
 using ProjectManager.Infrastructure.Persistance.Configurations;
 using System.Data.Entity;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
@@ -24,7 +26,7 @@ namespace ProjectManager.Infrastructure.Persistance
 
         public AppDbContext() : base("name=ProjectManagerConnectionString")
         {
-            Database.SetInitializer(new DatabaseInitializer());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, DatabaseInitializer>());
         }
 
         protected override void OnModelCreating(DbModelBuilder builder)
@@ -43,6 +45,16 @@ namespace ProjectManager.Infrastructure.Persistance
             builder.Configurations.Add(new PriorityConfiguration());
             builder.Configurations.Add(new FileConfiguration());
             builder.Configurations.Add(new FileTypeConfiguration());
+        }
+
+        public void Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<int> SaveAsync(CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
