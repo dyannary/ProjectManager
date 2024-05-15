@@ -18,26 +18,36 @@
         body {
             background: linear-gradient(90deg, rgba(223,223,223,1) 0%, rgba(179,179,179,1) 50%, rgba(223,223,223,1) 100%);
         }
+
+        .element {
+            max-width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100">
-    <div class="container body-content shadow p-5 bg-white rounded-2 col-3">
+    <div class="container-fluid body-content justify-content-center align-items-center shadow p-3 bg-white rounded-2 col-3">
         <section>
-            <h1>Login</h1>
+            <h1 class="text-center">Login</h1>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" });
+            }
         </section>
-        <section class="justify-content-center mx-auto">
+        <section class="justify-content-center mx-auto element">
 
             @using (Html.BeginForm("Login", "Account", FormMethod.Post))
             {
                 @Html.AntiForgeryToken();
 
-            <div class="form-group">
+            <div class="form-group align-content-center">
                 @Html.LabelFor(u => u.Username)
                 @Html.TextBoxFor(u => u.Username, new { @class = "form-control" })
                 @Html.ValidationMessageFor(u => u.Username)
             </div>
-                <div class="form-group mt-2">
+                <div class="form-group mt-2 align-content-center">
                     @Html.LabelFor(u => u.Password)
                     @Html.TextBoxFor(u => u.Password, new {@class = "form-control", type = "password"})
                     @Html.ValidationMessageFor(u => u.Password)

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace ProjectManager.Presentation.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
