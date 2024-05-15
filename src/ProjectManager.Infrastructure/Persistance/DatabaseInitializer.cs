@@ -1,18 +1,29 @@
 ﻿using ProjectManager.Domain.Entities;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
-    public class DatabaseInitializer : CreateDatabaseIfNotExists<AppDbContext>
+    public class DatabaseInitializer : DbMigrationsConfiguration<AppDbContext>
     {
+
+        public DatabaseInitializer() 
+        {
+            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = true;
+        }
+
         protected override void Seed(AppDbContext context)
         {
-            CreateRolesForUser(context);
-            CreateRolesForUserProject(context);
-            CreateUsers(context);
+            if (!context.Roles.Any())
+                CreateRolesForUser(context);
+
+            if (!context.Users.Any())
+                CreateUsers(context);
+
+            if (!context.UserProjectRole.Any())
+                CreateRolesForUserProject(context);
 
             base.Seed(context);
         }
@@ -24,7 +35,7 @@ namespace ProjectManager.Infrastructure.Persistance
                 new Role { Name = "admin", Description = "Administrator with full access and privileges." },
                 new Role { Name = "user", Description = "Standard user with basic access and privileges." }
             };
-                context.Roles.AddRange(rolesUser);
+            rolesUser.ForEach(role => context.Roles.Add(role));
             context.SaveChanges();
         }
 

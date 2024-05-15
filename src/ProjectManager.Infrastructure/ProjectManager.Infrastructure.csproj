@@ -77,11 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfrastructureDependencyInjection.cs" />
-    <Compile Include="Migrations\202405140825484_Init.cs" />
-    <Compile Include="Migrations\202405140825484_Init.Designer.cs">
-      <DependentUpon>202405140825484_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202405150855274_init.cs" />
+    <Compile Include="Migrations\202405150855274_init.Designer.cs">
+      <DependentUpon>202405150855274_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\FileConfiguration.cs" />
     <Compile Include="Persistance\Configurations\FileTypeConfiguration.cs" />
@@ -117,8 +116,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405140825484_Init.resx">
-      <DependentUpon>202405140825484_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405150855274_init.resx">
+      <DependentUpon>202405150855274_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
