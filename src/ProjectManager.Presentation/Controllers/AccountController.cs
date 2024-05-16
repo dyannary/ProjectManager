@@ -25,6 +25,11 @@ namespace ProjectManager.Presentation.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
