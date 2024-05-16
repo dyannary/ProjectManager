@@ -6,46 +6,146 @@
     <title>@ViewBag.Title - PM</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            position: fixed;
+            z-index: 1;
+            width: 0;
+            top: 0;
+            left: 0;
+            background-color: #303340;
+            overflow: auto;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 12px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+
+            .sub-menu{
+                padding-left : 10px;
+            }
+            .sub-menu a{
+                padding-left: 25px;
+            }
+
+        #main {
+            transition: margin-left .3s;
+            padding: 16px;
+        }
+
+        ul {
+            list-style-position: inside;
+        }
+        li{
+            margin-left: 0;
+            padding-left: 0;
+            list-style-type: none;
+        }
+
+    </style>
+
 </head>
 <body>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <ul>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <li><a href="#">@Html.ActionLink("Sign In", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</a></li>
+            }
+            else
+            {
+                <li>
+                <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
+                <ul id="accountSubmenu" class="sub-menu" style="display: none;">
+                    <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+                </li>
+            }
+        </ul>
 
-    <div class="container-fluid">
-            <div class="row flex-nowrap">
-                <div class="bg-dark col-auto col-md-2 min-vh-100">
-                    <div class="bg-dark">
-                        <a class="d-flex text-decoration-none align-items-center">
-                            <span class="fs-4 d-none d-sm-inline">Menu</span>
-                        </a>
-                        <ul class="navbar-nav">
-                            <li class="nav-item text-white">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li class="nav-item text-white">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li class="nav-item text-white">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        </ul>
-                        <ul class="navbar-nav">
-                            @if (!User.Identity.IsAuthenticated)
-                            {
-                                <li class="nav-item text-white">@Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                            }
-                            else
-                            {
-                                <li class="nav-item text-white">@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                            }
-                        </ul>
-                    </div>
-                </div>
+        <hr style="width:100%;text-align:left;margin-left:0; color: white;">
 
-                <div class="p-3">
-                    <div class="container body-content">
-                        @RenderBody()
-                        <hr />
-                        <footer>
-                            <p>&copy; @DateTime.Now.Year - Project Manager</p>
-                        </footer>
-                    </div>
-                </div>
-            </div>
+        <ul>
+            @if (User.IsInRole("admin"))
+            {
+                <li>
+                    <a href="#" onclick="toggleSubMenu('manage')">Manage</a>
+                    <ul id="manageSubmenu" class="sub-menu" style="display: none;">
+                        <li>@Html.ActionLink("Users", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Projects", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Roles", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                </li>
+            }
+            else if (User.IsInRole("user"))
+            {
+                <li><a href="#">@Html.ActionLink("Projects", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</a></li>
+            }
+        </ul>
+    </div>
+
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer" id="openButton" onclick="openNav()">&#9776;</span>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
         </div>
+    </div>
 
+    <script>
+        function openNav() {
+                document.getElementById("mySidenav").style.width = "300px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.getElementById("openButton").style.visibility = "hidden";
+            }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.getElementById("openButton").style.visibility = "visible";
+        }
+
+        function toggleSubMenu(submenu) {
+            var subMenuElement = document.getElementById(submenu + "Submenu");
+            if (subMenuElement.style.display === "none") {
+                subMenuElement.style.display = "block";
+            } else {
+                subMenuElement.style.display = "none";
+            }
+        }
+
+    </script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
