@@ -2,7 +2,7 @@
 using ProjectManager.Application.DTOs.User;
 using ProjectManager.Application.interfaces;
 using ProjectManager.Application.Interfaces;
-using ProjectManager.Domain.Entities;
+using System;
 using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,29 +30,36 @@ namespace ProjectManager.Application.User.Queries
 
         public async Task<UserByUsernameAndPasswordDto> Handle(GetUserByUsernameAndPasswordQuerry request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.Include(u => u.Role)
+            try
+            {
+                var user = await _context.Users.Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.UserName.ToUpper() == request.UserName.ToUpper(), cancellationToken);
 
-            if (user == null)
-            {
-                return null;
+                if (user == null)
+                {
+                    return null;
+                }
+
+                if (!_passwordEncryptionService.VerifyPassword(request.Password, user.Password))
+                    return null;
+
+                var userByUsernameAndPasswordDto = new UserByUsernameAndPasswordDto
+                {
+                    id = user.Id,
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Role = user.Role.Name,
+                    IsEnabled = user.IsEnabled
+                };
+                return userByUsernameAndPasswordDto;
             }
-
-            if (!_passwordEncryptionService.VerifyPassword(request.Password, user.Password))
-                return null;
-
-            var userByUsernameAndPasswordDto = new UserByUsernameAndPasswordDto
+            catch (Exception ex)
             {
-                id = user.Id,
-                UserName = user.UserName,
-                Password = user.Password,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Role = user.Role.Name,
-                IsEnabled = user.IsEnabled
-            };
-            return userByUsernameAndPasswordDto;
+                throw new Exception("Error occured in user query" + ex);
+            }
         }
     }
 

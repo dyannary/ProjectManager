@@ -93,6 +93,7 @@
     <Compile Include="DTOs\User\RegisterUserDto.cs" />
     <Compile Include="DTOs\User\UserByIdDto.cs" />
     <Compile Include="DTOs\User\UserByUsernameAndPasswordDto.cs" />
+    <Compile Include="DTOs\User\UserDto.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,8 +102,12 @@
     <Compile Include="User\Commands\CreateUser\CreateUserCommandValidator.cs" />
     <Compile Include="User\Commands\LoginUser\LoginUserCommand.cs" />
     <Compile Include="User\Commands\LoginUser\LoginUserCommandValidator.cs" />
-    <Compile Include="User\Queries\GetUserByIdQuery.cs" />
-    <Compile Include="User\Queries\GetUserByUsernameAndPasswordQuerry.cs" />
+    <Compile Include="User\Commands\UpdateUser\UpdateUserCommand.cs" />
+    <Compile Include="User\Commands\UpdateUser\UpdateUserCommandValidator.cs" />
+    <Compile Include="User\Queries\GetUserById\GetUserByIdQuery.cs" />
+    <Compile Include="User\Queries\GetUserById\GetUserByUsernameAndPasswordQuerry.cs" />
+    <Compile Include="User\Queries\GetUsers\GetUsersQuery.cs" />
+    <Compile Include="User\Queries\GetUsers\GetUsersQueryValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -49,12 +49,12 @@ namespace ProjectManager.Infrastructure.Persistance
 
         public void Save()
         {
-            throw new System.NotImplementedException();
+            this.SaveChanges();
         }
 
-        public Task<int> SaveAsync(CancellationToken cancellationToken)
+        public async Task<int> SaveAsync(CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return await this.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -51,7 +51,8 @@ namespace ProjectManager.Presentation.Controllers
                 {
                     ModelState.AddModelError("", "Invalid Username and Password");
                     return View();
-                }else if (user.IsEnabled == false)
+                }
+                else if (user.IsEnabled == false)
                 {
                     ModelState.AddModelError("", "Your account is Deactivated.");
                 }
@@ -80,6 +81,5 @@ namespace ProjectManager.Presentation.Controllers
             authenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
-
     }
 }
