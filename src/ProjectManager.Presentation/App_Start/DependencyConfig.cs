@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using MediatR;
 using ProjectManager.Application.User.Queries;
 using ProjectManager.Application;
+using ProjectManager.Application.Projects.Queries;
 
 namespace ProjectManager.Presentation
 {
@@ -34,6 +35,7 @@ namespace ProjectManager.Presentation
             ApplicationDependencyInjection.Register(builder);
 
             builder.RegisterType<GetUserByUsernameAndPasswordHandler>().AsImplementedInterfaces();
+            builder.RegisterType<GetProjectsByFilterHandler>().AsImplementedInterfaces();
 
             var container = builder.Build();
 
