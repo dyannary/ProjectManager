@@ -31,11 +31,12 @@ namespace ProjectManager.Presentation
 
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
 
+            builder.RegisterAssemblyTypes(typeof(ApplicationDependencyInjection).Assembly)
+                   .AsClosedTypesOf(typeof(IRequestHandler<,>))
+                   .InstancePerLifetimeScope();
+
             InfrastructureDependencyInjection.Register(builder);
             ApplicationDependencyInjection.Register(builder);
-
-            builder.RegisterType<GetUserByUsernameAndPasswordHandler>().AsImplementedInterfaces();
-            builder.RegisterType<GetProjectsByFilterHandler>().AsImplementedInterfaces();
 
             var container = builder.Build();
 
