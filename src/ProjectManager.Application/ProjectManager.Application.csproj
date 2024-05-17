@@ -89,6 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDependencyInjection.cs" />
+    <Compile Include="DTOs\Projects\ProjectByFiltersDto.cs" />
+    <Compile Include="DTOs\User\CardDto.cs" />
     <Compile Include="DTOs\User\LoginUserDto.cs" />
     <Compile Include="DTOs\User\RegisterUserDto.cs" />
     <Compile Include="DTOs\User\UserByIdDto.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="DTOs\User\UserDto.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
+    <Compile Include="Projects\Queries\GetProjectsByFilterQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PasswordEncryptionService.cs" />
     <Compile Include="User\Commands\CreateUser\CreateUserCommand.cs" />
@@ -119,7 +122,9 @@
       <Name>ProjectManager.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Projects\Commands\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

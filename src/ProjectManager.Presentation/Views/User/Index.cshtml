@@ -1,0 +1,68 @@
+﻿@using ProjectManager.Application.DTOs.User;
+@model List<CardDto>
+@{
+    ViewBag.Title = "Projects";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+</head>
+
+<body>
+    <!--Filter section-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="filter-bar">
+                    <!-- Add your filter options here -->
+                    <select class="form-control">
+                        <option value="">Filter option 1</option>
+                        <option value="">Filter option 2</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Cards section-->
+
+    <div class="container">
+        <div class="row">
+            @foreach (var card in Model)
+            {
+                <div class="col-lg-4 col--6 mb-4">
+                    <div class="card h-100">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img class="card-img ma" src="@card.photoPath" alt="Card image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h4 class="card-title">@card.Name</h4>
+                                    <p class="card-text">@card.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!--Pagination section-->
+
+    <ul class="pagination">
+        <li class="pagination-lg">Previos</li>
+        <li class="pagination-sm">Next</li>
+    </ul>
+
+</body>
+
+</html>
+
