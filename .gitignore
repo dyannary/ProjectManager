@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/src/ProjectManager.Presentation/Web.config
+/src/ProjectManager.Presentation/Web.Debug.config
+/src/ProjectManager.Presentation/Web.Release.config
