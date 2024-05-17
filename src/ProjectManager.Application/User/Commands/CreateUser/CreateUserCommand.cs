@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Application.User.Commands.CreateUser
 {
-    public class CreateUserCommand : IRequest<LoginUserDto>
+    public class CreateUserCommand : IRequest<RegisterUserDto>
     {
-        public LoginUserDto LoginUserDto { get; set; }
+        public RegisterUserDto Data { get; set; }
     }
 
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, LoginUserDto>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, RegisterUserDto>
     {
         private readonly IAppDbContext _context;
         private readonly IPasswordEncryptionService _passwordEncryptionService;
@@ -27,9 +27,9 @@ namespace ProjectManager.Application.User.Commands.CreateUser
             _passwordEncryptionService = passwordEncryptionService;
         }
 
-        public async Task<LoginUserDto> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+        public async Task<RegisterUserDto> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            var model = command.LoginUserDto;
+            var model = command.Data;
 
             if (model == null)
             {
