@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ProjectManager.Application.User.Commands.LoginUser
+﻿namespace ProjectManager.Application.User.Commands.LoginUser
 {
     public class LoginUserCommandValidator
     {

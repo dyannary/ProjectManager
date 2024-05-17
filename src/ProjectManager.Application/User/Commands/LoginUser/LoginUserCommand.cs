@@ -12,7 +12,7 @@ namespace ProjectManager.Application.User.Commands.LoginUser
 {
     public class LoginUserCommand : IRequest<LoginUserDto>
     {
-        public LoginUserDto LoginUserDto { get; set; }
+        public LoginUserDto Data { get; set; }
     }
 
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserDto>
@@ -29,7 +29,7 @@ namespace ProjectManager.Application.User.Commands.LoginUser
 
         public async Task<LoginUserDto> Handle(LoginUserCommand command, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == command.LoginUserDto.UserName);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == command.Data.UserName);
 
             //VerifyPassword
 
@@ -41,7 +41,7 @@ namespace ProjectManager.Application.User.Commands.LoginUser
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            return command.LoginUserDto;
+            return command.Data;
         }
     }
 }
