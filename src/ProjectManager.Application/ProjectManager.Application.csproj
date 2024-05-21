@@ -77,6 +77,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -89,28 +90,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDependencyInjection.cs" />
-    <Compile Include="DTOs\Projects\ProjectByFiltersDto.cs" />
-    <Compile Include="DTOs\User\CardDto.cs" />
-    <Compile Include="DTOs\User\LoginUserDto.cs" />
-    <Compile Include="DTOs\User\RegisterUserDto.cs" />
-    <Compile Include="DTOs\User\UserByIdDto.cs" />
-    <Compile Include="DTOs\User\UserByUsernameAndPasswordDto.cs" />
-    <Compile Include="DTOs\User\UserDto.cs" />
+    <Compile Include="Common\Extensions\DataTableExtensions.cs" />
+    <Compile Include="DataTransferObjects\Project\ProjectByFiltersDto.cs" />
+    <Compile Include="DataTransferObjects\User\CardDto.cs" />
+    <Compile Include="DataTransferObjects\User\LoginUserDto.cs" />
+    <Compile Include="DataTransferObjects\User\RegisterUserDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserByIdDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserByUsernameAndPasswordDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserDto.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
     <Compile Include="Projects\Queries\GetProjectsByFilterQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PasswordEncryptionService.cs" />
-    <Compile Include="User\Commands\CreateUser\CreateUserCommand.cs" />
-    <Compile Include="User\Commands\CreateUser\CreateUserCommandValidator.cs" />
-    <Compile Include="User\Commands\LoginUser\LoginUserCommand.cs" />
-    <Compile Include="User\Commands\LoginUser\LoginUserCommandValidator.cs" />
-    <Compile Include="User\Commands\UpdateUser\UpdateUserCommand.cs" />
-    <Compile Include="User\Commands\UpdateUser\UpdateUserCommandValidator.cs" />
-    <Compile Include="User\Queries\GetUserById\GetUserByIdQuery.cs" />
-    <Compile Include="User\Queries\GetUserById\GetUserByUsernameAndPasswordQuerry.cs" />
-    <Compile Include="User\Queries\GetUsers\GetUsersQuery.cs" />
-    <Compile Include="User\Queries\GetUsers\GetUsersQueryValidation.cs" />
+    <Compile Include="Common\TableParameters\DataTableColumn.cs" />
+    <Compile Include="Common\TableParameters\DataTableOrder.cs" />
+    <Compile Include="Common\TableParameters\DataTableParameters.cs" />
+    <Compile Include="Common\TableParameters\DataTableSearch.cs" />
+    <Compile Include="UserManagement\Commands\CreateUser\CreateUserCommand.cs" />
+    <Compile Include="UserManagement\Commands\CreateUser\CreateUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommand.cs" />
+    <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommand.cs" />
+    <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Queries\GetUsersByFilter\GetUsersByFilterQuery.cs" />
+    <Compile Include="UserManagement\Queries\GetUserById\GetUserByIdQuery.cs" />
+    <Compile Include="UserManagement\Queries\GetUserById\GetUserByUsernameAndPasswordQuerry.cs" />
+    <Compile Include="UserManagement\Queries\GetUsers\GetUsersQuery.cs" />
+    <Compile Include="UserManagement\Queries\GetUsers\GetUsersQueryValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

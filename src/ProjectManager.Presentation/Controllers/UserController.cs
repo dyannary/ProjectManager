@@ -21,8 +21,8 @@ namespace ProjectManager.Presentation.Controllers
         {
             var cards = await _mediator.Send(new GetProjectsByFilterQuery
             {
-                page = 1,
-                pageSize = 10,
+                Page = 1,
+                PageSize = 10,
             });
 
             return View(cards);

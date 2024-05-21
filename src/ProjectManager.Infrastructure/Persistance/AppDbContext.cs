@@ -9,6 +9,10 @@ namespace ProjectManager.Infrastructure.Persistance
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
+        public AppDbContext() : base("name=ProjectManagerConnectionString")
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, DatabaseInitializer>());
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -23,11 +27,6 @@ namespace ProjectManager.Infrastructure.Persistance
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<FileType> FileTypes { get; set; }
         public DbSet<File> Files { get; set; }
-
-        public AppDbContext() : base("name=ProjectManagerConnectionString")
-        {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, DatabaseInitializer>());
-        }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
@@ -55,6 +54,10 @@ namespace ProjectManager.Infrastructure.Persistance
         public async Task<int> SaveAsync(CancellationToken cancellationToken)
         {
             return await this.SaveChangesAsync(cancellationToken);
+        }
+        public override async Task<int> SaveChangesAsync()
+        {
+            return await this.SaveChangesAsync();
         }
     }
 }

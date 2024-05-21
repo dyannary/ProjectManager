@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - PM</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/lib/jquery-datatables")
 
     <style>
         body {
@@ -46,10 +47,11 @@
                 margin-left: 50px;
             }
 
-            .sub-menu{
-                padding-left : 10px;
-            }
-            .sub-menu a{
+        .sub-menu {
+            padding-left: 10px;
+        }
+
+            .sub-menu a {
                 padding-left: 25px;
             }
 
@@ -61,12 +63,12 @@
         ul {
             list-style-position: inside;
         }
-        li{
+
+        li {
             margin-left: 0;
             padding-left: 0;
             list-style-type: none;
         }
-
     </style>
 
 </head>
@@ -81,12 +83,12 @@
             else
             {
                 <li>
-                <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
-                <ul id="accountSubmenu" class="sub-menu" style="display: none;">
-                    <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+                    <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
+                    <ul id="accountSubmenu" class="sub-menu" style="display: none;">
+                        <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
                 </li>
             }
         </ul>
@@ -121,7 +123,7 @@
             document.getElementById("mySidenav").style.width = "300px";
             document.getElementById("main").style.marginLeft = "250px";
             document.getElementById("openButton").style.visibility = "hidden";
-            }
+        }
 
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
@@ -143,5 +145,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/datatables")
 </body>
 </html>

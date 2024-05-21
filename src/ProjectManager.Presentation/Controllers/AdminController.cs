@@ -1,9 +1,12 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using ProjectManager.Application.DTOs.User;
+using ProjectManager.Application.TableParameters;
 using ProjectManager.Application.User.Commands.UpdateUser;
 using ProjectManager.Application.User.Queries;
+using ProjectManager.Application.UserManagement.Queries;
 using System;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,31 +20,47 @@ namespace ProjectManager.Presentation.Controllers
         #region Private Fields
 
         private readonly IMediator _mediator;
-        //private readonly IValidator<UserDto> _validator;
 
         #endregion
 
         #region Constructor
 
-        public AdminController(IMediator mediator 
-            //IValidator<UserDto> validator
-            )
+        public AdminController(IMediator mediator)
         {
             _mediator = mediator;
-           // _validator = validator;
         }
 
         #endregion
+
+        [HttpPost]
+        public async Task<ActionResult> UserTable(DataTableParameters parameters)
+        {
+            var users = await _mediator.Send(new GetUsersByFilterQuery(parameters));
+
+            return Json(new
+            {
+                draw = parameters.Draw,
+                recordsFiltered = parameters.TotalCount,
+                recordsTotal = parameters.TotalCount,
+                data = users
+            });
+        }
 
         #region CRUD Operations
 
         #region Update User
 
-        public async Task<ActionResult> Index()
+
+
+        public async Task<ActionResult> Index(CancellationToken cancellationToken)
         {
             try
             {
-                var users = await _mediator.Send(new GetUsersQuery());
+                var users = await _mediator.Send(new GetUsersQuery()
+                {
+               
+                }, cancellationToken);
+
                 return View(users);
             }
             catch (Exception ex)
@@ -63,7 +82,7 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateUser(UserDto model)
         {
-           // var validationResult = _validator.Validate(model);
+            //var validationResult = _validator.Validate(model);
             if (ModelState.IsValid)
             {
                 await _mediator.Send(new UpdateUserCommand { Data = model });
@@ -77,7 +96,7 @@ namespace ProjectManager.Presentation.Controllers
                 };
             }
 
-            //var errorList = validationResult.Errors.Select(e=>new
+            //var errorList = validationResult.Errors.Select(e => new
             //{
             //    message = e.ErrorMessage,
             //    propertyName = e.PropertyName,
@@ -88,7 +107,7 @@ namespace ProjectManager.Presentation.Controllers
                 Data = new
                 {
                     success = false,
-                  //  errors = errorList
+                    //errors = errorList
                 }
             };
         }

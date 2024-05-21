@@ -1,5 +1,15 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": []
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "jquery-datatables@1.10.18",
+      "destination": "lib/jquery-datatables/"
+    },
+    {
+      "library": "fontawesome-iconpicker@3.2.0",
+      "destination": "lib/fontawesome-iconpicker/"
+    }
+  ]
 }
