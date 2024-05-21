@@ -25,6 +25,27 @@ namespace ProjectManager.Presentation
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/lib/jquery-datatables").Include(
+             "~/lib/jquery-datatables/css/jquery.dataTables.css"
+            //"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.css"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+            "~/lib/jquery-datatables/js/jquery.dataTables.js"
+            //"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.js",
+            //"~/lib/jquery-contextmenu/dist/jquery.ui.position.min.js"
+            ));
+
+            //bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+            //"~/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.js"
+            ////"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.js",
+            ////"~/lib/jquery-contextmenu/dist/jquery.ui.position.min.js"
+            //));
+            //bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+            //"~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.css"
+            ////"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.js",
+            ////"~/lib/jquery-contextmenu/dist/jquery.ui.position.min.js"
+            //));
         }
     }
 }

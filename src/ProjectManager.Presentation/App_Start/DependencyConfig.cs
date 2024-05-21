@@ -6,9 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using MediatR;
-using ProjectManager.Application.User.Queries;
 using ProjectManager.Application;
-using ProjectManager.Application.Projects.Queries;
 
 namespace ProjectManager.Presentation
 {
@@ -26,7 +24,6 @@ namespace ProjectManager.Presentation
                 return t => componentContext.Resolve(t);
             });
 
-
             builder.Register(a => HttpContext.Current.GetOwinContext().Authentication).As<IAuthenticationManager>();
 
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
@@ -41,7 +38,6 @@ namespace ProjectManager.Presentation
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
         }
     }
 }

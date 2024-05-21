@@ -12,12 +12,12 @@ namespace ProjectManager.Application.Projects.Queries
 {
     public class GetProjectsByFilterQuery : IRequest<List<CardDto>>
     {
-        public string name { get; set; }
+        public string Name { get; set; }
         public string Status { get; set; }
         public string Owning { get; set; }
-        public DateTime startDate {  get; set; }
-        public int page { get; set; }
-        public int pageSize { get; set; }
+        public DateTime StartDate {  get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
     }
 
     public class GetProjectsByFilterHandler : IRequestHandler<GetProjectsByFilterQuery, List<CardDto>>
@@ -33,12 +33,12 @@ namespace ProjectManager.Application.Projects.Queries
             var projects = _context.Projects.AsQueryable()
                 .OrderBy(p => p.Name)
                 .Include(ps => ps.ProjectState)
-                .Skip((request.page - 1) * request.pageSize)
-                .Take(request.pageSize);
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize);
 
-            if (request.name != null && request.name != "")
+            if (request.Name != null && request.Name != "")
             {
-                string name = request.name.Replace("", " ").ToLower();
+                string name = request.Name.Replace("", " ").ToLower();
 
                 projects = projects.Where(p => p.Name.Replace("", " ").ToLower() == name);
             }

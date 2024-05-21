@@ -1,5 +1,5 @@
 ﻿using ProjectManager.Domain.Entities;
-using System;
+using ProjectManager.Infrastructure.DataSeeder.Seeds;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -8,7 +8,6 @@ namespace ProjectManager.Infrastructure.Persistance
 {
     public class DatabaseInitializer : DbMigrationsConfiguration<AppDbContext>
     {
-
         public DatabaseInitializer() 
         {
             AutomaticMigrationDataLossAllowed = true;
@@ -57,16 +56,10 @@ namespace ProjectManager.Infrastructure.Persistance
         {
             var roles = context.Roles.ToList();
 
-            Role AdminRole = roles.Where(r => r.Name.Contains("admin")).First();
-            Role UserRole = roles.Where(r => r.Name.Contains("user")).First();
+            Role adminRole = roles.Where(r => r.Name.Contains("admin")).First();
+            Role userRole = roles.Where(r => r.Name.Contains("user")).First();
 
-            var users = new List<User>()
-            {
-                new User {UserName = "admin", Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", FirstName = "admin", LastName = "admin"
-                , Email = "sergiu.sorocean@iongroup.com", IsEnabled = true, Role = AdminRole },
-                new User {UserName = "user", Password="04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb", FirstName = "user", LastName = "user",
-                Email = "sergiu.sorocean@iongroup.com", IsEnabled = true, Role = UserRole}
-            };
+            var users = UsersSeed.SeedUsers(adminRole, userRole);
 
             users.ForEach(user => context.Users.Add(user));
             context.SaveChanges();
