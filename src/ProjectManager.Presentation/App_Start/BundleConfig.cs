@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using ProjectManager.Infrastructure.Persistance;
+using System.Web;
 using System.Web.Optimization;
 
 namespace ProjectManager.Presentation
@@ -25,6 +26,15 @@ namespace ProjectManager.Presentation
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new Bundle("~/bundles/OpenModal").Include(
+                      "~/Scripts/user/OpenModal.js"));
+
+            bundles.Add(new Bundle("~/bundles/LayoutScripts").Include(
+                    "~/Scripts/Layout/LayoutScripts.js"));
+
+            bundles.Add(new Bundle("~/bundles/UserProjects").Include(
+                    "~/Scripts/User/UserProjects.js"));
         }
     }
 }

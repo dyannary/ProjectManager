@@ -13,6 +13,7 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
             Property(p => p.IsDeleted).IsRequired();
             Property(p => p.ProjectEndDate).IsRequired();
             Property(p => p.ProjectStartDate).IsRequired();
+            Property(p => p.PhotoPath).IsOptional().HasMaxLength(150);
 
             Property(p => p.Created).IsOptional();
             Property(p => p.LastModified).IsOptional();

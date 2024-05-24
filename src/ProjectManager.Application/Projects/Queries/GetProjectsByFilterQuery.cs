@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using ProjectManager.Application.DTOs.User;
+using ProjectManager.Application.DTOs.Projects;
 using ProjectManager.Application.interfaces;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading;
@@ -10,17 +9,19 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Application.Projects.Queries
 {
-    public class GetProjectsByFilterQuery : IRequest<List<CardDto>>
+    public class GetProjectsByFilterQuery : IRequest<ProjectFilterResponse>
     {
-        public string name { get; set; }
+        public string Name { get; set; }
         public string Status { get; set; }
+        public string IsDeleted {  get; set; }
         public string Owning { get; set; }
-        public DateTime startDate {  get; set; }
-        public int page { get; set; }
-        public int pageSize { get; set; }
+        public DateTime StartDate {  get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public int UserID { get; set; }
     }
 
-    public class GetProjectsByFilterHandler : IRequestHandler<GetProjectsByFilterQuery, List<CardDto>>
+    public class GetProjectsByFilterHandler : IRequestHandler<GetProjectsByFilterQuery, ProjectFilterResponse>
     {
         private readonly IAppDbContext _context;
         public GetProjectsByFilterHandler(IAppDbContext context)
@@ -28,29 +29,80 @@ namespace ProjectManager.Application.Projects.Queries
             _context = context;
         }
 
-        public async Task<List<CardDto>> Handle(GetProjectsByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<ProjectFilterResponse> Handle(GetProjectsByFilterQuery request, CancellationToken cancellationToken)
         {
-            var projects = _context.Projects.AsQueryable()
-                .OrderBy(p => p.Name)
-                .Include(ps => ps.ProjectState)
-                .Skip((request.page - 1) * request.pageSize)
-                .Take(request.pageSize);
+            var querry = _context.Projects
+            .Where(p => p.UserProjects.Any(up => up.UserId == request.UserID))
+            .AsQueryable()
+            .OrderByDescending(p => p.Id)
+            .Include(ps => ps.ProjectState);
 
-            if (request.name != null && request.name != "")
+            if (!string.IsNullOrEmpty(request.Name))
             {
-                string name = request.name.Replace("", " ").ToLower();
+                string name = request.Name.ToLower().Trim();
 
-                projects = projects.Where(p => p.Name.Replace("", " ").ToLower() == name);
+                querry = querry.Where(q => q.Name.ToLower().Contains(name));
             }
+
+            if (request.Owning != null && request.Owning != "all")
+            {
+                if (request.Owning == "myprojects") 
+                {
+                    querry = querry.Where(p => p.UserProjects.Any(up => up.UserProjectRole.Name == "ProjectCreator"));
+                }
+                else 
+                    querry = querry.Where(p => p.UserProjects.Any(up => up.UserProjectRole.Name != "ProjectCreator"));
+            }
+
+            if (request.Status != null && request.Status != "all")
+            {
+                if (request.Status == "completed")
+                    querry = querry.Where(q => q.ProjectEndDate <= DateTime.Now);
+                else
+                    querry = querry.Where(q => q.ProjectEndDate >= DateTime.Now);
+            }
+
+            if (request.IsDeleted != null && request.IsDeleted!= "all")
+            {
+                if (request.IsDeleted == "deactivated")
+                    querry = querry.Where(q => q.IsDeleted == true);
+                else querry = querry.Where(q => q.IsDeleted == false);
+            }
+
+            var projects = await querry
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync(cancellationToken);
+
+            int projectCount = await querry.CountAsync(cancellationToken);
+            int pageCount = (int)Math.Ceiling((double)projectCount / request.PageSize);
+
+            if (request.Page + 2 <= pageCount)
+                pageCount = request.Page + 2;
+
+            int fromPage = 1;
+            if (request.Page - 2 >= 1)
+                fromPage = request.Page - 2;
+
 
             var cardDtos = projects.Select(p => new CardDto
             {
+                Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
-                photoPath = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"
+                PhotoPath = p.PhotoPath,
+                IsEnabled = p.IsDeleted,
+                status = p.ProjectState.Name,
             }).ToList();
- 
-            return cardDtos;
+
+            var response = new ProjectFilterResponse
+            {
+                Cards = cardDtos,
+                MaxPage = pageCount,
+                FromPage = fromPage
+            };
+
+            return response;
         }
     }
 

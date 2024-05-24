@@ -6,6 +6,9 @@
     <title>@ViewBag.Title - PM</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
 
     <style>
         body {
@@ -46,10 +49,11 @@
                 margin-left: 50px;
             }
 
-            .sub-menu{
-                padding-left : 10px;
-            }
-            .sub-menu a{
+        .sub-menu {
+            padding-left: 10px;
+        }
+
+            .sub-menu a {
                 padding-left: 25px;
             }
 
@@ -61,16 +65,24 @@
         ul {
             list-style-position: inside;
         }
-        li{
+
+        li {
             margin-left: 0;
             padding-left: 0;
             list-style-type: none;
         }
-
     </style>
 
 </head>
 <body>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <ul>
@@ -81,12 +93,12 @@
             else
             {
                 <li>
-                <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
-                <ul id="accountSubmenu" class="sub-menu" style="display: none;">
-                    <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+                    <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
+                    <ul id="accountSubmenu" class="sub-menu" style="display: none;">
+                        <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
                 </li>
             }
         </ul>
@@ -100,7 +112,7 @@
             }
             else if (User.IsInRole("user"))
             {
-                <li><a href="#">@Html.ActionLink("Projects", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</a></li>
+                <li><a href="#">@Html.ActionLink("Projects", "Index", "Project", new { area = "" }, new { @class = "nav-link" })</a></li>
             }
         </ul>
     </div>
@@ -116,32 +128,11 @@
         </div>
     </div>
 
-    <script>
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "300px";
-            document.getElementById("main").style.marginLeft = "250px";
-            document.getElementById("openButton").style.visibility = "hidden";
-            }
-
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
-            document.getElementById("openButton").style.visibility = "visible";
-        }
-
-        function toggleSubMenu(submenu) {
-            var subMenuElement = document.getElementById(submenu + "Submenu");
-            if (subMenuElement.style.display === "none") {
-                subMenuElement.style.display = "block";
-            } else {
-                subMenuElement.style.display = "none";
-            }
-        }
-
-    </script>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/OpenModal")
+    @Scripts.Render("~/bundles/LayoutScripts")
+    @Scripts.Render("~/bundles/UserProjects")
     @RenderSection("scripts", required: false)
 </body>
 </html>

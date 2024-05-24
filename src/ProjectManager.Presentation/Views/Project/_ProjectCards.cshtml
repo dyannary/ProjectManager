@@ -1,0 +1,38 @@
+﻿<div class="container">
+    <div class="row">
+        @foreach (var card in Model)
+        {
+            <div class="col-lg-5 col--6 col-sm-12 mb-4">
+                <div class="card h-100">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img class="card-img ma" src="@card.PhotoPath" alt="Card image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title">@card.Name</h4>
+                                <p class="card-text">@card.Description</p>
+                                <button class="btn btn-outline-secondary" id="modalUpdateProject" onclick="openModal({url: '/Project/OpenUpdateModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
+                                    Update
+                                </button>
+                                @if (card.IsEnabled == false)
+                                {
+
+                                    <button class="btn btn-outline-danger" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
+                                        Deactivate
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-outline-danger" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
+                                        Activate
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
