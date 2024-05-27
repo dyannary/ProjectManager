@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using ProjectManager.Infrastructure.Persistance;
+using System.Web;
 using System.Web.Optimization;
 
 namespace ProjectManager.Presentation
@@ -46,6 +47,15 @@ namespace ProjectManager.Presentation
             ////"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.js",
             ////"~/lib/jquery-contextmenu/dist/jquery.ui.position.min.js"
             //));
+
+            bundles.Add(new Bundle("~/bundles/OpenModal").Include(
+                      "~/Scripts/user/OpenModal.js"));
+
+            bundles.Add(new Bundle("~/bundles/LayoutScripts").Include(
+                    "~/Scripts/Layout/LayoutScripts.js"));
+
+            bundles.Add(new Bundle("~/bundles/UserProjects").Include(
+                    "~/Scripts/User/UserProjects.js"));
         }
     }
 }

@@ -91,15 +91,23 @@
   <ItemGroup>
     <Compile Include="ApplicationDependencyInjection.cs" />
     <Compile Include="Common\Extensions\DataTableExtensions.cs" />
-    <Compile Include="DataTransferObjects\Project\ProjectByFiltersDto.cs" />
-    <Compile Include="DataTransferObjects\User\CardDto.cs" />
     <Compile Include="DataTransferObjects\User\LoginUserDto.cs" />
     <Compile Include="DataTransferObjects\User\RegisterUserDto.cs" />
     <Compile Include="DataTransferObjects\User\UserByIdDto.cs" />
     <Compile Include="DataTransferObjects\User\UserByUsernameAndPasswordDto.cs" />
     <Compile Include="DataTransferObjects\User\UserDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectByFiltersDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\CardDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectByIdDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectFilterResponse.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectToCreateDto.cs" />
+    <Compile Include="Extensionms\ClaimsExtensions.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
+    <Compile Include="Projects\Commands\Create\CreateProjectCommand.cs" />
+    <Compile Include="Projects\Commands\Update\UpdateEnableProjectCommand.cs" />
+    <Compile Include="Projects\Commands\Update\UpdateProjectCommand.cs" />
+    <Compile Include="Projects\Queries\GetProjectByIdQuerry.cs" />
     <Compile Include="Projects\Queries\GetProjectsByFilterQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PasswordEncryptionService.cs" />
@@ -130,9 +138,7 @@
       <Name>ProjectManager.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Projects\Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

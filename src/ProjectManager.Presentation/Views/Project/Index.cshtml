@@ -1,0 +1,73 @@
+﻿@using ProjectManager.Application.DataTransferObjects.Projects;
+@model List<CardDto>
+@{
+    ViewBag.Title = "Projects";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+</head>
+
+<body>
+    <div class="col">
+        <div class="row">
+            <div class="">
+                <button class="btn btn-outline-primary mb-4" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenCreateModal', data: 0})" data-toggle="ajax-modal" data-trigger="Modal">
+                    Create project
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        @using (Ajax.BeginForm("GetByFilters", "Project", new AjaxOptions
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "ProjectCards",
+            InsertionMode = InsertionMode.Replace
+        }))
+        {
+            <div class="bg-light col mb-2 d-flex justify-content-between align-items-center">
+                <div class="col d-md-flex">
+                    @Html.DropDownList("ProjectType", new List<SelectListItem>
+                     {
+                       new SelectListItem {Text = "All projects", Value = "all"},
+                       new SelectListItem {Text = "My projects", Value = "myprojects"},
+                       new SelectListItem {Text = "Collaboration projects", Value = "collaborationprojects"}
+                     }, new { @class = "form-select" })
+
+                    @Html.DropDownList("ProjectStatus", new List<SelectListItem>
+                        {
+                            new SelectListItem {Text = "All projects", Value = "all"},
+                            new SelectListItem {Text = "Completed", Value = "completed"},
+                            new SelectListItem {Text = "Ongoing", Value = "ongoing"},
+                        }, new { @class = "form-select" })
+
+                    @Html.DropDownList("ProjectEnable", new List<SelectListItem>
+                        {
+                            new SelectListItem {Text = "Activated projects", Value = "activated"},
+                            new SelectListItem {Text = "deactivated projects", Value = "deactivated"},
+                            new SelectListItem {Text = "All projects", Value = "all"},
+                        }, new { @class = "form-select" })
+
+                </div>
+                <div>
+                    <div class="input-group">
+                        @Html.TextBox("searchProject", null, new { @class = "form-control", placeholder = "Search project" })
+                        <button type="submit" class="btn btn-outline-secondary">Search</button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div id="ProjectCards">
+            @Html.Partial("_ProjectCards", Model);
+        </div>
+    </div>
+    </body>
+
+</html>
+

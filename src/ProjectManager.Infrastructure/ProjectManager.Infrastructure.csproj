@@ -82,6 +82,10 @@
     <Compile Include="Migrations\202405150855274_init.Designer.cs">
       <DependentUpon>202405150855274_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405200708343_add_photoPath_In_Projects.cs" />
+    <Compile Include="Migrations\202405200708343_add_photoPath_In_Projects.Designer.cs">
+      <DependentUpon>202405200708343_add_photoPath_In_Projects.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\FileConfiguration.cs" />
     <Compile Include="Persistance\Configurations\FileTypeConfiguration.cs" />
@@ -119,6 +123,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202405150855274_init.resx">
       <DependentUpon>202405150855274_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405200708343_add_photoPath_In_Projects.resx">
+      <DependentUpon>202405200708343_add_photoPath_In_Projects.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
