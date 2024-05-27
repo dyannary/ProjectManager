@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using ProjectManager.Application.DTOs.User;
 using ProjectManager.Application.User.Commands.UpdateUser;
 using ProjectManager.Application.User.Queries;
