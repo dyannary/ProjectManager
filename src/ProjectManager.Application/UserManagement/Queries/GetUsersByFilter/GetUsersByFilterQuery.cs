@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using ProjectManager.Application.Common.Extensions;
-using ProjectManager.Application.DTOs.User;
+using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.interfaces;
 using ProjectManager.Application.TableParameters;
 using System.Collections.Generic;

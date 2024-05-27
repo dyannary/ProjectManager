@@ -109,6 +109,7 @@
     <Compile Include="Common\TableParameters\DataTableSearch.cs" />
     <Compile Include="UserManagement\Commands\CreateUser\CreateUserCommand.cs" />
     <Compile Include="UserManagement\Commands\CreateUser\CreateUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Commands\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommandValidator.cs" />
     <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommand.cs" />

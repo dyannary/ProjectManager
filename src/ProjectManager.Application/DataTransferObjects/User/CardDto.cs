@@ -1,4 +1,4 @@
-﻿namespace ProjectManager.Application.DTOs.User
+﻿namespace ProjectManager.Application.DataTransferObjects.User
 {
     public class CardDto
     {

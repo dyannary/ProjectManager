@@ -1,8 +1,9 @@
 ﻿using MediatR;
-using ProjectManager.Application.DTOs.User;
+using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.interfaces;
 using ProjectManager.Application.Interfaces;
 using System;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace ProjectManager.Application.User.Commands.CreateUser
                 UserName = model.UserName,
             };
 
-            _context.Users.Add(user);
+            _context.Users.AddOrUpdate(user);
 
             await _context.SaveAsync(cancellationToken);
 

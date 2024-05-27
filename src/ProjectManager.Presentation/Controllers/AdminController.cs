@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using ProjectManager.Application.DTOs.User;
+using Newtonsoft.Json.Linq;
+using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.TableParameters;
 using ProjectManager.Application.User.Commands.UpdateUser;
 using ProjectManager.Application.User.Queries;
+using ProjectManager.Application.UserManagement.Commands.DeleteUser;
 using ProjectManager.Application.UserManagement.Queries;
 using System;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace ProjectManager.Presentation.Controllers
 {
-   // [Authorize(Roles = "1")]
+    // [Authorize(Roles = "1")]
     public class AdminController : Controller
     {
         #region Private Fields
@@ -33,9 +33,20 @@ namespace ProjectManager.Presentation.Controllers
         #endregion
 
         [HttpPost]
-        public async Task<ActionResult> UserTable(DataTableParameters parameters)
+        public async Task<ActionResult> UserTable(DataTableParameters parameters, CancellationToken cancellationToken)
         {
-            var users = await _mediator.Send(new GetUsersByFilterQuery(parameters));
+            var customParameters = new DataTableParameters
+            {
+                TotalCount = parameters.TotalCount,
+                Draw = parameters.Draw,
+                Start = parameters.Start,
+                Length = parameters.Length,
+                Columns = parameters.Columns.Take(parameters.Columns.Count - 1).ToList(),
+                Search = parameters.Search,
+                Order = parameters.Order
+            };
+
+            var users = await _mediator.Send(new GetUsersByFilterQuery(customParameters), cancellationToken);
 
             return Json(new
             {
@@ -48,9 +59,7 @@ namespace ProjectManager.Presentation.Controllers
 
         #region CRUD Operations
 
-        #region Update User
-
-
+        
 
         public async Task<ActionResult> Index(CancellationToken cancellationToken)
         {
@@ -68,32 +77,44 @@ namespace ProjectManager.Presentation.Controllers
                 throw new Exception("Cannot send request via Mediatr" + ex);
             }
         }
-
-        public ActionResult UpdateUser()
+        public ActionResult GetUsersDetails()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("GetUsersDetails", "Admin");
             }
 
             return View();
         }
+        #region Update User
+        //public ActionResult UpdateUser()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        return RedirectToAction("Index", "Admin");
+        //    }
 
+        //    return View();
+        //}
+
+        // TO do in index
         [HttpPost]
-        public async Task<ActionResult> UpdateUser(UserDto model)
+        public async Task<ActionResult> UpdateUser(UserDto data)
         {
             //var validationResult = _validator.Validate(model);
             if (ModelState.IsValid)
             {
-                await _mediator.Send(new UpdateUserCommand { Data = model });
+                var updatedUser = await _mediator.Send(new UpdateUserCommand { Data = data });
 
-                return new JsonResult
-                {
-                    Data = new
-                    {
-                        success = true,
-                    }
-                };
+                return View("UpdateUser", updatedUser);
+
+                //return new JsonResult
+                //{
+                //    Data = new
+                //    {
+                //        success = true,
+                //    }
+                //};
             }
 
             //var errorList = validationResult.Errors.Select(e => new
@@ -108,6 +129,23 @@ namespace ProjectManager.Presentation.Controllers
                 {
                     success = false,
                     //errors = errorList
+                }
+            };
+        }
+
+        #endregion
+
+        #region Delete User
+       
+        [HttpPost]
+        public async Task<ActionResult> DisableUser(int id)
+        {
+            var result = await _mediator.Send(new DeleteUserCommand { UserId = id });
+            return new JsonResult
+            {
+                Data = new
+                {
+                    success = result,
                 }
             };
         }
