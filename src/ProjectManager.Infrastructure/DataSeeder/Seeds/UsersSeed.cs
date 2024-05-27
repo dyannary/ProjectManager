@@ -29,7 +29,7 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                 {
                     Id = 0,
                     FirstName = "user", LastName = "user", Email = "user@example.com",
-                    Password = HashPassword("ChrisWillie3eams456$"), UserName = "user",
+                    Password = HashPassword("user"), UserName = "user",
                     IsEnabled = true,
                     Role = userRole
                 },
@@ -37,7 +37,7 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                 {
                     Id = 1,
                     FirstName = "admin", LastName = "admin", Email = "admin@example.com",
-                    Password = HashPassword("ChrisWillie3edams456$"), UserName = "admin",
+                    Password = HashPassword("admin"), UserName = "admin",
                     IsEnabled = true,
                     Role = adminRole
                 },

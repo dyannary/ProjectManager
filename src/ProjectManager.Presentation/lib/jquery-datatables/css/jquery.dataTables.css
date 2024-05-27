@@ -15,8 +15,8 @@ table.dataTable {
    */
 }
 /* Center align content in specific columns */
-table.dataTable tbody td:nth-child(5),
-table.dataTable tbody td:nth-child(6) {
+table.dataTable tbody td:nth-child(6),
+table.dataTable tbody td:nth-child(7) {
   text-align: center;
 }
 table.dataTable thead th,
