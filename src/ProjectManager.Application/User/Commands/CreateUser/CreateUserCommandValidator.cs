@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ProjectManager.Application.DTOs.User;
+using ProjectManager.Application.DataTransferObjects.User;
 
 namespace ProjectManager.Application.User.Commands.CreateUser
 {

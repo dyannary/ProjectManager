@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ProjectManager.Application.DTOs.Projects;
+using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.Projects.Commands.Create;
 using ProjectManager.Application.Projects.Commands.Update;

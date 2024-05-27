@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace ProjectManager.Application.DTOs
+namespace ProjectManager.Application.DataTransferObjects
 {
     public class ProjectByFiltersDto
     {

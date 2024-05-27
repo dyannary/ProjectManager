@@ -89,16 +89,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDependencyInjection.cs" />
-    <Compile Include="DTOs\Projects\ProjectByFiltersDto.cs" />
-    <Compile Include="DTOs\Projects\CardDto.cs" />
-    <Compile Include="DTOs\Projects\ProjectByIdDto.cs" />
-    <Compile Include="DTOs\Projects\ProjectFilterResponse.cs" />
-    <Compile Include="DTOs\Projects\ProjectToCreateDto.cs" />
-    <Compile Include="DTOs\User\LoginUserDto.cs" />
-    <Compile Include="DTOs\User\RegisterUserDto.cs" />
-    <Compile Include="DTOs\User\UserByIdDto.cs" />
-    <Compile Include="DTOs\User\UserByUsernameAndPasswordDto.cs" />
-    <Compile Include="DTOs\User\UserDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectByFiltersDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\CardDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectByIdDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectFilterResponse.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectToCreateDto.cs" />
+    <Compile Include="DataTransferObjects\User\LoginUserDto.cs" />
+    <Compile Include="DataTransferObjects\User\RegisterUserDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserByIdDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserByUsernameAndPasswordDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserDto.cs" />
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />

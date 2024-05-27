@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ProjectManager.Application.DTOs.User;
+using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.interfaces;
 using System.Threading;
 using System.Threading.Tasks;

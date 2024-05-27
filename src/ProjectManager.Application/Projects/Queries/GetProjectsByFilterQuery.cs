@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ProjectManager.Application.DTOs.Projects;
+using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.interfaces;
 using System;
 using System.Data.Entity;
