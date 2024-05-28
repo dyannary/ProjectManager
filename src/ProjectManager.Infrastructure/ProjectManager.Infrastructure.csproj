@@ -86,6 +86,10 @@
     <Compile Include="Migrations\202405200708343_add_photoPath_In_Projects.Designer.cs">
       <DependentUpon>202405200708343_add_photoPath_In_Projects.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405281338517_extend_project_description_size_limit.cs" />
+    <Compile Include="Migrations\202405281338517_extend_project_description_size_limit.Designer.cs">
+      <DependentUpon>202405281338517_extend_project_description_size_limit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\FileConfiguration.cs" />
     <Compile Include="Persistance\Configurations\FileTypeConfiguration.cs" />
@@ -126,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405200708343_add_photoPath_In_Projects.resx">
       <DependentUpon>202405200708343_add_photoPath_In_Projects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405281338517_extend_project_description_size_limit.resx">
+      <DependentUpon>202405281338517_extend_project_description_size_limit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
