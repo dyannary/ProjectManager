@@ -1,6 +1,4 @@
-﻿using ProjectManager.Domain.Entities;
-using System.Collections.Generic;
-using System;
+﻿using System;
 
 namespace ProjectManager.Application.DataTransferObjects
 {

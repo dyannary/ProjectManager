@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.interfaces;
-using ProjectManager.Domain.Entities;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -28,7 +27,7 @@ namespace ProjectManager.Application.Projects.Commands.Update
         public async Task<bool> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
 
-            var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == 1);
+            var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == request.Project.ProjectStateID);
 
             var projectToUpdate = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.Project.Id);
 

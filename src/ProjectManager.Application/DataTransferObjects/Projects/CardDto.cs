@@ -6,7 +6,7 @@
         public string PhotoPath { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string status { get; set; }
+        public string Status { get; set; }
         public bool IsEnabled { get; set; }
     }
 }

@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDependencyInjection.cs" />
     <Compile Include="Common\Extensions\DataTableExtensions.cs" />
+    <Compile Include="DataTransferObjects\ProjectStates\ProjectStatesSelectListDto.cs" />
     <Compile Include="DataTransferObjects\User\LoginUserDto.cs" />
     <Compile Include="DataTransferObjects\User\RegisterUserDto.cs" />
     <Compile Include="DataTransferObjects\User\UserByIdDto.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
+    <Compile Include="ProjectStates\Queries\GetProjectStatesQuerry.cs" />
     <Compile Include="Projects\Commands\Create\CreateProjectCommand.cs" />
     <Compile Include="Projects\Commands\Update\UpdateEnableProjectCommand.cs" />
     <Compile Include="Projects\Commands\Update\UpdateProjectCommand.cs" />

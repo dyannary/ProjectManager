@@ -36,3 +36,34 @@
         }
     </div>
 </div>
+
+<nav aria-label="Page navigation example" class="d-flex justify-content-end">
+    <ul class="pagination">
+
+        @if (ViewBag.MaxpPage - ViewBag.CurrentPage > 8)
+        {
+            ViewBag.MaxPage = 8;
+        }
+
+        @if (ViewBag.CurrentPage - 1 > 0)
+        {
+            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(ViewBag.CurrentPage - 1))">Previous</a></li>
+        }
+
+        @for (int i = ViewBag.CurrentPage; i <= ViewBag.MaxPage; i++)
+        {
+            if (ViewBag.CurrentPage == i)
+            {
+                <li class="page-item"><a class="page-link btn btn-outline-info" id="CurrentPage" onclick="GetProjectCards(@i)">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@i)">@i</a></li>
+            }
+        }
+        @if (ViewBag.MaxPage != ViewBag.CurrentPage)
+        {
+            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(ViewBag.CurrentPage + 1))">Next</a></li>
+        }
+    </ul>
+</nav>

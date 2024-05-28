@@ -92,7 +92,7 @@ namespace ProjectManager.Application.Projects.Queries
                 Description = p.Description,
                 PhotoPath = p.PhotoPath,
                 IsEnabled = p.IsDeleted,
-                status = p.ProjectState.Name,
+                Status = p.ProjectState.Name,
             }).ToList();
 
             var response = new ProjectFilterResponse

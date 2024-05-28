@@ -9,8 +9,7 @@
     @using (Ajax.BeginForm("Create", "Project", new AjaxOptions
     {
         HttpMethod = "POST",
-        UpdateTargetId = "ProjectCards",
-        InsertionMode = InsertionMode.Replace
+        OnSuccess = "GetProjectCards()"
     }))
     {
         <div class="modal-body">
@@ -47,6 +46,14 @@
                     <div class="col-md-10">
                         @Html.TextBoxFor(model => model.ProjectEndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                         @Html.ValidationMessageFor(model => model.ProjectEndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProjectStateID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.ProjectStateID, (SelectList)ViewBag.ProjectStates, "Select Project State", new { @class = "form-select dropdown-toggle" });
+                        @Html.ValidationMessageFor(model => model.ProjectStateID, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
