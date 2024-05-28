@@ -24,13 +24,7 @@
     </div>
     <div class="container-fluid">
 
-        @using (Ajax.BeginForm("GetByFilters", "Project", new AjaxOptions
-        {
-            HttpMethod = "GET",
-            UpdateTargetId = "ProjectCards",
-            InsertionMode = InsertionMode.Replace
-        }))
-        {
+        <form if="filterForm">
             <div class="bg-light col mb-2 d-flex justify-content-between align-items-center">
                 <div class="col d-md-flex">
                     @Html.DropDownList("ProjectType", new List<SelectListItem>
@@ -38,35 +32,35 @@
                        new SelectListItem {Text = "All projects", Value = "all"},
                        new SelectListItem {Text = "My projects", Value = "myprojects"},
                        new SelectListItem {Text = "Collaboration projects", Value = "collaborationprojects"}
-                     }, new { @class = "form-select" })
+                     }, new { @class = "form-select", onchange = "GetProjectCards(1)" })
 
                     @Html.DropDownList("ProjectStatus", new List<SelectListItem>
                         {
                             new SelectListItem {Text = "All projects", Value = "all"},
                             new SelectListItem {Text = "Completed", Value = "completed"},
                             new SelectListItem {Text = "Ongoing", Value = "ongoing"},
-                        }, new { @class = "form-select" })
+                        }, new { @class = "form-select", onchange = "GetProjectCards(1)" })
 
                     @Html.DropDownList("ProjectEnable", new List<SelectListItem>
                         {
                             new SelectListItem {Text = "Activated projects", Value = "activated"},
                             new SelectListItem {Text = "deactivated projects", Value = "deactivated"},
                             new SelectListItem {Text = "All projects", Value = "all"},
-                        }, new { @class = "form-select" })
-
+                        }, new { @class = "form-select", onchange = "GetProjectCards(1)" })
                 </div>
                 <div>
                     <div class="input-group">
                         @Html.TextBox("searchProject", null, new { @class = "form-control", placeholder = "Search project" })
-                        <button type="submit" class="btn btn-outline-secondary">Search</button>
+                        <button type="button" onclick="GetProjectCards(1)" class="btn btn-outline-secondary">Search</button>
                     </div>
                 </div>
-            </div>
-        }
+                </div>
+        </form>
         <div id="ProjectCards">
-            @Html.Partial("_ProjectCards", Model);
+            @Html.Partial("_ProjectCards", Model)
         </div>
     </div>
+
     </body>
 
 </html>

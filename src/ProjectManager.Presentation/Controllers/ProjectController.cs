@@ -4,6 +4,7 @@ using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.Projects.Commands.Create;
 using ProjectManager.Application.Projects.Commands.Update;
 using ProjectManager.Application.Projects.Queries;
+using ProjectManager.Application.ProjectStates.Queries;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -14,6 +15,7 @@ namespace ProjectManager.Presentation.Controllers
     {
 
         private readonly IMediator _mediator;
+        private readonly int DefaultPageSize = 12;
 
         public ProjectController(IMediator mediator)
         {
@@ -33,19 +35,19 @@ namespace ProjectManager.Presentation.Controllers
             var response = await _mediator.Send(new GetProjectsByFilterQuery
             {
                 Page = 1,
-                PageSize = 10,
+                PageSize = DefaultPageSize,
                 UserID = GetUserId(),
                 IsDeleted = "activated"
             });
-            ViewBag.pageFrom = response.FromPage;
-            ViewBag.currentPage = 1;
-            ViewBag.pageCount = response.MaxPage;
+
+            ViewBag.CurrentPage = 1;
+            ViewBag.MaxPage = response.MaxPage;
 
             return View(response.Cards);
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetByFilters(string projectType, string projectStatus, string searchProject, string ProjectEnable)
+        public async Task<ActionResult> GetByFilters(string projectType, string projectStatus, string searchProject, string ProjectEnable, string SortBy, string SortOrd, int page)
         {
             var response = await _mediator.Send(new GetProjectsByFilterQuery
             {
@@ -53,29 +55,13 @@ namespace ProjectManager.Presentation.Controllers
                 Owning = projectType,
                 Status = projectStatus,
                 IsDeleted = ProjectEnable,
-                Page = 1,
-                PageSize = 10,
-                UserID = GetUserId()
-
-            });
-
-            return PartialView("_ProjectCards", response.Cards);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Pagination(int page, int pageSize)
-        {
-            // This mnethod is not finished. It is for pagination that will be added later.
-            var response = await _mediator.Send(new GetProjectsByFilterQuery
-            {
                 Page = page,
-                PageSize = pageSize,
+                PageSize = DefaultPageSize,
                 UserID = GetUserId()
             });
 
-            ViewBag.pageFrom = response.FromPage;
-                ViewBag.currentPage = page;
-            ViewBag.pageCount = response.MaxPage;
+            ViewBag.CurrentPage = page;
+            ViewBag.MaxPage = response.MaxPage;
 
             return PartialView("_ProjectCards", response.Cards);
         }
@@ -83,39 +69,54 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(ProjectToCreateDto projectDto)
         {
-            var responseCreate = await _mediator.Send(new CreateProjectCommand
+            try
             {
-                Project = projectDto,
-                UserID = GetUserId()
-            });
+                var responseCreate = await _mediator.Send(new CreateProjectCommand
+                {
+                    Project = projectDto,
+                    UserID = GetUserId()
+                });
 
-            var responseCards = await _mediator.Send(new GetProjectsByFilterQuery
+                if (responseCreate)
+                {
+                    return Json(new { StatusCode = 201 });
+                }
+                else
+                {
+                    return Json(new { StatusCode = 500 });
+                }
+
+            } catch
             {
-                Page = 1,
-                PageSize = 10,
-                UserID = GetUserId()
-            });
-
-            return PartialView("_ProjectCards", responseCards.Cards);
+                return Json(new { StatusCode = 500 });
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> Update(ProjectByIdDto projectDto)
         {
-            var responseUpdate = await _mediator.Send(new UpdateProjectCommand
+            try
             {
-                Project = projectDto,
-                UserID = GetUserId()
-            });
+                var responseUpdate = await _mediator.Send(new UpdateProjectCommand
+                    {
+                        Project = projectDto,
+                        UserID = GetUserId()
+                    });
 
-            var responseCards = await _mediator.Send(new GetProjectsByFilterQuery
+                if (responseUpdate)
+                {
+                    return Json(new { StatusCode = 201 });
+                }
+                else
+                {
+                    return Json(new { StatusCode = 500 });
+                }
+
+            }
+            catch
             {
-                Page = 1,
-                PageSize = 10,
-                UserID = GetUserId()
-            });
-
-            return PartialView("_ProjectCards", responseCards.Cards);
+                return Json(new { StatusCode = 500 });
+            }
         }
 
         [HttpPost]
@@ -128,15 +129,8 @@ namespace ProjectManager.Presentation.Controllers
                     Id = id
                 });
 
-                var response = await _mediator.Send(new GetProjectsByFilterQuery
-                {
-                    Page = 1,
-                    PageSize = 10,
-                    UserID = GetUserId()
-                });
-
                 if (isDeleted)
-                    return PartialView("_ProjectCards", response.Cards);
+                    return Json(new { StatusCode = 204 });
                 else
                     return Json(new { StatusCode = 500 });
             }
@@ -148,8 +142,12 @@ namespace ProjectManager.Presentation.Controllers
 
         // Modals : This methods open modals
 
-        public ActionResult OpenCreateModal()
+        public async Task<ActionResult> OpenCreateModal()
         {
+
+            var responseProjectStates = await _mediator.Send(new GetProjectStatesQuerry { });
+
+            ViewBag.ProjectStates = new SelectList(responseProjectStates, "Id", "Name");
             return PartialView("_CreateProjectModal");
         }
         public ActionResult OpenDisableProjectModal(int id)
@@ -163,6 +161,10 @@ namespace ProjectManager.Presentation.Controllers
             {
                 Id = id
             });
+
+            var responseProjectStates = await _mediator.Send(new GetProjectStatesQuerry { });
+
+            ViewBag.ProjectStates = new SelectList(responseProjectStates, "Id", "Name");
 
             return PartialView("_UpdateProjectModal", response);
         }

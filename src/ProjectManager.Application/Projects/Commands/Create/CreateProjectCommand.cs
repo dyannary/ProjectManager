@@ -27,10 +27,8 @@ namespace ProjectManager.Application.Projects.Commands.Create
 
         public async Task<bool> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-
-            // TODO: Add functionality for user to choose the project state
             // TODO: Add functionality for user to add its own photo for project
-            var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == 1);
+            var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == request.Project.ProjectStateID);
             var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserID);
             var userProjectRole = await _context.UserProjectRole.FirstOrDefaultAsync(upr => upr.Name == "ProjectCreator");
             var projectToCreate = new Project
