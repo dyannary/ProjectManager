@@ -7,6 +7,8 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using ProjectManager.Domain.Entities;
+using ProjectManager.Application.Interfaces;
+using ProjectManager.Application.Enums;
 
 namespace ProjectManager.Application.Projects.Commands.Create
 {
@@ -20,14 +22,25 @@ namespace ProjectManager.Application.Projects.Commands.Create
     {
 
         private readonly IAppDbContext _context;
-        public CreateProjectHandler(IAppDbContext context)
+        private readonly IFileService _fileService;
+        public CreateProjectHandler(IAppDbContext context, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
 
         public async Task<bool> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-            // TODO: Add functionality for user to add its own photo for project
+
+            FileTypeEnum fileType = FileTypeEnum.Default;
+
+            if (request.Project.File != null)
+            {
+                fileType = FileTypeEnum.Image;
+            }
+
+            string filePathResponse = _fileService.SaveFile(request.Project.File, fileType);
+
             var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == request.Project.ProjectStateID);
             var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserID);
             var userProjectRole = await _context.UserProjectRole.FirstOrDefaultAsync(upr => upr.Name == "ProjectCreator");
@@ -35,7 +48,7 @@ namespace ProjectManager.Application.Projects.Commands.Create
             {
                 Name = request.Project.Name,
                 Description = request.Project.Description,
-                PhotoPath = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png",
+                PhotoPath = filePathResponse,
                 ProjectStartDate = DateTime.Now,
                 ProjectEndDate = request.Project.ProjectEndDate,
                 Created = DateTime.Now,

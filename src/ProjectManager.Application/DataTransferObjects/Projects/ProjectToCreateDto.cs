@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 
 namespace ProjectManager.Application.DataTransferObjects.Projects
 {
@@ -6,7 +7,7 @@ namespace ProjectManager.Application.DataTransferObjects.Projects
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string PhotoPath { get; set; }
+        public HttpPostedFileBase File { get; set; }
         public int ProjectStateID { get; set; }
         public DateTime ProjectEndDate { get; set; }
     }

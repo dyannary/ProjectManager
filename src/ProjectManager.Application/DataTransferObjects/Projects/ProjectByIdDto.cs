@@ -8,7 +8,8 @@ namespace ProjectManager.Application.DataTransferObjects.Projects
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsDeleted { get; set; }
-        public string PhotoPath { get; set; }
+        public HttpPostedFileBase File { get; set; }
+        public bool RemoveFile { get; set; }
         public int ProjectStateID {  get; set; }
         public DateTime ProjectEndDate { get; set; }
         public DateTime ProjectStartDate { get; set; }

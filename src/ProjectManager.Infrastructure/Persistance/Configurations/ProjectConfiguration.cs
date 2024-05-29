@@ -9,7 +9,7 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
         {
             HasKey(p => p.Id);
             Property(p => p.Name).IsRequired().HasMaxLength(50);
-            Property(p => p.Description).IsRequired().HasMaxLength(50);
+            Property(p => p.Description).IsRequired().HasMaxLength(250);
             Property(p => p.IsDeleted).IsRequired();
             Property(p => p.ProjectEndDate).IsRequired();
             Property(p => p.ProjectStartDate).IsRequired();

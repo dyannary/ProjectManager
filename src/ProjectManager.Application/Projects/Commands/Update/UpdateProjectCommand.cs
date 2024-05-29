@@ -1,11 +1,14 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.Projects;
+using ProjectManager.Application.Enums;
 using ProjectManager.Application.interfaces;
+using ProjectManager.Application.Interfaces;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ProjectManager.Application.Projects.Commands.Update
 {
@@ -19,9 +22,11 @@ namespace ProjectManager.Application.Projects.Commands.Update
     {
 
         private readonly IAppDbContext _context;
-        public UpdateProjectHandler(IAppDbContext context)
+        private readonly IFileService _fileService;
+        public UpdateProjectHandler(IAppDbContext context, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
 
         public async Task<bool> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
@@ -31,10 +36,25 @@ namespace ProjectManager.Application.Projects.Commands.Update
 
             var projectToUpdate = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.Project.Id);
 
+            string photoPath = "";
+            string path = projectToUpdate.PhotoPath;
+            HttpPostedFileBase file = request.Project.File;
+
+            if (request.Project.RemoveFile != true)
+                if (request.Project.File != null)
+                   photoPath = _fileService.UpdateFile(file, FileTypeEnum.Image, path);
+                else if (path == null)
+                    photoPath = _fileService.UpdateFile(file, FileTypeEnum.Default, path);
+                else 
+                    photoPath = path;
+            else
+                photoPath = _fileService.UpdateFile(file, FileTypeEnum.Default, path);
+
             projectToUpdate.Name = request.Project.Name;
             projectToUpdate.Description = request.Project.Description;
             projectToUpdate.IsDeleted = request.Project.IsDeleted;
             projectToUpdate.ProjectStartDate = request.Project.ProjectStartDate;
+            projectToUpdate.PhotoPath = photoPath;
             projectToUpdate.ProjectEndDate = request.Project.ProjectEndDate;
             projectToUpdate.LastModified = DateTime.Now;
             projectToUpdate.LastModifiedBy = request.UserID;
