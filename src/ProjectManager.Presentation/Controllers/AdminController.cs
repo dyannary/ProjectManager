@@ -1,8 +1,5 @@
 ﻿using MediatR;
-using Newtonsoft.Json.Linq;
 using ProjectManager.Application.DataTransferObjects.User;
-using ProjectManager.Application.Projects.Commands.Update;
-using ProjectManager.Application.Projects.Queries;
 using ProjectManager.Application.TableParameters;
 using ProjectManager.Application.User.Commands.UpdateUser;
 using ProjectManager.Application.User.Queries;
