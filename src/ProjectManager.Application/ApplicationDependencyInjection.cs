@@ -9,6 +9,7 @@ namespace ProjectManager.Application
         public static void Register(ContainerBuilder builder)
         {
             builder.RegisterType<PasswordEncryptionService>().As<IPasswordEncryptionService>();
+            builder.RegisterType<FileService>().As<IFileService>();
         }
     }
 }

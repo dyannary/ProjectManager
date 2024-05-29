@@ -10,7 +10,7 @@
     {
         HttpMethod = "POST",
         OnSuccess = "GetProjectCards()"
-    }))
+    }, new { enctype = "multipart/form-data", id = "projectForm" }))
     {
     <div class="modal-body">
         @Html.AntiForgeryToken()
@@ -44,10 +44,17 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.PhotoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.File, "Select File", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.PhotoPath, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "file" })
-                    @Html.ValidationMessageFor(model => model.PhotoPath, "", new { @class = "text-danger" })
+                    <input type="file" name="File" id="File" class="form-control" accept="image/*" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RemoveFile, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.RemoveFile)
+                    @Html.ValidationMessageFor(model => model.RemoveFile, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -70,7 +77,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.ProjectStateID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.ProjectStateID, (SelectList)ViewBag.ProjectStates, "Select Project State" , new { @class = "form-select dropdown-toggle" })
+                    @Html.DropDownListFor(model => model.ProjectStateID, (SelectList)ViewBag.ProjectStates, "Select Project State", new { @class = "form-select dropdown-toggle" })
                     @Html.ValidationMessageFor(model => model.ProjectStateID, "", new { @class = "text-danger" })
                 </div>
             </div>
