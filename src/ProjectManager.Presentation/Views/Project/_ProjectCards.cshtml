@@ -5,10 +5,12 @@
             <div class="col-lg-4 col col-sm-12 mb-4">
                 <div class="card h-100">
                     <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img class="card-img ma" src="@card.PhotoPath" alt="Card image">
+                        <div class="col-md-5">
+                            <div class="square-image-container">
+                                <img class="card-img ma square-image" src="@Url.Content(card.PhotoPath)" alt="Card image">
+                            </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <div class="card-body">
                                 <h4 class="card-title">@card.Name</h4>
                                 <p class="card-text">@card.Description</p>
@@ -19,13 +21,13 @@
                                 {
 
                                     <button class="btn btn-outline-danger" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
-                                        Deactivate
+                                        Disable
                                     </button>
                                 }
                                 else
                                 {
-                                    <button class="btn btn-outline-danger" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
-                                        Activate
+                                    <button class="btn btn-outline-success" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
+                                        Enable
                                     </button>
                                 }
                             </div>
@@ -36,6 +38,25 @@
         }
     </div>
 </div>
+
+<style>
+    .square-image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding-top: 100%;
+    }
+
+    .square-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+
 
 <nav aria-label="Page navigation example" class="d-flex justify-content-end">
     <ul class="pagination">

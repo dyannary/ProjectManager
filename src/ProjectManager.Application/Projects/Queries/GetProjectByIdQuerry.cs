@@ -31,7 +31,8 @@ namespace ProjectManager.Application.Projects.Queries
                 Name = querry.Name,
                 Description = querry.Description,
                 IsDeleted = querry.IsDeleted,
-                PhotoPath = querry.PhotoPath,
+                RemoveFile = false,
+                File = null,
                 ProjectEndDate = querry.ProjectEndDate,
                 ProjectStartDate = querry.ProjectStartDate,
             };
