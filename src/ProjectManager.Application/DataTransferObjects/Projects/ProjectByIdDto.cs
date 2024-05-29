@@ -1,7 +1,4 @@
-﻿using ProjectManager.Application.DataTransferObjects.ProjectStates;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace ProjectManager.Application.DataTransferObjects.Projects
 {

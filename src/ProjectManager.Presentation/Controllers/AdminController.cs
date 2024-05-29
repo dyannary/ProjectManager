@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Newtonsoft.Json.Linq;
 using ProjectManager.Application.DataTransferObjects.User;
+using ProjectManager.Application.Projects.Commands.Update;
+using ProjectManager.Application.Projects.Queries;
 using ProjectManager.Application.TableParameters;
 using ProjectManager.Application.User.Commands.UpdateUser;
 using ProjectManager.Application.User.Queries;
@@ -46,7 +48,7 @@ namespace ProjectManager.Presentation.Controllers
                 Order = parameters.Order
             };
 
-            var users = await _mediator.Send(new GetUsersByFilterQuery(customParameters), cancellationToken);
+            var users = await _mediator.Send(new GetUsersByFilterQuery(parameters), cancellationToken);
 
             return Json(new
             {
@@ -87,50 +89,36 @@ namespace ProjectManager.Presentation.Controllers
             return View();
         }
         #region Update User
-        //public ActionResult UpdateUser()
-        //{
-        //    if (User.Identity.IsAuthenticated)
-        //    {
-        //        return RedirectToAction("Index", "Admin");
-        //    }
+        public async Task<ActionResult> UpdateUser(int id)
+        {
+            var response = await _mediator.Send(new GetUserByIdQuery
+            {
+                Id = id
+            });
 
-        //    return View();
-        //}
+            return PartialView("_UpdateUserModal", response);
+        }
 
         // TO do in index
         [HttpPost]
         public async Task<ActionResult> UpdateUser(UserDto data)
         {
-            //var validationResult = _validator.Validate(model);
-            if (ModelState.IsValid)
+            try
             {
                 var updatedUser = await _mediator.Send(new UpdateUserCommand { Data = data });
-
-                return View("UpdateUser", updatedUser);
-
-                //return new JsonResult
-                //{
-                //    Data = new
-                //    {
-                //        success = true,
-                //    }
-                //};
-            }
-
-            //var errorList = validationResult.Errors.Select(e => new
-            //{
-            //    message = e.ErrorMessage,
-            //    propertyName = e.PropertyName,
-            //}).ToList();
-
-            return new JsonResult
-            {
-                Data = new
+                if (updatedUser)
                 {
-                    success = false,
-                    //errors = errorList
+                    return Json(new { StatusCode = 201 });
                 }
-            };
+                else
+                {
+                    return Json(new { StatusCode = 500 });
+                }
+            }
+            catch 
+            {
+                return Json(new { StatusCode = 500 });
+            }
         }
 
         #endregion
@@ -151,6 +139,37 @@ namespace ProjectManager.Presentation.Controllers
         }
 
         #endregion
+
+        #region Modals
+
+        public ActionResult OpenDisableUserModal(int id)
+        {
+            return PartialView("_DisableUserModal", id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateUserEnableStatus(int id)
+        {
+            try
+            {
+                var isDeleted = await _mediator.Send(new DeleteUserCommand
+                {
+                    UserId = id
+                });
+
+                if (isDeleted)
+                    return Json(new { StatusCode = 204 });
+                else
+                    return Json(new { StatusCode = 500 });
+            }
+            catch
+            {
+                return Json(new { StatusCode = 500 });
+            }
+        }
+
+        #endregion
+
         #endregion
     }
 }

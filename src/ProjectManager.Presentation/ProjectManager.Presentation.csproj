@@ -280,6 +280,7 @@
     <Content Include="lib\jquery-datatables\images\sort_desc_disabled.png" />
     <Content Include="lib\jquery-datatables\js\jquery.dataTables.js" />
     <Content Include="lib\jquery-datatables\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\Admin\UserManagement.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -323,12 +324,13 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\GetUsersDetails.cshtml" />
-    <Content Include="Views\Admin\UpdateUser.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\_ProjectCards.cshtml" />
     <Content Include="Views\Project\_CreateProjectModal.cshtml" />
     <Content Include="Views\Project\_ConfirmDisableModal.cshtml" />
     <Content Include="Views\Project\_UpdateProjectModal.cshtml" />
+    <Content Include="Views\Admin\_DisableUserModal.cshtml" />
+    <Content Include="Views\Admin\_UpdateUserModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

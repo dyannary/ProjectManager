@@ -12,5 +12,9 @@ namespace ProjectManager.Application.DataTransferObjects.User
         public DateTime CreatedDate {  get; set; }
         public int RoleId { get; set; }
         public bool IsEnabled { get; set; }
+
+
+
+        public bool Actions {  get; set; }
     }
 }
