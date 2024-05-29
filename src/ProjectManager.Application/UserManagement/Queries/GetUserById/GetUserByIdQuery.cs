@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.interfaces;
+using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace ProjectManager.Application.User.Queries
 
         public async Task<UserByIdDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FindAsync(request.Id, cancellationToken);
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == request.Id);
 
             //Pe viitor, message error
             if (user is null)

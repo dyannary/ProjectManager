@@ -1,17 +1,18 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.interfaces;
+using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProjectManager.Application.User.Commands.UpdateUser
 {
-    public class UpdateUserCommand : IRequest<UserDto>
+    public class UpdateUserCommand : IRequest<bool>
     {
         public UserDto Data { get; set; }
     }
 
-    public class UpdateUserCommmandHandler : IRequestHandler<UpdateUserCommand, UserDto>
+    public class UpdateUserCommmandHandler : IRequestHandler<UpdateUserCommand, bool>
     {
         private readonly IAppDbContext _context;
         public UpdateUserCommmandHandler(IAppDbContext context)
@@ -19,15 +20,15 @@ namespace ProjectManager.Application.User.Commands.UpdateUser
             _context = context;
         }
 
-        public async Task<UserDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
         {
             var updatedUser = command.Data;
             if (updatedUser == null)
-                return null;
+                return false;
 
-            var toUpdate = await _context.Users.FindAsync(updatedUser.Id, cancellationToken);
+            var toUpdate = await _context.Users.FirstOrDefaultAsync(p => p.Id == command.Data.Id);
             if (toUpdate == null)
-                return null;
+                return false;
 
             toUpdate.UserName = command.Data.UserName;
             toUpdate.FirstName = command.Data.FirstName;
@@ -36,9 +37,10 @@ namespace ProjectManager.Application.User.Commands.UpdateUser
             toUpdate.RoleId = command.Data.RoleId;
             toUpdate.IsEnabled = command.Data.IsEnabled;
 
-            await _context.SaveAsync(cancellationToken);
 
-            return updatedUser;
+            if (await _context.SaveAsync(cancellationToken) == 1)
+                return true;
+            else return false;
         }
     }
 }

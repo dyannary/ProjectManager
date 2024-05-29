@@ -62,15 +62,44 @@
                             }
                             return data;
                         }
+                    },
+
+                    {
+                        "data": "Actions",
+                        "title": "Actions",
+                        "dataSorter": false,
+                        "orderable": false,
+                        "render": function (data, type, full, meta) {
+                            var idUser = full.Id;
+
+                            return `<button class="btn id="modalConfirmButton" onclick="openModal({url: '/Admin/UpdateUser', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal">Edit</button>`;
+                        }
                     }
+
+                    //Paginarea nu lucreaza daca ignor coloana
+                    //Nu lucreaza filtrarea daca las ultima coloana
+
+                     //Disable button
+                    //{
+                    //    "title": "Actions",
+                    //    "dataSorter": false,
+                    //    "orderable": false,
+                    //    "render": function (data, type, full, meta) {
+                    //        var idUser = full.Id;
+                    //        var isEnabled = full.IsEnabled;
+                    //        var buttonText = isEnabled ? "Disable" : "Enable";
+                    //        var buttonClass = isEnabled ? "btn-outline-danger" : "btn-outline-success";
+                    //        return `<button class="btn ${buttonClass}" id="modalConfirmButton" onclick="openModal({url: '/Admin/OpenDisableUserModal', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal">${buttonText}</button>`;
+                    //    }
+                    //}
                 ],
                 "pagingType": "full_numbers", // Use full_numbers for your pagination style
                 "language": {
                     "paginate": {
-                        "first": "",
+                        "first": "First",
                         "previous": "&laquo;",
                         "next": "&raquo;",
-                        "last": ""
+                        "last": "Last"
                     }
                 }
             });

@@ -37,7 +37,8 @@ namespace ProjectManager.Application.UserManagement.Queries
                 LastName = x.LastName,
                 Email = x.Email,
                 CreatedDate = x.Created,
-                IsEnabled = x.IsEnabled
+                IsEnabled = x.IsEnabled,
+                Actions = true,
             })
             .Search(request.Parameters).OrderBy(request.Parameters).Page(request.Parameters).ToListAsync();
 

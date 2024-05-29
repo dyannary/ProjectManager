@@ -7,7 +7,7 @@
         alert('error')
         return;
     }
-
+    
     $.ajax(
         {
             type: 'GET',
