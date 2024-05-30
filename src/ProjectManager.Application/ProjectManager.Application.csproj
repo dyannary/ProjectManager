@@ -96,8 +96,9 @@
     <Compile Include="ApplicationDependencyInjection.cs" />
     <Compile Include="Common\Extensions\DataTableExtensions.cs" />
     <Compile Include="DataTransferObjects\ProjectStates\ProjectStatesSelectListDto.cs" />
+    <Compile Include="DataTransferObjects\Projects\RoleDto.cs" />
     <Compile Include="DataTransferObjects\User\LoginUserDto.cs" />
-    <Compile Include="DataTransferObjects\User\RegisterUserDto.cs" />
+    <Compile Include="DataTransferObjects\User\AddUserDto.cs" />
     <Compile Include="DataTransferObjects\User\UserByIdDto.cs" />
     <Compile Include="DataTransferObjects\User\UserByUsernameAndPasswordDto.cs" />
     <Compile Include="DataTransferObjects\User\UserDto.cs" />
@@ -124,8 +125,8 @@
     <Compile Include="Common\TableParameters\DataTableOrder.cs" />
     <Compile Include="Common\TableParameters\DataTableParameters.cs" />
     <Compile Include="Common\TableParameters\DataTableSearch.cs" />
-    <Compile Include="UserManagement\Commands\CreateUser\CreateUserCommand.cs" />
-    <Compile Include="UserManagement\Commands\CreateUser\CreateUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Commands\AddUser\AddUserCommand.cs" />
+    <Compile Include="UserManagement\Commands\AddUser\AddUserCommandValidator.cs" />
     <Compile Include="UserManagement\Commands\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommandValidator.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="UserManagement\Queries\GetUsersByFilter\GetUsersByFilterQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUserById\GetUserByIdQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUserById\GetUserByUsernameAndPasswordQuerry.cs" />
+    <Compile Include="UserManagement\Queries\GetUsersRole\GetUsersRoleQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUsers\GetUsersQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUsers\GetUsersQueryValidation.cs" />
   </ItemGroup>

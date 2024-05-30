@@ -1,6 +1,4 @@
-﻿
-
-using MediatR;
+﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.ProjectStates;
 using ProjectManager.Application.interfaces;
 using System.Collections.Generic;
@@ -37,5 +35,4 @@ namespace ProjectManager.Application.ProjectStates.Queries
             return response;
         }
     }
-
 }
