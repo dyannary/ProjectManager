@@ -3,7 +3,7 @@
 
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Update project</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Update user</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     @using (Ajax.BeginForm("UpdateUser", "Admin", new AjaxOptions
@@ -16,7 +16,6 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <hr />
                 @Html.HiddenFor(model => model.Id)
 
                 <div class="form-group">
@@ -60,10 +59,9 @@
                 </div>
 
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                    @Html.CheckBoxFor(model => model.IsEnabled, new { @class = "form-check-input", @role = "switch", @id = "flexSwitchCheckChecked" })
                     <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
                 </div>
-
 
             </div>
         </div>

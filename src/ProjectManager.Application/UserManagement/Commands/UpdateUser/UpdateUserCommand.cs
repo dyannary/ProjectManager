@@ -23,10 +23,12 @@ namespace ProjectManager.Application.User.Commands.UpdateUser
         public async Task<bool> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
         {
             var updatedUser = command.Data;
+
             if (updatedUser == null)
                 return false;
 
             var toUpdate = await _context.Users.FirstOrDefaultAsync(p => p.Id == command.Data.Id);
+
             if (toUpdate == null)
                 return false;
 
@@ -40,7 +42,8 @@ namespace ProjectManager.Application.User.Commands.UpdateUser
 
             if (await _context.SaveAsync(cancellationToken) == 1)
                 return true;
-            else return false;
+            else 
+                return false;
         }
     }
 }

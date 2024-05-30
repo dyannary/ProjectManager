@@ -334,6 +334,7 @@
     <Content Include="Views\Project\_UpdateProjectModal.cshtml" />
     <Content Include="Views\Admin\_DisableUserModal.cshtml" />
     <Content Include="Views\Admin\_UpdateUserModal.cshtml" />
+    <Content Include="Views\Admin\_AddUserModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

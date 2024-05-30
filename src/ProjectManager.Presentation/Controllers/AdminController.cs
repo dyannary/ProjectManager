@@ -1,10 +1,13 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.User;
+using ProjectManager.Application.ProjectStates.Queries;
 using ProjectManager.Application.TableParameters;
+using ProjectManager.Application.User.Commands.CreateUser;
 using ProjectManager.Application.User.Commands.UpdateUser;
 using ProjectManager.Application.User.Queries;
 using ProjectManager.Application.UserManagement.Commands.DeleteUser;
 using ProjectManager.Application.UserManagement.Queries;
+using ProjectManager.Application.UserManagement.Queries.GetUsersRole;
 using System;
 using System.Linq;
 using System.Threading;
@@ -58,8 +61,6 @@ namespace ProjectManager.Presentation.Controllers
 
         #region CRUD Operations
 
-        
-
         public async Task<ActionResult> Index(CancellationToken cancellationToken)
         {
             try
@@ -85,6 +86,45 @@ namespace ProjectManager.Presentation.Controllers
 
             return View();
         }
+
+        #region Add User
+        public async Task<ActionResult> AddUser(int id)
+        {
+            var response = await _mediator.Send(new GetUserByIdQuery
+            {
+                Id = id
+            });
+
+            var responseUsersRoles = await _mediator.Send(new GetUsersRoleQuery { });
+
+            ViewBag.UserRoles = new SelectList(responseUsersRoles, "Id", "Name");
+
+            return PartialView("_AddUserModal", response);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddUser(AddUserDto data)
+        {
+            try
+            {
+                var addedUser = await _mediator.Send(new AddUserCommand { Data = data });
+                if (addedUser)
+                {
+                    return Json(new { StatusCode = 201 });
+                }
+                else
+                {
+                    return Json(new { StatusCode = 500 });
+                }
+            }
+            catch
+            {
+                return Json(new { StatusCode = 500 });
+            }
+        }
+
+        #endregion
+
         #region Update User
         public async Task<ActionResult> UpdateUser(int id)
         {
@@ -96,7 +136,6 @@ namespace ProjectManager.Presentation.Controllers
             return PartialView("_UpdateUserModal", response);
         }
 
-        // TO do in index
         [HttpPost]
         public async Task<ActionResult> UpdateUser(UserDto data)
         {

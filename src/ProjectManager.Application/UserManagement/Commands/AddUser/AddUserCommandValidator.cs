@@ -3,9 +3,9 @@ using ProjectManager.Application.DataTransferObjects.User;
 
 namespace ProjectManager.Application.User.Commands.CreateUser
 {
-    public class CreateUserCommandValidator : AbstractValidator<RegisterUserDto>
+    public class AddUserCommandValidator : AbstractValidator<AddUserDto>
     {
-        public CreateUserCommandValidator()
+        public AddUserCommandValidator()
         {
             RuleFor(x => x.UserName)
                 .NotEmpty()
@@ -29,9 +29,6 @@ namespace ProjectManager.Application.User.Commands.CreateUser
             RuleFor(x => x.IsEnabled)
                 .NotEmpty()
                 .WithMessage("Active status is required");
-            RuleFor(x => x.RoleId)
-                .NotEmpty()
-                .WithMessage("Role is required");
         }
     }
 }
