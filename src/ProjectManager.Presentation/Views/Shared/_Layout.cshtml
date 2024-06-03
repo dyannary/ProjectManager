@@ -7,9 +7,12 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/lib/jquery-datatables")
+    @Styles.Render("~/Content/jqueryContextMenu")
+    @Styles.Render("~/Content/bootstrap-select")
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <style>
         body {
@@ -114,6 +117,7 @@
             else if (User.IsInRole("user"))
             {
                 <li><a href="#">@Html.ActionLink("Projects", "Index", "Project", new { area = "" }, new { @class = "nav-link" })</a></li>
+                <li><a href="#">@Html.ActionLink("Tasks", "Index", "ProjectTask", new { area = "" }, new { @class = "nav-link" })</a></li>
             }
         </ul>
     </div>
@@ -121,11 +125,10 @@
     <div id="main">
         <span style="font-size:30px;cursor:pointer" id="openButton" onclick="openNav()">&#9776;</span>
         <div class="container body-content">
+
             @RenderBody()
             <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
+
         </div>
     </div>
 

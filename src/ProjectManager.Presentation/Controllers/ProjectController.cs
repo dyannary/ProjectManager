@@ -169,5 +169,10 @@ namespace ProjectManager.Presentation.Controllers
             return PartialView("_UpdateProjectModal", response);
         }
 
+        public ActionResult GotoProjectDetails(int id)
+        {
+            return RedirectToAction("Index", "ProjectTask", new {Id = id});
+        }
+
     }
 }

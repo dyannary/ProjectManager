@@ -1,0 +1,46 @@
+﻿@using ProjectManager.Application.DataTransferObjects.ProjectTask;
+@model ProjectTaskDto
+@{
+    ViewBag.Title = "Index";
+}
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+
+            <p class="mb-0">Product details</p>
+            <div class="d-flex">
+                <div class="form-group me-2">
+                    <div class="col-md-10">
+                        @Html.DropDownList("SelectedProject", new SelectList(Model.ProjectsList, "Id", "Name"), new { @class = "form-select dropdown-toggle", onchange = "refreshCard()" })
+                    </div>
+                </div>
+                <div class="col-auto">
+
+                    <a href = "@Url.Action("Index", "Project")" class="btn btn-outline-dark">Projects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_CardInfoPartial", Model.Project)
+</div>
+
+@section Scripts {
+    <script>
+        function refreshCard() {
+            var selectedProject = $("#SelectedProject").val();
+            $.ajax({
+                url: '@Url.Action("RefreshDetailCard", "ProjectTask")',
+                type: 'GET',
+                data: { id: selectedProject },
+                success: function (result) {
+                    debugger;
+                    $("#DetailCard").empty();
+                    $("#DetailCard").html(result);
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+    </script>
+}
