@@ -14,23 +14,32 @@
                             <div class="card-body">
                                 <h4 class="card-title">@card.Name</h4>
                                 <p class="card-text">@card.Description</p>
-                                <button class="btn btn-outline-secondary" id="modalUpdateProject" onclick="openModal({url: '/Project/OpenUpdateModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
-                                    Update
-                                </button>
-                                @if (card.IsEnabled == false)
-                                {
 
-                                    <button class="btn btn-outline-danger" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
-                                        Disable
+                                <div class="dropdown dropdown-top-right">
+                                    <button class="dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
-                                }
-                                else
-                                {
-                                    <button class="btn btn-outline-success" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">
-                                        Enable
-                                    </button>
-                                }
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <button class="dropdown-item" id="modalUpdateProject" onclick="openModal({url: '/Project/OpenUpdateModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">Update</button>
+
+                                        <form action="../Project/GotoProjectDetails" method="get">
+                                            <input type="hidden" name="Id" value="@card.Id" />
+                                            <button type="submit" class="dropdown-item">Details</button>
+                                        </form>
+
+                                        @if (card.IsEnabled == false)
+                                        {
+
+                                            <button class="dropdown-item" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">Disable</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="dropdown-item " id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">Enable</button>
+                                        }
+                                    </div>
+                                </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -38,13 +47,18 @@
         }
     </div>
 </div>
-
 <style>
     .square-image-container {
         position: relative;
         width: 100%;
         height: 100%;
         padding-top: 100%;
+    }
+
+    .dropdown-top-right {
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 
     .square-image {
