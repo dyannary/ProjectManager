@@ -326,7 +326,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\GetUsersDetails.cshtml" />
+    <Content Include="Views\Admin\_GetUserDetailsModal.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\_ProjectCards.cshtml" />
     <Content Include="Views\Project\_CreateProjectModal.cshtml" />

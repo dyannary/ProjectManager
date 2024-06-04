@@ -24,7 +24,6 @@ namespace ProjectManager.Application.User.Queries
         {
             var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == request.Id);
 
-            //Pe viitor, message error
             if (user is null)
                 return null;
 
@@ -34,7 +33,8 @@ namespace ProjectManager.Application.User.Queries
                 UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
+                Email = user.Email,
+                IsEnabled = user.IsEnabled
             };
 
             return userDto;

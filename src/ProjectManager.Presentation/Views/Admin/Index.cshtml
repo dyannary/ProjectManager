@@ -4,15 +4,25 @@
 
 
 <div class="text">
-    <button type="button" class="btn btn-danger" onclick="openModal({url: '/Admin/AddUser', data: 0})" data-bs-toggle="modal" data-bs-target="#addUserModal">+</button>
+    <button type="button" class="btn btn-danger" onclick="openModal({url: '/Admin/AddUser', data: 0})" data-bs-toggle="modal" data-bs-target="#addUserModal">Add</button>
 </div>
+
 
 
 <table id="UserDatabase" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
     <thead class="table-dark">
-
+        <tr>
+            <th>Id</th>
+            <th>RoleId</th>
+            <th>UserName</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Email</th>
+            <th>CreatedDate</th>
+            <th>IsEnabled</th>
+            <th>Actions</th>
+        </tr>
     </thead>
-
     <tbody>
     </tbody>
 </table>
@@ -21,13 +31,44 @@
     <script>
         $(document).ready(function () {
             initializeUserDataTable();
+
+            $(document).contextMenu({
+                selector: 'tr',
+                trigger: 'right',
+                callback: function (key, options) {
+                    let row = table.row(options.$trigger);
+                    row.select();
+
+                    switch (key) {
+                        case 'details':
+                            window.location.href = "#Admin/GetUserDetails/" + row.data()["Id"];
+                            break;
+                        case 'edit':
+                            window.location.href = "#Admin/UpdateUser/" + row.data()["Id"];
+                            break;
+                        default:
+                            break;
+                    }
+                },
+                items: {
+                    "edit": { name: "Edit" },
+                    "details": { name: "Details" }
+                }
+            });
         });
+        debugger;
 
         function initializeUserDataTable() {
             var table = $('#UserDatabase').DataTable({
 
                 "serverSide": true,
-                "dom": "<'row-4'<'col-sm-2'><'col-sm-12'f><'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>", // Includes search input box ("f") //f, r, t, l, p
+                "dom": "<'row-4'<'col-sm-6'l><'col-sm-12'f><'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>", // Includes search input box ("f") //f, r, t, l, p
+
+                processing: true,
+
+                stateSave: true,
+
+
                 "pageLength": 15,
                 "order": [[6, 'desc']],
                 ajax: {
@@ -35,6 +76,16 @@
                     "type": "POST",
                     "dataType": "json",
                 },
+                "buttons": [
+                    {
+                        text: 'Add User',
+                        action: function (e, dt, node, config) {
+                            // Define your custom action for the button here
+                            alert('Add User button clicked');
+                        }
+                    },
+                    'copy', 'csv', 'excel', 'pdf', 'print' // You can add other buttons like copy, csv, etc.
+                ],
                 "columns": [
                     { "data": "Id", "title": "Id", "name": "Id", "visible": false },
                     { "data": "RoleId", "title": "RoleId", "name": "RoleId", "visible": false },
@@ -83,23 +134,10 @@
                         "render": function (data, type, full, meta) {
                             var idUser = full.Id;
 
-                            return `<button class="btn" id="modalConfirmButton" onclick="openModal({url: '/Admin/UpdateUser', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal"><i class="bi bi-pencil-square"></i></button>`;
+                            return `<button class="btn" id="modalConfirmButton" onclick="openModal({url: '/Admin/UpdateUser', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal"><i class="bi bi-pencil-square"></i></button>` +
+                                `<button class="btn" id="modalConfirmButton" onclick="openModal({url: '/Admin/GetUserDetails', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal"><i class="bi bi-info-circle"></i></button>`;
                         }
                     }
-
-                    //Disable button
-                    //{
-                    //    "title": "Actions",
-                    //    "dataSorter": false,
-                    //    "orderable": false,
-                    //    "render": function (data, type, full, meta) {
-                    //        var idUser = full.Id;
-                    //        var isEnabled = full.IsEnabled;
-                    //        var buttonText = isEnabled ? "Disable" : "Enable";
-                    //        var buttonClass = isEnabled ? "btn-outline-danger" : "btn-outline-success";
-                    //        return `<button class="btn ${buttonClass}" id="modalConfirmButton" onclick="openModal({url: '/Admin/OpenDisableUserModal', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal">${buttonText}</button>`;
-                    //    }
-                    //}
                 ],
                 "pagingType": "full_numbers", // Use full_numbers for your pagination style
                 "language": {

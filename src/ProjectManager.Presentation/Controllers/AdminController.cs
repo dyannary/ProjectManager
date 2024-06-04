@@ -12,6 +12,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace ProjectManager.Presentation.Controllers
@@ -77,14 +78,14 @@ namespace ProjectManager.Presentation.Controllers
                 throw new Exception("Cannot send request via Mediatr" + ex);
             }
         }
-        public ActionResult GetUsersDetails()
+        public async Task<ActionResult> GetUserDetails(int id)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("GetUsersDetails", "Admin");
-            }
+            var response = await _mediator.Send(new GetUserByIdQuery 
+            { 
+                Id = id
+            });
 
-            return View();
+            return PartialView("_GetUserDetailsModal", response);
         }
 
         #region Add User
@@ -105,6 +106,10 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddUser(AddUserDto data)
         {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { StatusCode = 500 });
+            }
             try
             {
                 var addedUser = await _mediator.Send(new AddUserCommand { Data = data });
@@ -133,12 +138,20 @@ namespace ProjectManager.Presentation.Controllers
                 Id = id
             });
 
+            var responseUsersRoles = await _mediator.Send(new GetUsersRoleQuery { });
+
+            ViewBag.UserRoles = new SelectList(responseUsersRoles, "Id", "Name");
+
             return PartialView("_UpdateUserModal", response);
         }
 
         [HttpPost]
         public async Task<ActionResult> UpdateUser(UserDto data)
         {
+            if(!ModelState.IsValid)
+            {
+                return Json(new { StatusCode = 500 });
+            }
             try
             {
                 var updatedUser = await _mediator.Send(new UpdateUserCommand { Data = data });

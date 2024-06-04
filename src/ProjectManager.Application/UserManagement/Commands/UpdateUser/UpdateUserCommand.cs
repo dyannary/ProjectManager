@@ -32,11 +32,19 @@ namespace ProjectManager.Application.User.Commands.UpdateUser
             if (toUpdate == null)
                 return false;
 
+            var getRoles = _context.Roles.FirstOrDefaultAsync(x => x.Id == command.Data.RoleId);
+
             toUpdate.UserName = command.Data.UserName;
             toUpdate.FirstName = command.Data.FirstName;
             toUpdate.LastName = command.Data.LastName;
             toUpdate.Email = command.Data.Email;
             toUpdate.RoleId = command.Data.RoleId;
+
+            if (toUpdate.RoleId == 1 && toUpdate.Id == updatedUser.Id && !updatedUser.IsEnabled)
+            {
+                return false;
+            }
+
             toUpdate.IsEnabled = command.Data.IsEnabled;
 
 

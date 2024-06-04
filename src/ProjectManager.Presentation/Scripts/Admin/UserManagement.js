@@ -8,10 +8,11 @@
         success: function (result) {
             debugger
             if (result.StatusCode === 204) {
+
                 var row = $('#UserDatabase').DataTable().row('#' + id);
-                // Invalidate the row data
+              
                 row.invalidate();
-                // Redraw the row
+              
                 row.draw('full-hold');
             } else {
                 alert("A problem occured!");
