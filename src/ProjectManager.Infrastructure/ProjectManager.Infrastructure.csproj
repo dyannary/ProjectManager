@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSeeder\Seeds\ProjectTasksSeed.cs" />
     <Compile Include="DataSeeder\Seeds\UsersSeed.cs" />
     <Compile Include="InfrastructureDependencyInjection.cs" />
     <Compile Include="Migrations\202405150855274_init.cs" />

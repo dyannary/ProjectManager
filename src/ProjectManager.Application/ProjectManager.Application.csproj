@@ -456,6 +456,9 @@
     <Compile Include="DataTransferObjects\Projects\RoleDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectByIdForProjectTaskDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectForDropDownDto.cs" />
+    <Compile Include="DataTransferObjects\ProjectTask\AddTaskDto.cs" />
+    <Compile Include="DataTransferObjects\ProjectTask\ProjectTaskById.cs" />
+    <Compile Include="DataTransferObjects\ProjectTask\TaskTableDto.cs" />
     <Compile Include="DataTransferObjects\ProjectTask\ProjectTaskDto.cs" />
     <Compile Include="DataTransferObjects\User\LoginUserDto.cs" />
     <Compile Include="DataTransferObjects\User\AddUserDto.cs" />
@@ -480,6 +483,9 @@
     <Compile Include="Projects\Queries\GetProjectByIdQuerry.cs" />
     <Compile Include="Projects\Queries\GetProjectsByFilterQuery.cs" />
     <Compile Include="Projects\Queries\GetProjectsForDropDowmQuerry.cs" />
+    <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommand.cs" />
+    <Compile Include="ProjectTasks\Queries\GetTasksByProjectIdQuery.cs" />
+    <Compile Include="ProjectTasks\Queries\GetTasksByFilterQuery.cs\GetTasksByFilterQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\PasswordEncryptionService.cs" />

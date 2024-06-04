@@ -338,6 +338,7 @@
     <Content Include="Views\Admin\_AddUserModal.cshtml" />
     <Content Include="Views\ProjectTask\Index.cshtml" />
     <Content Include="Views\ProjectTask\_CardInfoPartial.cshtml" />
+    <Content Include="Views\ProjectTask\_ProjectTaskTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

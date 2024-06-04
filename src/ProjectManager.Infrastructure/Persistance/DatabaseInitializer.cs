@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net.Mime;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
     public class DatabaseInitializer : DbMigrationsConfiguration<AppDbContext>
     {
-        public DatabaseInitializer() 
+        public DatabaseInitializer()
         {
             AutomaticMigrationDataLossAllowed = true;
             AutomaticMigrationsEnabled = true;
@@ -37,6 +38,12 @@ namespace ProjectManager.Infrastructure.Persistance
 
             if (!context.Priorities.Any())
                 CreatePriotities(context);
+
+            if (!context.Projects.Any())
+                ProjectSeed(context);
+
+            if (!context.ProjectTasks.Any())
+                ProjectTasksSeed(context);  
 
             base.Seed(context);
         }
@@ -131,6 +138,78 @@ namespace ProjectManager.Infrastructure.Persistance
             };
 
             priorities.ForEach(p => context.Priorities.Add(p));
+            context.SaveChanges();
+        }
+
+        private void ProjectSeed(AppDbContext context)
+        {
+            var projects = new List<Project>()
+            {
+                new Project
+                {
+                    Id = 1,
+                    Name = "First Project",
+                    Description = "First Description",
+                    IsDeleted = false,
+                    PhotoPath = $"~/Content/Images/Default/defaultImage.jpg",
+                    ProjectStartDate = new DateTime(2024, 6, 2),
+                    ProjectEndDate = new DateTime(2024, 7, 3),
+                    ProjectStateId = 1,
+                    UserProjects = new List<UserProject>(), // Assuming some default values or method to generate
+                    ProjectTasks = new List<ProjectTask>() // Assuming some default values or method to generate
+                },
+                new Project
+                {
+                    Id = 2,
+                    Name = "Second Project",
+                    Description = "Second Description",
+                    IsDeleted = false,
+                    PhotoPath = $"~/Content/Images/Default/defaultImage.jpg",
+                    ProjectStartDate = new DateTime(2024, 5, 2),
+                    ProjectEndDate = new DateTime(2024, 8, 12),
+                    ProjectStateId = 2,
+                    UserProjects = new List<UserProject>(),
+                    ProjectTasks = new List<ProjectTask>()
+                },
+                new Project
+                {
+                    Id = 3,
+                    Name = "Third Project",
+                    Description = "Third Description",
+                    IsDeleted = false,
+                    PhotoPath = $"~/Content/Images/Default/defaultImage.jpg",
+                    ProjectStartDate = new DateTime(2024, 7, 1),
+                    ProjectEndDate = new DateTime(2024, 9, 12),
+                    ProjectStateId = 1,
+                    UserProjects = new List<UserProject>(),
+                    ProjectTasks = new List<ProjectTask>()
+                }
+            };
+
+            projects.ForEach(t => context.Projects.Add(t));
+            context.SaveChanges();
+        }
+
+        private void ProjectTasksSeed(AppDbContext context)
+        {
+            var tasks = new List<ProjectTask>()
+            {
+                new ProjectTask()
+                {
+                    Name = "Add project task seed",
+                    Description = "This is a task",
+                    TaskStartDate = new DateTime(2024, 8, 12),
+                    TaskEndDate = new DateTime(2024, 9, 12),
+                    PriorityId = 1, // Assuming there are 4 priority levels
+                    TaskTypeId = 1, // Assuming there are 4 task types
+                    TaskStateId = 1, // Assuming there are 4 task states
+                    ProjectId = 1, // Assuming there are 4 projects
+                    Files = new List<File>(),
+                    UserProjectTasks = new List<UserProjectTask>()
+                },
+            };
+
+            tasks.ForEach(t => context.ProjectTasks.Add(t));
             context.SaveChanges();
         }
     }
