@@ -25,6 +25,7 @@ namespace ProjectManager.Application.User.Queries
             var users = await _context.Users.ToListAsync(cancellationToken);
 
             var userDtos = new List<UserDto>();
+
             foreach (var user in users)
             {
                 var userDto = new UserDto

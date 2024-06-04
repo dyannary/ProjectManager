@@ -30,7 +30,7 @@ namespace ProjectManager.Application.UserManagement.Commands.DeleteUser
             try
             {
                 var userToDelete = await _context.Users.FirstOrDefaultAsync(p => p.Id.Equals(request.UserId));
-                //var userToDelete = await _context.Users.FindAsync(userId, cancellationToken);
+
                 if (userToDelete == null)
                 {
                     return false;
@@ -51,11 +51,8 @@ namespace ProjectManager.Application.UserManagement.Commands.DeleteUser
             {
                 Console.WriteLine($"An error occurred while deleting user with ID {request.UserId}: {ex.Message}");
 
-                // Rethrow the exception if necessary
-                throw;
+                return false;
             }
-
-            
         }
     }
 }

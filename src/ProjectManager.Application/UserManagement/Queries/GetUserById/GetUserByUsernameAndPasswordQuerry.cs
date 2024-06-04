@@ -27,7 +27,6 @@ namespace ProjectManager.Application.User.Queries
             _passwordEncryptionService = passwordEncryptionService;
         }
 
-
         public async Task<UserByUsernameAndPasswordDto> Handle(GetUserByUsernameAndPasswordQuerry request, CancellationToken cancellationToken)
         {
             try

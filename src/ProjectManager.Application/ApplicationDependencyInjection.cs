@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using ProjectManager.Application.Interfaces;
 using ProjectManager.Application.Services;
 
@@ -10,6 +11,7 @@ namespace ProjectManager.Application
         {
             builder.RegisterType<PasswordEncryptionService>().As<IPasswordEncryptionService>();
             builder.RegisterType<FileService>().As<IFileService>();
+
         }
     }
 }
