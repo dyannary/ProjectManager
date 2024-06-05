@@ -3,16 +3,21 @@
     const url = parameters.url;
     const modal = $('#modal');
 
-    if (id == undefined || url == undefined) {
-        alert('error')
+    if (!parameters.hasOwnProperty('data') || !parameters.hasOwnProperty('url')) {
+        alert('Error: Missing required parameters "id" and "url".');
         return;
     }
-    
+
+    const data = { id: id };
+    if (parameters.hasOwnProperty('additionalData')) {
+        Object.assign(data, parameters.additionalData); // Merge additional data if provided
+    }
+
     $.ajax(
         {
             type: 'GET',
             url: url,
-            data: { id: id },
+            data: data,
             success: function (response) {
                 $('.modal-dialog');
                 modal.find(".modal-content").html(response);
@@ -25,4 +30,12 @@
                 alert(response.responseText)
             }
         });
+};
+
+function openModalNoParam() {
+    const modal = $('#modal');
+
+   $('.modal-dialog');
+   modal.find(".modal-content").html(response);
+   modal.modal('show')
 };

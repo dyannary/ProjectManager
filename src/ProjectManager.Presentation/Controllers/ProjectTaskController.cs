@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.ProjectTask;
+using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.Projects.Queries;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace ProjectManager.Presentation.Controllers
         public async Task<ActionResult> Index(int? Id)
         {
 
-            var responseProjectList = await _mediator.Send(new GetProjectsForDropDowmQuerry());
+            var responseProjectList = await _mediator.Send(new GetProjectsForDropDownQuerry() { UserID = GetUserId() });
 
             if (!responseProjectList.Any()){
                 return HttpNotFound();
@@ -35,6 +36,7 @@ namespace ProjectManager.Presentation.Controllers
             var responseProject = await _mediator.Send(new GetProjectByIdForProjectTaskQuerry
             {
                 Id = ProjectId,
+                LoggedUserId = GetUserId()
             });
 
             var model = new ProjectTaskDto
@@ -51,7 +53,8 @@ namespace ProjectManager.Presentation.Controllers
         {
             var viewModel = await _mediator.Send(new GetProjectByIdForProjectTaskQuerry 
             {
-                Id = id
+                Id = id,
+                LoggedUserId = GetUserId()
             });
 
             return PartialView("_CardInfoPartial", viewModel);
@@ -62,6 +65,12 @@ namespace ProjectManager.Presentation.Controllers
             return RedirectToAction("Index", "Project");
         }
 
+        public int GetUserId()
+        {
+            var user = User;
+            int id = ClaimsExtensions.GetUserId(user);
+            return id;
+        }
 
     }
 }

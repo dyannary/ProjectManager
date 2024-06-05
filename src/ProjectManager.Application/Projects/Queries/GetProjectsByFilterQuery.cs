@@ -48,10 +48,10 @@ namespace ProjectManager.Application.Projects.Queries
             {
                 if (request.Owning == "myprojects") 
                 {
-                    querry = querry.Where(p => p.UserProjects.Any(up => up.UserProjectRole.Name == "ProjectCreator"));
+                    querry = querry.Where(p => p.UserProjects.Any(up => up.UserProjectRole.Name == "ProjectCreator" && up.UserId == request.UserID));
                 }
                 else 
-                    querry = querry.Where(p => p.UserProjects.Any(up => up.UserProjectRole.Name != "ProjectCreator"));
+                    querry = querry.Where(p => p.UserProjects.Any(up => up.UserProjectRole.Name != "ProjectCreator" && up.UserId == request.UserID));
             }
 
             if (request.Status != null && request.Status != "all")

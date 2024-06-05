@@ -2,6 +2,7 @@
 using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.interfaces;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +24,8 @@ namespace ProjectManager.Application.Projects.Queries
 
         public async Task<ProjectByIdDto> Handle(GetProjectByIdQuerry request, CancellationToken cancellationToken)
         {
-            var querry = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.Id);
+            var querry = await _context.Projects
+                .FirstOrDefaultAsync(p => p.Id == request.Id);
 
             var response = new ProjectByIdDto
             {
