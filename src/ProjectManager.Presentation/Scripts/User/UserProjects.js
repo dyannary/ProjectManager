@@ -54,3 +54,27 @@ function GetProjectCards(page) {
         }
     });
 }
+
+function GetCollaborators(page, projectId) {
+    var search = $('#searchProject').val() || '';
+    page = page || 1
+
+    $.ajax({
+        url: '../ProjectCollaborators/GetByFilters',
+        type: 'GET',
+        data: { projectId: projectId, search: search, page: page },
+        success: function (result) {
+            if (result !== null) {
+                $("#CollaboratorsTable").empty();
+                $("#CollaboratorsTable").html(result);
+            } else {
+                debugger;
+                alert('ERROR');
+            }
+        },
+        error: function () {
+            alert('ERROR X2')
+        }
+    });
+
+}
