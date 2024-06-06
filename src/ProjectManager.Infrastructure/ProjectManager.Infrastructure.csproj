@@ -76,6 +76,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSeeder\Seeds\ProjectsSeed.cs" />
+    <Compile Include="DataSeeder\Seeds\ProjectTasksSeed.cs" />
     <Compile Include="DataSeeder\Seeds\UsersSeed.cs" />
     <Compile Include="InfrastructureDependencyInjection.cs" />
     <Compile Include="Migrations\202405150855274_init.cs" />
@@ -89,6 +91,10 @@
     <Compile Include="Migrations\202405281338517_extend_project_description_size_limit.cs" />
     <Compile Include="Migrations\202405281338517_extend_project_description_size_limit.Designer.cs">
       <DependentUpon>202405281338517_extend_project_description_size_limit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406051323542_AddUserPhotoPath.cs" />
+    <Compile Include="Migrations\202406051323542_AddUserPhotoPath.Designer.cs">
+      <DependentUpon>202406051323542_AddUserPhotoPath.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\FileConfiguration.cs" />
@@ -133,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405281338517_extend_project_description_size_limit.resx">
       <DependentUpon>202405281338517_extend_project_description_size_limit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406051323542_AddUserPhotoPath.resx">
+      <DependentUpon>202406051323542_AddUserPhotoPath.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,15 +1,19 @@
-﻿using ProjectManager.Domain.Entities;
+﻿using ProjectManager.Application.DataTransferObjects.ProjectTask;
+using ProjectManager.Domain.Entities;
 using ProjectManager.Infrastructure.DataSeeder.Seeds;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
     public class DatabaseInitializer : DbMigrationsConfiguration<AppDbContext>
     {
-        public DatabaseInitializer() 
+        public DatabaseInitializer()
         {
             AutomaticMigrationDataLossAllowed = true;
             AutomaticMigrationsEnabled = true;
@@ -37,6 +41,12 @@ namespace ProjectManager.Infrastructure.Persistance
 
             if (!context.Priorities.Any())
                 CreatePriotities(context);
+
+            if (!context.Projects.Any())
+                CreateProjects(context);
+
+            if (!context.ProjectTasks.Any())
+                CreateProjectTasks(context);
 
             base.Seed(context);
         }
@@ -72,7 +82,7 @@ namespace ProjectManager.Infrastructure.Persistance
             Role adminRole = roles.Where(r => r.Name.Contains("admin")).First();
             Role userRole = roles.Where(r => r.Name.Contains("user")).First();
 
-            var users = UsersSeed.SeedUsers(adminRole, userRole);
+            var users = UsersSeed.Seed(adminRole, userRole);
 
             users.ForEach(user => context.Users.Add(user));
             context.SaveChanges();
@@ -131,6 +141,24 @@ namespace ProjectManager.Infrastructure.Persistance
             };
 
             priorities.ForEach(p => context.Priorities.Add(p));
+            context.SaveChanges();
+        }
+
+        private void CreateProjects(AppDbContext context)
+        {
+            var projects = ProjectsSeed.Seed();
+
+            projects.ForEach(p => context.Projects.Add(p));
+
+            context.SaveChanges();
+        }
+
+        private void CreateProjectTasks(AppDbContext context)
+        {
+            var tasks = ProjectTasksSeed.Seed();
+
+            tasks.ForEach(pt => context.ProjectTasks.Add(pt));
+
             context.SaveChanges();
         }
     }

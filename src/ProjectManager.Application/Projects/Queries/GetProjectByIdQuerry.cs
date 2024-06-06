@@ -42,5 +42,4 @@ namespace ProjectManager.Application.Projects.Queries
             return response;
         }
     }
-
 }

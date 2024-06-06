@@ -17,7 +17,7 @@ using System.Web.Mvc;
 
 namespace ProjectManager.Presentation.Controllers
 {
-    // [Authorize(Roles = "1")]
+    //[Authorize(Roles = "1")]
     public class AdminController : Controller
     {
         #region Private Fields

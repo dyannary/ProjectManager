@@ -1,9 +1,9 @@
-﻿@using ProjectManager.Application.DataTransferObjects.User
+﻿﻿@using ProjectManager.Application.DataTransferObjects.User
 @model UserByIdDto
 
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Update user</h5>
+        <h5 class="modal-title" id="staticBackdropLabel" ">Update user</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     @using (Ajax.BeginForm("UpdateUser", "Admin", new AjaxOptions
@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     @Html.LabelFor(model => model.RoleId, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 mb-2">
                         @Html.DropDownListFor(model => model.RoleId, (SelectList)ViewBag.UserRoles, "Select Role", new { @class = "form-select dropdown-toggle" })
@@ -59,9 +59,9 @@
                 </div>
 
                 <div class="form-check form-switch m-2">
-                    @Html.Label("");
+                    @Html.Label("")
                     @Html.CheckBoxFor(model => model.IsEnabled, new { @class = "form-check-input", @role = "switch", @id = "flexSwitchCheckChecked" })
-                    <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                    <label class="form-check-label" for="flexSwitchCheckChecked" id="switchLabel"></label>
                 </div>
 
             </div>

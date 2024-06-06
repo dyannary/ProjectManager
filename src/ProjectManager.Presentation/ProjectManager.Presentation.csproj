@@ -269,6 +269,7 @@
     <Content Include="Content\Images\App\background.jpg" />
     <Content Include="Content\Images\App\settings.png" />
     <Content Include="Content\Images\Default\defaultImage.jpg" />
+    <Content Include="Content\Images\Default\default_avatar.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -339,12 +340,14 @@
     <Content Include="Views\Admin\_AddUserModal.cshtml" />
     <Content Include="Views\ProjectTask\Index.cshtml" />
     <Content Include="Views\ProjectTask\_CardInfoPartial.cshtml" />
+    <Content Include="Views\ProjectTask\_ProjectTaskTable.cshtml" />
     <Content Include="Views\ProjectCollaborators\Index.cshtml" />
     <Content Include="Views\ProjectCollaborators\_AddCollaboratorModal.cshtml" />
     <Content Include="Views\ProjectCollaborators\_EditCollaboratorModal.cshtml" />
     <Content Include="Views\ProjectCollaborators\_RemoveCollaboratorModal.cshtml" />
     <Content Include="Views\ProjectCollaborators\_CollaboratorsTable.cshtml" />
     <Content Include="Views\ProjectCollaborators\_TransferProjectOwnershipModal.cshtml" />
+    <Content Include="Views\ProjectTask\_ProjectTasksTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -34,7 +34,7 @@
         }
 
             .sidenav a {
-                padding: 8px 8px 8px 12px;
+                padding: 8px 0px 0px 0px;
                 text-decoration: none;
                 font-size: 25px;
                 color: #818181;
@@ -97,14 +97,20 @@
             }
             else
             {
-                <li>
-                    <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
-                    <ul id="accountSubmenu" class="sub-menu" style="display: none;">
-                        <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    </ul>
-                </li>
+            <li>
+                <div style="text-align: center;">
+                    <div style="border-radius: 50%; overflow: hidden; margin-top: 5px; width: 50px; height: 50px;">
+                        <img class="avatar avatar-lg" src= '/Content/Images/Default/default_avatar.jpg' />
+                    </div>
+                </div>
+                <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
+
+                <ul id="accountSubmenu" class="sub-menu" style="display: none;">
+                    <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </li>
             }
         </ul>
 
@@ -122,6 +128,7 @@
             }
         </ul>
     </div>
+
 
     <div id="main">
         <span style="font-size:30px;cursor:pointer" id="openButton" onclick="openNav()">&#9776;</span>

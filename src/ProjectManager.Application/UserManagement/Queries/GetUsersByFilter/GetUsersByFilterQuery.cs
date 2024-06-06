@@ -33,6 +33,7 @@ namespace ProjectManager.Application.UserManagement.Queries
                 Id = x.Id, 
                 RoleId = x.RoleId,
                 UserName = x.UserName,
+                PhotoPath = x.PhotoPath,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 Email = x.Email,

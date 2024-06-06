@@ -56,6 +56,7 @@ namespace ProjectManager.Application.User.Commands.CreateUser
                 Password = model.Password,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
+                PhotoPath = "/Content/Images/Default/default_avatar.jpg",
                 Email = model.Email,
                 IsEnabled = true,
                 RoleId = command.Data.RoleId,

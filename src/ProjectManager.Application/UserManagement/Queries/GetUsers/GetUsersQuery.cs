@@ -37,6 +37,7 @@ namespace ProjectManager.Application.User.Queries
                     Email = user.Email,
                     CreatedDate = user.Created,
                     RoleId = user.RoleId,
+                    PhotoPath = user.PhotoPath,
                     IsEnabled = user.IsEnabled,
                 };
                 userDtos.Add(userDto);

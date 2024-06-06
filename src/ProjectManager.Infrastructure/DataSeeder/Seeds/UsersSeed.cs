@@ -21,7 +21,7 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                 return builder.ToString();
             }
         }
-        public static List<User> SeedUsers(Role adminRole, Role userRole)
+        public static List<User> Seed(Role adminRole, Role userRole)
         {
             return new List<User>()
             {
@@ -31,7 +31,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "user", LastName = "user", Email = "user@example.com",
                     Password = HashPassword("user"), UserName = "user",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -39,7 +40,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "admin", LastName = "admin", Email = "admin@example.com",
                     Password = HashPassword("admin"), UserName = "admin",
                     IsEnabled = true,
-                    Role = adminRole
+                    Role = adminRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -47,7 +49,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Chris", LastName = "Williams", Email = "chris.williams@example.com",
                     Password = HashPassword("ChrisWilliams456$"), UserName = "chriswilliams",
                     IsEnabled = true,
-                    Role = adminRole
+                    Role = adminRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -55,7 +58,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Ashley", LastName = "Jones", Email = "ashley.jones@example.com",
                     Password = HashPassword("AshleyJones789#"), UserName = "ashleyjones",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -63,7 +67,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "David", LastName = "Miller", Email = "david.miller@example.com",
                     Password = HashPassword("DavidMiller123!"), UserName = "davidmiller",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -71,14 +76,16 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Emma", LastName = "Anderson", Email = "emma.anderson@example.com",
                     Password = HashPassword("EmmaAnderson456@"), UserName = "emmaanderson",
                     IsEnabled = true,
-                    Role = adminRole
+                    Role = adminRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
                     Id = 6,
                     FirstName = "Matthew", LastName = "Taylor", Email = "matthew.taylor@example.com",
                     Password = HashPassword("MatthewTaylor789$"), UserName = "matthewtaylor",
-                    Role = adminRole
+                    Role = adminRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -86,7 +93,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Alex", LastName = "Brown", Email = "alex.brown@example.com",
                     Password = HashPassword("AlexBrown123!"), UserName = "alexbrown",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -94,7 +102,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Emily", LastName = "Johnson", Email = "emily.johnson@example.com",
                     Password = HashPassword("EmilyJohnson456#"), UserName = "emilyjohnson",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -102,7 +111,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Ryan", LastName = "Garcia", Email = "ryan.garcia@example.com",
                     Password = HashPassword("RyanGarcia789$"), UserName = "ryangarcia",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -110,7 +120,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Sophia", LastName = "Martinez", Email = "sophia.martinez@example.com",
                     Password = HashPassword("SophiaMartinez123#"), UserName = "sophiamartinez",
                     IsEnabled = true,
-                    Role = adminRole
+                    Role = adminRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -118,7 +129,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Jacob", LastName = "Hernandez", Email = "jacob.hernandez@example.com",
                     Password = HashPassword("JacobHernandez456!"), UserName = "jacobhernandez",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -126,7 +138,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Emma", LastName = "Smith", Email = "emma.smith@example.com",
                     Password = HashPassword("EmmaSmith123!"), UserName = "emmasmith",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -134,7 +147,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Liam", LastName = "Davis", Email = "liam.davis@example.com",
                     Password = HashPassword("LiamDavis456#"), UserName = "liamdavis",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -142,7 +156,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Olivia", LastName = "Wilson", Email = "olivia.wilson@example.com",
                     Password = HashPassword("OliviaWilson789$"), UserName = "oliviawilson",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -150,7 +165,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Noah", LastName = "Thomas", Email = "noah.thomas@example.com",
                     Password = HashPassword("NoahThomas123!"), UserName = "noahthomas",
                     IsEnabled = true,
-                    Role = adminRole
+                    Role = adminRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -158,7 +174,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Ava", LastName = "Martinez", Email = "ava.martinez@example.com",
                     Password = HashPassword("AvaMartinez456#"), UserName = "avamartinez",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -166,7 +183,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Mia", LastName = "Anderson", Email = "mia.anderson@example.com",
                     Password = HashPassword("MiaAnderson789$"), UserName = "miaanderson",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -174,7 +192,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "William", LastName = "Jackson", Email = "william.jackson@example.com",
                     Password = HashPassword("WilliamJackson123!"), UserName = "williamjackson",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -182,7 +201,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Sophia", LastName = "White", Email = "sophia.white@example.com",
                     Password = HashPassword("SophiaWhite456#"), UserName = "sophiawhite",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -190,7 +210,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "James", LastName = "Brown", Email = "james.brown@example.com",
                     Password = HashPassword("JamesBrown789$"), UserName = "jamesbrown",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -198,7 +219,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Oliver", LastName = "Garcia", Email = "oliver.garcia@example.com",
                     Password = HashPassword("OliverGarcia123!"), UserName = "olivergarcia",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -206,7 +228,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Charlotte", LastName = "Miller", Email = "charlotte.miller@example.com",
                     Password = HashPassword("CharlotteMiller456#"), UserName = "charlottemiller",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 }, 
                 new User
                 {
@@ -214,7 +237,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Ethan", LastName = "Taylor", Email = "ethan.taylor@example.com",
                     Password = HashPassword("EthanTaylor789$"), UserName = "ethantaylor",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -222,7 +246,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Amelia", LastName = "Thomas", Email = "amelia.thomas@example.com",
                     Password = HashPassword("AmeliaThomas123!"), UserName = "ameliathomas",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -230,7 +255,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Logan", LastName = "Hernandez", Email = "logan.hernandez@example.com",
                     Password = HashPassword("LoganHernandez456#"), UserName = "loganhernandez",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -238,7 +264,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Harper", LastName = "Young", Email = "harper.young@example.com",
                     Password = HashPassword("HarperYoung789$"), UserName = "harperyoung",
                     IsEnabled = true,
-                    Role = userRole
+                    Role = userRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 },
                 new User
                 {
@@ -246,7 +273,8 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     FirstName = "Mason", LastName = "Martin", Email = "mason.martin@example.com",
                     Password = HashPassword("MasonMartin123!"), UserName = "masonmartin",
                     IsEnabled = true,
-                    Role = adminRole
+                    Role = adminRole,
+                    PhotoPath = $"/Content/Images/Default/default_avatar.jpg"
                 }
             };
         }

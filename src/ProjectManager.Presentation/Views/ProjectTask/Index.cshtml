@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="card">
+<div class="card mb-3">
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
 
@@ -16,13 +16,22 @@
                 </div>
                 <div class="col-auto">
 
-                    <a href = "@Url.Action("Index", "Project")" class="btn btn-outline-dark">Projects</a>
+                    <a href="@Url.Action("Index", "Project")" class="btn btn-outline-dark">Projects</a>
                 </div>
             </div>
         </div>
     </div>
     @Html.Partial("_CardInfoPartial", Model.Project)
 </div>
+
+<div class="card">
+    <div class="card-header">
+        <div id="TasksTable">
+            @Html.Partial("_ProjectTasksTable", Model.ProjectTasks)
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <script>
@@ -33,9 +42,25 @@
                 type: 'GET',
                 data: { id: selectedProject },
                 success: function (result) {
-                    debugger;
                     $("#DetailCard").empty();
                     $("#DetailCard").html(result);
+
+                    refreshTable(selectedProject);
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+
+        function refreshTable(selectedProject) {
+            $.ajax({
+                url: '@Url.Action("RefreshTable", "ProjectTask")',
+                type: 'GET',
+                data: { id: selectedProject },
+                success: function (result) {
+                    $("#TasksTable").empty();
+                    $("#TasksTable").html(result);
                 },
                 error: function (xhr, status, error) {
                     alert('Error: ' + error);
