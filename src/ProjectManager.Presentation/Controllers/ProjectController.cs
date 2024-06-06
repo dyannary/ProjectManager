@@ -42,7 +42,7 @@ namespace ProjectManager.Presentation.Controllers
             ViewBag.CurrentPage = 1;
             ViewBag.MaxPage = response.MaxPage;
 
-            return View(response.Cards);
+            return View(response);
         }
 
         [HttpGet]
@@ -62,7 +62,7 @@ namespace ProjectManager.Presentation.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.MaxPage = response.MaxPage;
 
-            return PartialView("_ProjectCards", response.Cards);
+            return PartialView("_ProjectCards", response);
         }
 
         [HttpPost]

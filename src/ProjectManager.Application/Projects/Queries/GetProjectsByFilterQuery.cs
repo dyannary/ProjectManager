@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Application.Projects.Queries
 {
-    public class GetProjectsByFilterQuery : IRequest<ProjectFilterResponse>
+    public class GetProjectsByFilterQuery : IRequest<ProjectResponseDto>
     {
         public string Name { get; set; }
         public string Status { get; set; }
@@ -21,7 +21,7 @@ namespace ProjectManager.Application.Projects.Queries
         public int UserID { get; set; }
     }
 
-    public class GetProjectsByFilterHandler : IRequestHandler<GetProjectsByFilterQuery, ProjectFilterResponse>
+    public class GetProjectsByFilterHandler : IRequestHandler<GetProjectsByFilterQuery, ProjectResponseDto>
     {
         private readonly IAppDbContext _context;
         public GetProjectsByFilterHandler(IAppDbContext context)
@@ -29,7 +29,7 @@ namespace ProjectManager.Application.Projects.Queries
             _context = context;
         }
 
-        public async Task<ProjectFilterResponse> Handle(GetProjectsByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<ProjectResponseDto> Handle(GetProjectsByFilterQuery request, CancellationToken cancellationToken)
         {
             var querry = _context.Projects
             .Where(p => p.UserProjects.Any(up => up.UserId == request.UserID))
@@ -95,11 +95,13 @@ namespace ProjectManager.Application.Projects.Queries
                 Status = p.ProjectState.Name,
             }).ToList();
 
-            var response = new ProjectFilterResponse
+            var response = new ProjectResponseDto
             {
-                Cards = cardDtos,
+                Projects = cardDtos,
                 MaxPage = pageCount,
-                FromPage = fromPage
+                FromPage = fromPage,
+                CurrentPage = request.Page,
+                
             };
 
             return response;

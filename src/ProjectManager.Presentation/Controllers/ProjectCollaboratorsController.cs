@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Ajax.Utilities;
 using ProjectManager.Application.DataTransferObjects.ProjectCollaborator;
 using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.ProjectCollaborator.Commands;
@@ -29,19 +30,25 @@ namespace ProjectManager.Presentation.Controllers
             return id;
         }
 
-        public async Task<ActionResult> Index(int projectId)
+        public async Task<ActionResult> Index(int? projectId)
         {
+            int? loggedUserID = GetUserId();
+
+            if (projectId == null || loggedUserID == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
             var response = await _mediator.Send(new GetProjectCollaboratorsQuerry 
             {
-                ProjectId = projectId,
+                ProjectId = projectId.Value,
                 Page = 1, PageSize = 10,
-                LoggedUserId = GetUserId()
+                LoggedUserId = loggedUserID.Value
             });
 
             if (response == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             if (response.LoggedUserRole == "User")

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Net;
 
 namespace ProjectManager.Presentation.Controllers
 {
@@ -33,7 +34,7 @@ namespace ProjectManager.Presentation.Controllers
             var responseProjectList = await _mediator.Send(new GetProjectsForDropDownQuerry() { UserID = GetUserId() });
 
             if (!responseProjectList.Any()){
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             int ProjectId = responseProjectList.FirstOrDefault().Id;
@@ -46,6 +47,11 @@ namespace ProjectManager.Presentation.Controllers
                 Id = ProjectId,
                 LoggedUserId = GetUserId()
             });
+
+            if (responseProject == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
             var projectTask = await _mediator.Send(new GetTasksByProjectId()
             {
@@ -123,6 +129,11 @@ namespace ProjectManager.Presentation.Controllers
                 Id = id,
                 LoggedUserId = GetUserId()
             });
+
+            if (viewModel == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
             return PartialView("_CardInfoPartial", viewModel);
         }

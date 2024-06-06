@@ -473,7 +473,6 @@
     <Compile Include="DataTransferObjects\Projects\ProjectByFiltersDto.cs" />
     <Compile Include="DataTransferObjects\Projects\CardDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectByIdDto.cs" />
-    <Compile Include="DataTransferObjects\Projects\ProjectFilterResponse.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectToCreateDto.cs" />
     <Compile Include="Enums\FileTypeEnum.cs" />
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
@@ -494,6 +493,7 @@
     <Compile Include="Projects\Queries\GetProjectByIdQuerry.cs" />
     <Compile Include="ProjectCollaborator\Queries\GetProjectCollaboratorsQuerry.cs" />
     <Compile Include="Projects\Queries\GetProjectsByFilterQuery.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectResponseDto.cs" />
     <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommand.cs" />
     <Compile Include="ProjectTasks\Queries\GetTasksByProjectIdQuery.cs" />
     <Compile Include="ProjectTasks\Queries\GetTasksByFilterQuery.cs\GetTasksByFilterQuery.cs" />

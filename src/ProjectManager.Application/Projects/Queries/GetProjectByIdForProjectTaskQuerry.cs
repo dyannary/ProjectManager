@@ -32,6 +32,11 @@ namespace ProjectManager.Application.Projects.Queries
                 .Where(p => p.UserProjects.Any(up => up.UserId == request.LoggedUserId))
                 .FirstOrDefaultAsync(p => p.Id == request.Id);
 
+            if (querry == null || loggedUser == null || owner == null)
+            {
+                return null;
+            }
+
             var response = new ProjectByIdForProjectTaskDto
             {
                 Id = querry.Id,

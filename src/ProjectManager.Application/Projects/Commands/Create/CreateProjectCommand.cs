@@ -33,13 +33,18 @@ namespace ProjectManager.Application.Projects.Commands.Create
         {
 
             FileTypeEnum fileType = FileTypeEnum.Default;
+            string filePathResponse = _fileService.SaveFile(request.Project.File, fileType);
+
 
             if (request.Project.File != null)
             {
                 fileType = FileTypeEnum.Image;
+                filePathResponse = _fileService.SaveFile(request.Project.File, fileType);
             }
-
-            string filePathResponse = _fileService.SaveFile(request.Project.File, fileType);
+            else
+            {
+                filePathResponse = "/Content/Images/Default/defaultImage.jpg";
+            }
 
             var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == request.Project.ProjectStateID);
             var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserID);
