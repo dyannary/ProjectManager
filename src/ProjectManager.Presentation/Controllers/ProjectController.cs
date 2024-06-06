@@ -24,8 +24,7 @@ namespace ProjectManager.Presentation.Controllers
 
         public int GetUserId()
         {
-            var user = User;
-            int id = ClaimsExtensions.GetUserId(user);
+            int id = ClaimsExtensions.GetUserId(User);
             return id; 
         }
 

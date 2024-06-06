@@ -47,7 +47,6 @@ namespace ProjectManager.Application.User.Commands.UpdateUser
 
             toUpdate.IsEnabled = command.Data.IsEnabled;
 
-
             if (await _context.SaveAsync(cancellationToken) == 1)
                 return true;
             else 

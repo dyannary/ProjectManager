@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.ProjectTask;
+using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.Projects.Queries;
 using ProjectManager.Application.ProjectTasks.Queries;
@@ -29,7 +30,7 @@ namespace ProjectManager.Presentation.Controllers
         public async Task<ActionResult> Index(int? Id)
         {
 
-            var responseProjectList = await _mediator.Send(new GetProjectsForDropDowmQuerry());
+            var responseProjectList = await _mediator.Send(new GetProjectsForDropDownQuerry() { UserID = GetUserId() });
 
             if (!responseProjectList.Any()){
                 return HttpNotFound();
@@ -43,6 +44,7 @@ namespace ProjectManager.Presentation.Controllers
             var responseProject = await _mediator.Send(new GetProjectByIdForProjectTaskQuerry
             {
                 Id = ProjectId,
+                LoggedUserId = GetUserId()
             });
 
             var projectTask = await _mediator.Send(new GetTasksByProjectId()
@@ -54,7 +56,7 @@ namespace ProjectManager.Presentation.Controllers
             {
                 Project = responseProject,
                 ProjectsList = responseProjectList.ToList(),
-                ProjectTasks = projectTask.Where(task => task.Id == ProjectId).ToList()
+                ProjectTasks = projectTask.Where(task => task.ProjectName.ToLower() == responseProject.Name.ToLower()).ToList()
             };
 
             return View(model);
@@ -118,10 +120,22 @@ namespace ProjectManager.Presentation.Controllers
         {
             var viewModel = await _mediator.Send(new GetProjectByIdForProjectTaskQuerry 
             {
-                Id = id
+                Id = id,
+                LoggedUserId = GetUserId()
             });
 
             return PartialView("_CardInfoPartial", viewModel);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> RefreshTable(int id)
+        {
+            var viewModel = await _mediator.Send(new GetTasksByProjectId
+            {
+                Id = id
+            });
+
+            return PartialView("_ProjectTasksTable", viewModel);
         }
 
         public ActionResult GoBackToProjects()
@@ -129,6 +143,12 @@ namespace ProjectManager.Presentation.Controllers
             return RedirectToAction("Index", "Project");
         }
 
+        public int GetUserId()
+        {
+            var user = User;
+            int id = ClaimsExtensions.GetUserId(user);
+            return id;
+        }
 
     }
 }

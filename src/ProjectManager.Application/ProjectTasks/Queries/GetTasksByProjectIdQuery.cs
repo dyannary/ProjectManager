@@ -41,8 +41,8 @@ namespace ProjectManager.Application.ProjectTasks.Queries
                 ProjectTaskState = task.ProjectTaskState.Name,
                 ProjectName = project.Name,
                 Priority = task.Priority.Name,
-                AssignedTo = "Grisa"
-                //AssignedTo = $"{task.UserProjectTasks.FirstOrDefault().User.FirstName} {task.UserProjectTasks.FirstOrDefault().User.LastName}",
+                AssignedTo = task.UserProjectTasks.FirstOrDefault() != null ? $"{task.UserProjectTasks.FirstOrDefault().User.FirstName} {task.UserProjectTasks.FirstOrDefault().User.LastName}" : "Not Assigned",
+                PhotoPath = task.UserProjectTasks.FirstOrDefault().User.PhotoPath,
             }).ToList();
 
             return tasks;

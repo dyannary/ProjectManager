@@ -10,8 +10,10 @@ namespace ProjectManager.Application.DataTransferObjects.Projects
         public string Description { get; set; }
         public bool IsDeleted { get; set; }
         public string PhotoPath { get; set; }
-        public int ProjectStateID { get; set; }
+        public string ProjectState { get; set; }
         public DateTime ProjectEndDate { get; set; }
         public DateTime ProjectStartDate { get; set; }
+        public string LoggedUserRole { get; set; }
+        public string OwnerUserName { get; set; }
     }
 }

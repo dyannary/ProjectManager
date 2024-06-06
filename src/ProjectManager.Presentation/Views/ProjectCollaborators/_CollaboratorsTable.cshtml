@@ -1,0 +1,70 @@
+﻿@model ProjectManager.Application.DataTransferObjects.ProjectCollaborator.CollaboratorsResponseDto
+
+<table class="table table-bordered">
+    <thead style="background-color: #2f3248;">
+        <tr>
+            <th class="text-light">Username</th>
+            <th class="text-light">Role</th>
+            <th class="text-light">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var collaborator in Model.CollaboratorsDetails)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => collaborator.UserName)</td>
+                <td>@Html.DisplayFor(model => collaborator.CollaboratorProjectRole)</td>
+                <td>
+                    <div class="dropdown dropdown-top-right">
+                        <button class="dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button class="dropdown-item" id="modalConfirmButton"
+                                    onclick="openModal({ url: '/ProjectCollaborators/OpenEditModal', data: @Model.ProjectId, additionalData: { collaboratorUserName: '@collaborator.UserName' } })" data-toggle="ajax-modal" data-trigger="Modal">
+                                Edit
+                            </button>
+                            <button class="dropdown-item" id="modalConfirmButton"
+                                    onclick="openModal({ url: '/ProjectCollaborators/OpenRemoveModal', data: @Model.ProjectId, additionalData: { collaboratorUserName: '@collaborator.UserName' } })" data-toggle="ajax-modal" data-trigger="Modal">
+                                Remove
+                            </button>
+                            @if (Model.LoggedUserRole == "ProjectCreator")
+                            {
+                            <button class="dropdown-item" id="modalConfirmButton"
+                                    onclick="openModal({ url: '/ProjectCollaborators/OpenTransferProjectModal', data: @Model.ProjectId, additionalData: { collaboratorUserName: '@collaborator.UserName' } })" data-toggle="ajax-modal" data-trigger="Modal">
+                                Transfer
+                            </button>
+                            }
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation" class="d-flex justify-content-end">
+    <ul class="pagination">
+
+        @if (Model.CurrentPage - 1 > 0)
+        {
+            <li class="page-item"><a class="page-link btn" onclick="GetCollaborators(@(Model.CurrentPage - 1), @Model.ProjectId)">&laquo;</a></li>
+        }
+
+        @for (int i = Model.FromPage; i <= Model.MaxPage; i++)
+        {
+            if (Model.CurrentPage == i)
+            {
+                <li class="page-item active"><a class="page-link btn" id="CurrentPage" onclick="GetCollaborators(@i, @Model.ProjectId)">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link btn" onclick="GetCollaborators(@i, @Model.ProjectId)">@i</a></li>
+            }
+        }
+
+        @if (Model.MaxPage != Model.CurrentPage)
+        {
+            <li class="page-item"><a class="page-link btn" onclick="GetCollaborators(@(Model.CurrentPage + 1), @Model.ProjectId)">&raquo;</a></li>
+        }
+    </ul>
+</nav>

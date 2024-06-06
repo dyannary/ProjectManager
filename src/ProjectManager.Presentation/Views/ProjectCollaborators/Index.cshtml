@@ -1,0 +1,33 @@
+﻿@model ProjectManager.Application.DataTransferObjects.ProjectCollaborator.CollaboratorsResponseDto
+
+@{
+    ViewBag.Title = "UserManagement";
+}
+
+<div class="row justify-content-between">
+    <div class="col">
+        @if (Model.LoggedUserRole == "ProjectAdministrator" || Model.LoggedUserRole == "ProjectCreator")
+        {
+            <button class="btn btn-outline-dark mb-4" id="modalConfirmButton" onclick="openModal({url: '/ProjectCollaborators/OpenAddModal', data: @Model.ProjectId})" data-toggle="ajax-modal" data-trigger="Modal">
+                Add colaborator
+            </button>
+        }
+    </div>
+
+    <div class="col">
+        <div class="input-group">
+            @Html.TextBox("searchProject", null, new { @class = "form-control", placeholder = "Search collaborator" })
+            <button type="button" onclick="GetCollaborators(1, @Model.ProjectId)" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </div>
+</div>
+
+<div id="CollaboratorsTable">
+    @Html.Partial("_CollaboratorsTable", Model)
+</div>
+
+<div class="col">
+    <div class="d-flex flex-column align-items-center bg-light">
+        <h5 class="row text-center">Owner: @Model.ProjectCreatorName</h5>
+    </div>
+</div>

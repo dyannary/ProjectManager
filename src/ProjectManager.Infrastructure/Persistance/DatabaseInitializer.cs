@@ -1,10 +1,13 @@
-﻿using ProjectManager.Domain.Entities;
+﻿using ProjectManager.Application.DataTransferObjects.ProjectTask;
+using ProjectManager.Domain.Entities;
 using ProjectManager.Infrastructure.DataSeeder.Seeds;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
@@ -40,10 +43,10 @@ namespace ProjectManager.Infrastructure.Persistance
                 CreatePriotities(context);
 
             if (!context.Projects.Any())
-                ProjectSeed(context);
+                CreateProjects(context);
 
             if (!context.ProjectTasks.Any())
-                ProjectTasksSeed(context);  
+                CreateProjectTasks(context);
 
             base.Seed(context);
         }
@@ -79,7 +82,7 @@ namespace ProjectManager.Infrastructure.Persistance
             Role adminRole = roles.Where(r => r.Name.Contains("admin")).First();
             Role userRole = roles.Where(r => r.Name.Contains("user")).First();
 
-            var users = UsersSeed.SeedUsers(adminRole, userRole);
+            var users = UsersSeed.Seed(adminRole, userRole);
 
             users.ForEach(user => context.Users.Add(user));
             context.SaveChanges();
@@ -141,75 +144,21 @@ namespace ProjectManager.Infrastructure.Persistance
             context.SaveChanges();
         }
 
-        private void ProjectSeed(AppDbContext context)
+        private void CreateProjects(AppDbContext context)
         {
-            var projects = new List<Project>()
-            {
-                new Project
-                {
-                    Id = 1,
-                    Name = "First Project",
-                    Description = "First Description",
-                    IsDeleted = false,
-                    PhotoPath = $"~/Content/Images/Default/defaultImage.jpg",
-                    ProjectStartDate = new DateTime(2024, 6, 2),
-                    ProjectEndDate = new DateTime(2024, 7, 3),
-                    ProjectStateId = 1,
-                    UserProjects = new List<UserProject>(), // Assuming some default values or method to generate
-                    ProjectTasks = new List<ProjectTask>() // Assuming some default values or method to generate
-                },
-                new Project
-                {
-                    Id = 2,
-                    Name = "Second Project",
-                    Description = "Second Description",
-                    IsDeleted = false,
-                    PhotoPath = $"~/Content/Images/Default/defaultImage.jpg",
-                    ProjectStartDate = new DateTime(2024, 5, 2),
-                    ProjectEndDate = new DateTime(2024, 8, 12),
-                    ProjectStateId = 2,
-                    UserProjects = new List<UserProject>(),
-                    ProjectTasks = new List<ProjectTask>()
-                },
-                new Project
-                {
-                    Id = 3,
-                    Name = "Third Project",
-                    Description = "Third Description",
-                    IsDeleted = false,
-                    PhotoPath = $"~/Content/Images/Default/defaultImage.jpg",
-                    ProjectStartDate = new DateTime(2024, 7, 1),
-                    ProjectEndDate = new DateTime(2024, 9, 12),
-                    ProjectStateId = 1,
-                    UserProjects = new List<UserProject>(),
-                    ProjectTasks = new List<ProjectTask>()
-                }
-            };
+            var projects = ProjectsSeed.Seed();
 
-            projects.ForEach(t => context.Projects.Add(t));
+            projects.ForEach(p => context.Projects.Add(p));
+
             context.SaveChanges();
         }
 
-        private void ProjectTasksSeed(AppDbContext context)
+        private void CreateProjectTasks(AppDbContext context)
         {
-            var tasks = new List<ProjectTask>()
-            {
-                new ProjectTask()
-                {
-                    Name = "Add project task seed",
-                    Description = "This is a task",
-                    TaskStartDate = new DateTime(2024, 8, 12),
-                    TaskEndDate = new DateTime(2024, 9, 12),
-                    PriorityId = 1, // Assuming there are 4 priority levels
-                    TaskTypeId = 1, // Assuming there are 4 task types
-                    TaskStateId = 1, // Assuming there are 4 task states
-                    ProjectId = 1, // Assuming there are 4 projects
-                    Files = new List<File>(),
-                    UserProjectTasks = new List<UserProjectTask>()
-                },
-            };
+            var tasks = ProjectTasksSeed.Seed();
 
-            tasks.ForEach(t => context.ProjectTasks.Add(t));
+            tasks.ForEach(pt => context.ProjectTasks.Add(pt));
+
             context.SaveChanges();
         }
     }

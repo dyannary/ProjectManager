@@ -11,12 +11,10 @@ namespace ProjectManager.Domain.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public bool IsEnabled { get; set; }
-
+        public string PhotoPath { get; set; }
         public int RoleId { get; set; }
-
         public virtual Role Role { get; set; }
         public virtual ICollection<UserProject> UserProjects { get; set; }
-
         public virtual ICollection<UserProjectTask> UserProjectTasks { get; set; }
     }
 }

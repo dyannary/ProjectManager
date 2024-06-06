@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Application.Projects.Queries
 {
-    public class GetProjectsForDropDowmQuerry : IRequest<IEnumerable<ProjectForDropDownDto>>
+    public class GetProjectsForDropDownQuerry : IRequest<IEnumerable<ProjectForDropDownDto>>
     {
-
+        public int UserID { get; set; }
     }
 
-    public class GetProjectsForDropDownHandler : IRequestHandler<GetProjectsForDropDowmQuerry, IEnumerable<ProjectForDropDownDto>>
+    public class GetProjectsForDropDownHandler : IRequestHandler<GetProjectsForDropDownQuerry, IEnumerable<ProjectForDropDownDto>>
     {
         public readonly IAppDbContext _context;
         public GetProjectsForDropDownHandler(IAppDbContext context)
@@ -23,9 +23,11 @@ namespace ProjectManager.Application.Projects.Queries
             _context = context;
         }
 
-        public async Task<IEnumerable<ProjectForDropDownDto>> Handle(GetProjectsForDropDowmQuerry request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ProjectForDropDownDto>> Handle(GetProjectsForDropDownQuerry request, CancellationToken cancellationToken)
         {
-            var querry = await _context.Projects.ToListAsync();
+            var querry = await _context.Projects
+                .Where(p => p.UserProjects.Any(up => up.UserId == request.UserID))
+                .ToListAsync();
 
             var response = querry.Select(p => new ProjectForDropDownDto
             {

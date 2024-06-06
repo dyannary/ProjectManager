@@ -14,5 +14,6 @@ namespace ProjectManager.Application.DataTransferObjects.ProjectTask
         public string ProjectName { get; set; }
         public string Priority {  get; set; }
         public string AssignedTo {  get; set; }
+        public string PhotoPath {  get; set; }
     }
 }
