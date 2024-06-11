@@ -1,13 +1,15 @@
-﻿<div class="container">
+﻿@model ProjectManager.Application.DataTransferObjects.Projects.ProjectResponseDto
+
+<div class="container">
     <div class="row">
-        @foreach (var card in Model)
+        @foreach (var card in Model.Projects)
         {
             <div class="col-lg-4 col col-sm-12 mb-4">
                 <div class="card h-100">
                     <div class="row no-gutters">
                         <div class="col-md-5">
                             <div class="square-image-container">
-                                <img class="card-img ma square-image" src="@Url.Content(card.PhotoPath)" alt="Card image">
+                                <img class="card-img ma square-image img-thumbnail" src="@Url.Content(card.PhotoPath)" alt="Card image">
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -71,34 +73,29 @@
     }
 </style>
 
-
 <nav aria-label="Page navigation" class="d-flex justify-content-end">
     <ul class="pagination">
 
-        @if (ViewBag.MaxpPage - ViewBag.CurrentPage > 8)
+        @if (Model.CurrentPage - 1 > 0)
         {
-            ViewBag.MaxPage = 8;
+            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(Model.CurrentPage - 1))">&laquo;</a></li>
         }
 
-        @if (ViewBag.CurrentPage - 1 > 0)
+        @for (int i = Model.FromPage; i <= Model.MaxPage; i++)
         {
-            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(ViewBag.CurrentPage - 1))">Previous</a></li>
-        }
-
-        @for (int i = ViewBag.CurrentPage; i <= ViewBag.MaxPage; i++)
-        {
-            if (ViewBag.CurrentPage == i)
+            if (Model.CurrentPage == i)
             {
-                <li class="page-item"><a class="page-link btn btn-outline-info" id="CurrentPage" onclick="GetProjectCards(@i)">@i</a></li>
+                <li class="page-item active"><a class="page-link btn" id="CurrentPage" onclick="GetProjectCards(@i)">@i</a></li>
             }
             else
             {
                 <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@i)">@i</a></li>
             }
         }
-        @if (ViewBag.MaxPage != ViewBag.CurrentPage)
+
+        @if (Model.MaxPage != Model.CurrentPage)
         {
-            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(ViewBag.CurrentPage + 1))">Next</a></li>
+            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(Model.CurrentPage + 1))">&raquo;</a></li>
         }
     </ul>
 </nav>

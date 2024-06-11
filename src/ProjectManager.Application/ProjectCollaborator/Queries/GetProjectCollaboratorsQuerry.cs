@@ -31,6 +31,11 @@ namespace ProjectManager.Application.Projects.Queries
         public async Task<CollaboratorsResponseDto> Handle(GetProjectCollaboratorsQuerry request, CancellationToken cancellationToken)
         {
             var loggedUserForProjectRole = await _context.UserProjects.FirstOrDefaultAsync(up => up.UserId == request.LoggedUserId && up.ProjectId == request.ProjectId);
+            if (loggedUserForProjectRole == null)
+            {
+                return null;
+            }
+
             if (loggedUserForProjectRole.UserProjectRole.Name == "User")
                 return new CollaboratorsResponseDto
                 {

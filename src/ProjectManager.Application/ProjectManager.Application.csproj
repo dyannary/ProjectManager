@@ -46,14 +46,20 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentValidation.9.0.1\lib\net461\FluentValidation.dll</HintPath>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.AspNetCore, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentValidation.AspNetCore.8.1.0\lib\netstandard2.0\FluentValidation.AspNetCore.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.DependencyInjectionExtensions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentValidation.DependencyInjectionExtensions.9.0.1\lib\netstandard2.0\FluentValidation.DependencyInjectionExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.Mvc, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.Mvc5.8.6.1\lib\net45\FluentValidation.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.ValidatorAttribute.8.6.1\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>
     </Reference>
     <Reference Include="MediatR, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MediatR.5.0.1\lib\net45\MediatR.dll</HintPath>
@@ -422,6 +428,24 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -456,6 +480,7 @@
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorRecomandationDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorsResponseDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorsProjectRolesDto.cs" />
+    <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorToCreateDto.cs" />
     <Compile Include="DataTransferObjects\ProjectStates\ProjectStatesSelectListDto.cs" />
     <Compile Include="DataTransferObjects\Projects\RoleDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectByIdForProjectTaskDto.cs" />
@@ -473,13 +498,13 @@
     <Compile Include="DataTransferObjects\Projects\ProjectByFiltersDto.cs" />
     <Compile Include="DataTransferObjects\Projects\CardDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectByIdDto.cs" />
-    <Compile Include="DataTransferObjects\Projects\ProjectFilterResponse.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectToCreateDto.cs" />
     <Compile Include="Enums\FileTypeEnum.cs" />
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
+    <Compile Include="ProjectCollaborator\Commands\CreateProjectCollaboratorCommandValidator.cs" />
     <Compile Include="ProjectCollaborator\Commands\RemoveProjectCollaboratorCommand.cs" />
     <Compile Include="ProjectCollaborator\Commands\UpdateProjectOwnership.cs" />
     <Compile Include="ProjectCollaborator\Commands\UpdateProjectCollaboratorCommand.cs" />
@@ -488,12 +513,15 @@
     <Compile Include="ProjectStates\Queries\GetProjectStatesQuerry.cs" />
     <Compile Include="ProjectCollaborator\Commands\CreateProjectCollaboratorCommand.cs" />
     <Compile Include="Projects\Commands\Create\CreateProjectCommand.cs" />
+    <Compile Include="Projects\Commands\Create\CreateProjectCommandValidator.cs" />
     <Compile Include="Projects\Commands\Update\UpdateEnableProjectCommand.cs" />
     <Compile Include="Projects\Commands\Update\UpdateProjectCommand.cs" />
+    <Compile Include="Projects\Commands\Update\UpdateProjectCommandValidator.cs" />
     <Compile Include="Projects\Queries\GetProjectByIdForProjectTaskQuerry.cs" />
     <Compile Include="Projects\Queries\GetProjectByIdQuerry.cs" />
     <Compile Include="ProjectCollaborator\Queries\GetProjectCollaboratorsQuerry.cs" />
     <Compile Include="Projects\Queries\GetProjectsByFilterQuery.cs" />
+    <Compile Include="DataTransferObjects\Projects\ProjectResponseDto.cs" />
     <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommand.cs" />
     <Compile Include="ProjectTasks\Queries\GetTasksByProjectIdQuery.cs" />
     <Compile Include="ProjectTasks\Queries\GetTasksByFilterQuery.cs\GetTasksByFilterQuery.cs" />
@@ -506,7 +534,6 @@
     <Compile Include="Common\TableParameters\DataTableParameters.cs" />
     <Compile Include="Common\TableParameters\DataTableSearch.cs" />
     <Compile Include="UserManagement\Commands\AddUser\AddUserCommand.cs" />
-    <Compile Include="UserManagement\Commands\AddUser\AddUserCommandValidator.cs" />
     <Compile Include="UserManagement\Commands\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommandValidator.cs" />

@@ -13,13 +13,14 @@
         @using (Ajax.BeginForm("RemoveCollaborator", "ProjectCollaborators", new AjaxOptions
         {
             HttpMethod = "POST",
+            OnSuccess = "HandleCreateUpdateCollaborator"
         }, new { enctype = "multipart/form-data", id = "projectForm" }))
         {
 
             @Html.Hidden("projectId", Model.ProjectId)
             @Html.Hidden("collaboratorUserName", Model.CollaboratorUserName);
 
-            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" onclick="GetCollaborators(1, @Model.ProjectId)">Remove</button>
+            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Remove</button>
         }
     </div>
 </div>

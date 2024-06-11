@@ -62,9 +62,15 @@ namespace ProjectManager.Application.Projects.Commands.Update
 
             _context.Projects.AddOrUpdate(projectToUpdate);
 
-            if (await _context.SaveAsync(cancellationToken) == 1)
+            try
+            {
+                await _context.SaveAsync(cancellationToken);
                 return true;
-            else return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 

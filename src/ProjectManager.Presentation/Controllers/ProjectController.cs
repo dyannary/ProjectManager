@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.Projects.Commands.Create;
 using ProjectManager.Application.Projects.Commands.Update;
 using ProjectManager.Application.Projects.Queries;
 using ProjectManager.Application.ProjectStates.Queries;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -16,10 +18,14 @@ namespace ProjectManager.Presentation.Controllers
 
         private readonly IMediator _mediator;
         private readonly int DefaultPageSize = 12;
+        private readonly IValidator<ProjectToCreateDto> _createProjectValidator;
+        private readonly IValidator<ProjectByIdDto> _updateProjectValidator;
 
-        public ProjectController(IMediator mediator)
+        public ProjectController(IMediator mediator, IValidator<ProjectToCreateDto> createProjectValidator, IValidator<ProjectByIdDto> updateProjectValidator)
         {
             _mediator = mediator;
+            _createProjectValidator = createProjectValidator;
+            _updateProjectValidator = updateProjectValidator;
         }
 
         public int GetUserId()
@@ -36,13 +42,14 @@ namespace ProjectManager.Presentation.Controllers
                 Page = 1,
                 PageSize = DefaultPageSize,
                 UserID = GetUserId(),
-                IsDeleted = "activated"
+                IsDeleted = "activated",
+                maxDescriptionCh = 50
             });
 
             ViewBag.CurrentPage = 1;
             ViewBag.MaxPage = response.MaxPage;
 
-            return View(response.Cards);
+            return View(response);
         }
 
         [HttpGet]
@@ -56,18 +63,29 @@ namespace ProjectManager.Presentation.Controllers
                 IsDeleted = ProjectEnable,
                 Page = page,
                 PageSize = DefaultPageSize,
-                UserID = GetUserId()
+                UserID = GetUserId(),
+                maxDescriptionCh = 50
             });
 
             ViewBag.CurrentPage = page;
             ViewBag.MaxPage = response.MaxPage;
 
-            return PartialView("_ProjectCards", response.Cards);
+            return PartialView("_ProjectCards", response);
         }
 
         [HttpPost]
         public async Task<ActionResult> Create(ProjectToCreateDto projectDto)
         {
+            var validatorResponse = _createProjectValidator.Validate(projectDto);
+
+            if (!validatorResponse.IsValid)
+            {
+                var errors = validatorResponse.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json (new {success = false, errors});
+            }
+
             try
             {
                 var responseCreate = await _mediator.Send(new CreateProjectCommand
@@ -77,44 +95,47 @@ namespace ProjectManager.Presentation.Controllers
                 });
 
                 if (responseCreate)
-                {
-                    return Json(new { StatusCode = 201 });
-                }
+                    return Json(new { success = true });
                 else
-                {
-                    return Json(new { StatusCode = 500 });
-                }
+                    return Json(new { success = false });
 
-            } catch
+            }
+            catch
             {
-                return Json(new { StatusCode = 500 });
+                return Json(new { success = false });
             }
         }
 
         [HttpPost]
         public async Task<ActionResult> Update(ProjectByIdDto projectDto)
         {
+            var validatorResponse = _updateProjectValidator.Validate(projectDto);
+
+            if (!validatorResponse.IsValid)
+            {
+                var errors = validatorResponse.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, errors });
+            }
+
             try
             {
-                var responseUpdate = await _mediator.Send(new UpdateProjectCommand
-                    {
-                        Project = projectDto,
-                        UserID = GetUserId()
-                    });
+                var responseCreate = await _mediator.Send(new UpdateProjectCommand
+                {
+                    Project = projectDto,
+                    UserID = GetUserId()
+                });
 
-                if (responseUpdate)
-                {
-                    return Json(new { StatusCode = 201 });
-                }
+                if (responseCreate)
+                    return Json(new { success = true });
                 else
-                {
-                    return Json(new { StatusCode = 500 });
-                }
+                    return Json(new { success = false });
 
             }
             catch
             {
-                return Json(new { StatusCode = 500 });
+                return Json(new { success = false });
             }
         }
 
@@ -147,8 +168,31 @@ namespace ProjectManager.Presentation.Controllers
             var responseProjectStates = await _mediator.Send(new GetProjectStatesQuerry { });
 
             ViewBag.ProjectStates = new SelectList(responseProjectStates, "Id", "Name");
+
             return PartialView("_CreateProjectModal");
         }
+
+        [HttpGet]
+        public async Task<ActionResult> OpenCreateModalWithValidation(ProjectToCreateDto projectDto)
+        {
+
+            var validatorResponse = _createProjectValidator.Validate(projectDto);
+
+            if (!validatorResponse.IsValid)
+            {
+                foreach (var error in validatorResponse.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+            }
+
+            var responseProjectStates = await _mediator.Send(new GetProjectStatesQuerry { });
+
+            ViewBag.ProjectStates = new SelectList(responseProjectStates, "Id", "Name");
+
+            return PartialView("_CreateProjectModal");
+        }
+
         public ActionResult OpenDisableProjectModal(int id)
         {
             return PartialView("_ConfirmDisableModal", id);

@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.Owin.Security;
+using ProjectManager.Application.DataTransferObjects.User;
+using ProjectManager.Application.User.Commands.LoginUser;
 using ProjectManager.Application.User.Queries;
-using ProjectManager.Presentation.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,10 +17,12 @@ namespace ProjectManager.Presentation.Controllers
 
         private readonly IMediator _mediator;
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
+        private readonly IValidator<LoginUserDto> _loginValidator;
 
-        public AccountController(IMediator mediator)
+        public AccountController(IMediator mediator, IValidator<LoginUserDto> loginValidator)
         {
             _mediator = mediator;
+            _loginValidator = loginValidator;
         }
 
 
@@ -36,14 +40,23 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(LoginModel model)
+        public async Task<ActionResult> Login(LoginUserDto model)
         {
-            if (ModelState.IsValid)
+            var validatorResponse = _loginValidator.Validate(model);
+
+            if (!validatorResponse.IsValid)
+            {
+                foreach (var error in validatorResponse.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+            }
+            else
             {
 
                 var user = await _mediator.Send(new GetUserByUsernameAndPasswordQuerry
                 {
-                    UserName = model.Username,
+                    UserName = model.UserName,
                     Password = model.Password,
                 });
 
@@ -63,13 +76,13 @@ namespace ProjectManager.Presentation.Controllers
                     claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email, ClaimValueTypes.String));
                     claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider",
                         "OWIN Provider", ClaimValueTypes.String));
-                    claim.AddClaim(new Claim (ClaimsIdentity.DefaultRoleClaimType, user.Role, ClaimValueTypes.String));
+                    claim.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role, ClaimValueTypes.String));
 
                     authenticationManager.SignOut();
                     authenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
-                    }, claim);                    
+                    }, claim);
                     return RedirectToAction("Index", "Home");
                 }
             }
