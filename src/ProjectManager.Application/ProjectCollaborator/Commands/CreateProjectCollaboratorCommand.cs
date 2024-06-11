@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ProjectManager.Application.DataTransferObjects.ProjectCollaborator;
 using ProjectManager.Application.interfaces;
 using ProjectManager.Domain.Entities;
 using System.Data.Entity;
@@ -9,9 +10,7 @@ namespace ProjectManager.Application.Projects.Commands.Create
 {
     public class CreateProjectCollaboratorCommand : IRequest<bool>
     {
-        public int ProjectId { get; set; }
-        public string UserName { get; set; }
-        public int Role { get; set; }
+        public CollaboratorToCreateDto collaboratorToCreateDto { get; set; }
     }
 
     public class CreateProjectCollaboratorHandler : IRequestHandler<CreateProjectCollaboratorCommand, bool>
@@ -25,14 +24,14 @@ namespace ProjectManager.Application.Projects.Commands.Create
 
         public async Task<bool> Handle(CreateProjectCollaboratorCommand request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.collaboratorToCreateDto.UserName);
             if (user != null && user.Role.Name != "user")
             {
                 return false;
             }
 
-            var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.ProjectId);
-            var ProjectUserRole = await _context.UserProjectRole.FirstOrDefaultAsync(pur => pur.Id == request.Role);
+            var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.collaboratorToCreateDto.ProjectId);
+            var ProjectUserRole = await _context.UserProjectRole.FirstOrDefaultAsync(pur => pur.Id == request.collaboratorToCreateDto.RoleId);
 
             if (user != null && project != null && ProjectUserRole != null)
             {

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.interfaces;
 using System;
@@ -19,6 +20,7 @@ namespace ProjectManager.Application.Projects.Queries
         public int Page { get; set; }
         public int PageSize { get; set; }
         public int UserID { get; set; }
+        public int maxDescriptionCh { get; set; }
     }
 
     public class GetProjectsByFilterHandler : IRequestHandler<GetProjectsByFilterQuery, ProjectResponseDto>
@@ -88,8 +90,8 @@ namespace ProjectManager.Application.Projects.Queries
             var cardDtos = projects.Select(p => new CardDto
             {
                 Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
+                Name = p.Name.Length > 20 ? p.Name.Substring(0, 20) : p.Name,
+                Description = p.Description.Length > 50 ? p.Description.Substring(0, request.maxDescriptionCh) : p.Description,
                 PhotoPath = p.PhotoPath,
                 IsEnabled = p.IsDeleted,
                 Status = p.ProjectState.Name,
@@ -101,7 +103,6 @@ namespace ProjectManager.Application.Projects.Queries
                 MaxPage = pageCount,
                 FromPage = fromPage,
                 CurrentPage = request.Page,
-                
             };
 
             return response;

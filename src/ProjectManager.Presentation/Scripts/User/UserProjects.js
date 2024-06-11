@@ -15,15 +15,22 @@
     });
 }
 
-function handleSuccesUpdateProject(result) {
-    if (result !== null) {
-        $("#ProjectCards").empty();
-        $("#ProjectCards").html(result);
-    } else {
-        alert("A problem occured!");
-    }
-}
+function handleCreateUpdateProject(response) {
+    debugger;
 
+    if (response.success) {
+        $('#modal').modal('hide');
+        GetProjectCards(1);
+    } else {
+        $('span[data-valmsg-for]').text('');
+
+        for (var key in response.errors) {
+            var messages = response.errors[key];
+            var errorElement = $('span[data-valmsg-for="' + key + '"]');
+            errorElement.text(messages);
+        }
+    }  
+}
 function GetProjectCards(page) {
     page = page || 1
     var formData = {
@@ -35,7 +42,6 @@ function GetProjectCards(page) {
         SortOrd: $('#SortOrd').val() || '',
         page: page
     };
-    debugger;
     $.ajax({
         url: '../Project/GetByFilters',
         type: 'GET',
@@ -45,12 +51,11 @@ function GetProjectCards(page) {
                 $("#ProjectCards").empty();
                 $("#ProjectCards").html(result);
             } else {
-                debugger;
                 alert('ERROR');
             }
         },
         error: function () {
-            alert('ERROR X2')
+            alert("Internal error");
         }
     });
 }
@@ -59,6 +64,7 @@ function GetCollaborators(page, projectId) {
     var search = $('#searchProject').val() || '';
     page = page || 1
 
+    debugger;
     $.ajax({
         url: '../ProjectCollaborators/GetByFilters',
         type: 'GET',
@@ -68,7 +74,6 @@ function GetCollaborators(page, projectId) {
                 $("#CollaboratorsTable").empty();
                 $("#CollaboratorsTable").html(result);
             } else {
-                debugger;
                 alert('ERROR');
             }
         },
@@ -77,4 +82,20 @@ function GetCollaborators(page, projectId) {
         }
     });
 
+}
+
+function HandleCreateUpdateCollaborator(response) {
+    debugger;
+    if (response.success) {
+        $('#modal').modal('hide');
+        GetCollaborators(1, response.projectId);
+    } else {
+        $('span[data-valmsg-for]').text('');
+
+        for (var key in response.errors) {
+            var messages = response.errors[key];
+            var errorElement = $('span[data-valmsg-for="' + key + '"]');
+            errorElement.text(messages);
+        }
+    }
 }

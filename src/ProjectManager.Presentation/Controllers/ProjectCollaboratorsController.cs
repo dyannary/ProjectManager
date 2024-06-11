@@ -1,12 +1,15 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.Ajax.Utilities;
 using ProjectManager.Application.DataTransferObjects.ProjectCollaborator;
+using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.ProjectCollaborator.Commands;
 using ProjectManager.Application.ProjectCollaborator.Queries;
 using ProjectManager.Application.Projects.Commands.Create;
 using ProjectManager.Application.Projects.Commands.Update;
 using ProjectManager.Application.Projects.Queries;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -18,10 +21,12 @@ namespace ProjectManager.Presentation.Controllers
     {
 
         private readonly IMediator _mediator;
+        private readonly IValidator<CollaboratorToCreateDto> _collaboratorToCreateValidaotr;
 
-        public ProjectCollaboratorsController(IMediator mediator)
+        public ProjectCollaboratorsController(IMediator mediator, IValidator<CollaboratorToCreateDto> collaboratorToCreateValidaotr)
         {
             _mediator = mediator;
+            _collaboratorToCreateValidaotr = collaboratorToCreateValidaotr;
         }
 
         public int GetUserId()
@@ -98,39 +103,83 @@ namespace ProjectManager.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddCollaborator(string collaboratorUserName, int collaboratorProjectRole, int projectId)
+        public async Task<ActionResult> AddCollaborator(CollaboratorToCreateDto collaboratorToCreateDto)
         {
+            
+            var validatorResponse = _collaboratorToCreateValidaotr.Validate(collaboratorToCreateDto);
+            var projectId = collaboratorToCreateDto.ProjectId;
+            if (!validatorResponse.IsValid)
+            {
+                var errors = validatorResponse.Errors
+                .GroupBy(x => x.PropertyName)
+                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, projectId, errors });
+            }
 
-            var response = await _mediator.Send(new CreateProjectCollaboratorCommand 
-            { 
-                UserName = collaboratorUserName,
-                Role = collaboratorProjectRole,
-                ProjectId = projectId
-            });
-            return View();
+            try
+            {
+                var response = await _mediator.Send(new CreateProjectCollaboratorCommand
+                {
+                    collaboratorToCreateDto = collaboratorToCreateDto,
+                });
+
+                if (response)
+                    return Json(new { success = true, projectId });
+                else
+                    return Json(new { success = false, projectId });
+
+            }
+            catch
+            {
+                return Json(new { success = false, projectId });
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> EditCollaborator(string collaboratorUserName, int collaboratorProjectRole, int projectId)
         {
+            try
+            {
             var response = await _mediator.Send(new UpdateProjectCollaboratorCommand 
             { 
                 UserName = collaboratorUserName,
                 ProjectId = projectId,
                 Role = collaboratorProjectRole
             });
-            return View();
+
+                if (response)
+                    return Json(new { success = true, projectId });
+                else
+                    return Json(new { success = false, projectId });
+
+            }
+            catch
+            {
+                return Json(new { success = false, projectId });
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> RemoveCollaborator(string collaboratorUserName, int projectId)
         {
-            var response = await _mediator.Send(new RemoveProjectCollaboratorCommand 
+            try
             {
-                CollaboratorUserName = collaboratorUserName,
-                ProjectId = projectId
-            });
-            return View();
+                var response = await _mediator.Send(new RemoveProjectCollaboratorCommand
+                {
+                    CollaboratorUserName = collaboratorUserName,
+                    ProjectId = projectId
+                });
+
+                if (response)
+                    return Json(new { success = true, projectId });
+                else
+                    return Json(new { success = false, projectId });
+
+            }
+            catch
+            {
+                return Json(new { success = false, projectId });
+            }
         }
 
         [HttpPost]
@@ -147,13 +196,13 @@ namespace ProjectManager.Presentation.Controllers
 
 
         #region Modals
-        public async Task<ActionResult> OpenAddModal(int id, string collaboratorUserName)
+        public async Task<ActionResult> OpenAddModal(int id)
         {
             var projectUserRoles = await _mediator.Send(new GetProjectUserRolesQuerry { });
 
-
             ViewBag.ProjectUserRoles = new SelectList(projectUserRoles, "Id", "Name");
-            return PartialView("_AddCollaboratorModal", id);
+            ViewBag.ProjectId = id;
+            return PartialView("_AddCollaboratorModal");
         }
 
         public async Task<ActionResult> OpenEditModal(int id, string collaboratorUserName)

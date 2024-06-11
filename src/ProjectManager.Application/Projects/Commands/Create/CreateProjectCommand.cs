@@ -72,10 +72,15 @@ namespace ProjectManager.Application.Projects.Commands.Create
 
             _context.Projects.Add(projectToCreate);
             _context.UserProjects.AddOrUpdate(userProject);
-
-            if (await _context.SaveAsync(cancellationToken) == 1)
+            try
+            {
+                await _context.SaveAsync(cancellationToken);
                 return true;
-            else return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 

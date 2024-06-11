@@ -1,4 +1,4 @@
-﻿@model ProjectManager.Presentation.Models.LoginModel
+﻿@model ProjectManager.Application.DataTransferObjects.User.LoginUserDto
 
 @{
     ViewBag.Title = "Login";
@@ -43,14 +43,14 @@
                 @Html.AntiForgeryToken();
 
             <div class="form-group align-content-center">
-                @Html.LabelFor(u => u.Username)
-                @Html.TextBoxFor(u => u.Username, new { @class = "form-control" })
-                @Html.ValidationMessageFor(u => u.Username)
+                @Html.LabelFor(u => u.UserName)
+                @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(u => u.UserName, null, new { @class = "text-danger" })
             </div>
                 <div class="form-group mt-2 align-content-center">
                     @Html.LabelFor(u => u.Password)
                     @Html.TextBoxFor(u => u.Password, new {@class = "form-control", type = "password"})
-                    @Html.ValidationMessageFor(u => u.Password)
+                    @Html.ValidationMessageFor(u => u.Password, null, new {@class = "text-danger"})
                 </div>
 
                 <div class="justify-content-center d-flex">

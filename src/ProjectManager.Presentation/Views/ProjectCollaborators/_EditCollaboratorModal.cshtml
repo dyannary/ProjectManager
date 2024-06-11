@@ -8,6 +8,7 @@
     @using (Ajax.BeginForm("EditCollaborator", "ProjectCollaborators", new AjaxOptions
     {
         HttpMethod = "POST",
+        OnSuccess = "HandleCreateUpdateCollaborator"
     }, new { enctype = "multipart/form-data", id = "projectForm" }))
     {
         <div class="modal-body">
@@ -15,14 +16,22 @@
             <div class="bg-light col mb-2 d-flex justify-content-between align-items-center">
                 <div class="col d-md-flex">
                     @Html.Hidden("projectId", Model.ProjectId)
-                    @Html.Hidden("collaboratorUserName", Model.CollaboratorUserName);
-                    @Html.DropDownList("collaboratorProjectRole", (SelectList)ViewBag.ProjectUserRoles, new { @class = "form-select dropdown-toggle" })
+                    @Html.Hidden("collaboratorUserName", Model.CollaboratorUserName) 
+                    <div class="form-group row align-items-center">
+                        <div class="col-md-5">
+                            @Html.Label("collaboratorProjectRole", "New role:", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.DropDownList("collaboratorProjectRole", (SelectList)ViewBag.ProjectUserRoles, new { @class = "form-select dropdown-toggle" })
+                            @Html.ValidationMessage("collaboratorProjectRole", "", new { @class = "text-danger", data_valmsg_for = "RoleId" })
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-success" data-bs-dismiss="modal" onclick="GetCollaborators(1, @Model.ProjectId)">Edit</button>
+            <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Edit</button>
         </div>
     }
 </div>
