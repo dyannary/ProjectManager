@@ -14,8 +14,10 @@ namespace ProjectManager.Application.ProjectTasks.Queries.GetTasksByFilterQuery.
     public class GetTasksByFilterQuery : IRequest<IEnumerable<TaskTableDto>>
     {
         public DataTableParameters Parameters { get; set; }
-        public GetTasksByFilterQuery(DataTableParameters parameters)
+        public int ProjectId { get; set; }
+        public GetTasksByFilterQuery(int projectId, DataTableParameters parameters)
         {
+            ProjectId = projectId;
             Parameters = parameters;
         }
     }
@@ -30,14 +32,22 @@ namespace ProjectManager.Application.ProjectTasks.Queries.GetTasksByFilterQuery.
 
         public async Task<IEnumerable<TaskTableDto>> Handle(GetTasksByFilterQuery request, CancellationToken cancellationToken)
         {
+
             var tasks = await _context.ProjectTasks
+                .Include(u => u.UserProjectTasks)
+                .Where(u => u.ProjectId == request.ProjectId)
                 .Select(pt => new TaskTableDto
                 {
                     Id = pt.Id,
+                    Created = pt.Created,
                     Name = pt.Name,
-                    AssignedTo = $"{pt.UserProjectTasks.FirstOrDefault().User.FirstName} {pt.UserProjectTasks.FirstOrDefault().User.LastName}",
-                    TaskState = pt.ProjectTaskState.Name,
-                    StartDate = pt.TaskStartDate,
+                    AssignedTo = pt.UserProjectTasks.FirstOrDefault().User.UserName,
+                   // AssignedTo = pt.UserProjectTasks.FirstOrDefault() != null ? $"{pt.UserProjectTasks.FirstOrDefault().User.FirstName} {pt.UserProjectTasks.FirstOrDefault().User.LastName}" : "Not Assigned",
+                    ProjectTaskType = pt.ProjectTaskType.Name,
+                    ProjectTaskState = pt.ProjectTaskState.Name,
+
+                    Priority = pt.Priority.Name,
+                    PhotoPath = pt.UserProjectTasks.FirstOrDefault().User.PhotoPath,
                 })
                 .Search(request.Parameters)
                 .OrderBy(request.Parameters)

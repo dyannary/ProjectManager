@@ -3,6 +3,7 @@ using ProjectManager.Application.Common.Extensions;
 using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.interfaces;
 using ProjectManager.Application.TableParameters;
+using ProjectManager.Domain.Entities;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;

@@ -1,7 +1,4 @@
-﻿using ProjectManager.Domain.Entities;
-using System.Collections.Generic;
-
-namespace ProjectManager.Application.DataTransferObjects.User
+﻿namespace ProjectManager.Application.DataTransferObjects.User
 {
     public class AddUserDto
     {

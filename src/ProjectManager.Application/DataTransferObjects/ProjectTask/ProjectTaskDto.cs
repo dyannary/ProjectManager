@@ -7,7 +7,6 @@ namespace ProjectManager.Application.DataTransferObjects.ProjectTask
     {
         public ProjectByIdForProjectTaskDto Project { get; set; }  
         public List<ProjectForDropDownDto> ProjectsList { get; set; }
-        public List<ProjectTaskById> ProjectTasks { get; set; }
-        // The list of tasks
+        public ProjectTaskList ProjectTaskList { get; set; }
     }
 }

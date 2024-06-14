@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.User;
-using ProjectManager.Application.ProjectStates.Queries;
 using ProjectManager.Application.TableParameters;
 using ProjectManager.Application.User.Commands.CreateUser;
 using ProjectManager.Application.User.Commands.UpdateUser;
@@ -12,7 +11,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace ProjectManager.Presentation.Controllers

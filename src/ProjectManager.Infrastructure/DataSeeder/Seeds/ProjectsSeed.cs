@@ -21,7 +21,7 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     ProjectEndDate = new DateTime(2024, 7, 3),
                     ProjectStateId = 1,
                     UserProjects = new List<UserProject>(),
-                    ProjectTasks = new List<ProjectTask>() 
+                    ProjectTasks = new List<ProjectTask>()
                 },
                 new Project
                 {
