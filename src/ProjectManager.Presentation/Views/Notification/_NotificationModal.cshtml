@@ -1,0 +1,31 @@
+﻿@using ProjectManager.Application.DataTransferObjects.NotificationDots;
+@model IEnumerable<NotificationListDto>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Notifications</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="m-2 border-0 d-flex justify-content-between align-items-center">
+                @Html.DropDownList("NotificationType", new List<SelectListItem>
+                 {
+                   new SelectListItem {Text = "All", Value = "all" },
+                   new SelectListItem {Text = "For Project", Value = "Project"},
+                   new SelectListItem {Text = "For Task", Value = "Task"},
+                   new SelectListItem {Text = "For User management", Value = "collaborationprojects"},
+                   new SelectListItem {Text = "For Others", Value = "User Management"},
+                 }, new { @class = "form-select m-2", onchange = "GetNotification()" })
+
+
+                <button class="btn btn-outline-danger">Remove all</button>
+    </div>
+
+    <div id="NotificationList">
+        @Html.Partial("_NotificationList", Model);
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+    </div>
+</div>

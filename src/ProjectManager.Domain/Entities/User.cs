@@ -1,4 +1,5 @@
 ﻿using ProjectManager.Domain.Common;
+using ProjectManager.Domain.Entities;
 using System.Collections.Generic;
 
 namespace ProjectManager.Domain.Entities
@@ -16,5 +17,8 @@ namespace ProjectManager.Domain.Entities
         public virtual Role Role { get; set; }
         public virtual ICollection<UserProject> UserProjects { get; set; }
         public virtual ICollection<UserProjectTask> UserProjectTasks { get; set; }
+
+        public virtual ICollection<NotificationEntity> Notifications { get; set; }
+
     }
 }

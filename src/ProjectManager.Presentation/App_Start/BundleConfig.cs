@@ -1,4 +1,5 @@
-﻿using ProjectManager.Infrastructure.Persistance;
+﻿using MediatR;
+using ProjectManager.Infrastructure.Persistance;
 using System.Web;
 using System.Web.Optimization;
 
@@ -56,9 +57,12 @@ namespace ProjectManager.Presentation
 
             bundles.Add(new Bundle("~/bundles/UserProjects").Include(
                     "~/Scripts/User/UserProjects.js"));
-
+            
             bundles.Add(new Bundle("~/bundles/Admin").Include(
                     "~/Scripts/Admin/UserManagement.js"));
+
+            bundles.Add(new Bundle("~/bundles/Notification").Include(
+                    "~/Scripts/User/Notification.js"));
 
 
             //bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/toastr.js"));

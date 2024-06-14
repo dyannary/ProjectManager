@@ -237,6 +237,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="App_Start\DependencyConfig.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProjectCollaboratorsController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectTaskController.cs" />
@@ -264,6 +265,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Images\App\background.jpg" />
+    <Content Include="Content\Images\App\remove.png" />
     <Content Include="Content\Images\App\settings.png" />
     <Content Include="Content\Images\Default\defaultImage.jpg" />
     <Content Include="Content\Images\Default\default_avatar.jpg" />
@@ -306,6 +308,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Layout\LayoutScripts.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\User\Notification.js" />
     <Content Include="Scripts\User\OpenModal.js" />
     <Content Include="Scripts\User\UserProjects.js" />
     <Content Include="Web.config" />
@@ -343,6 +346,9 @@
     <Content Include="Views\ProjectCollaborators\_CollaboratorsTable.cshtml" />
     <Content Include="Views\ProjectCollaborators\_TransferProjectOwnershipModal.cshtml" />
     <Content Include="Views\ProjectTask\_ProjectTasksTable.cshtml" />
+    <Content Include="Views\Notification\_NotificationModal.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Notification\_NotificationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

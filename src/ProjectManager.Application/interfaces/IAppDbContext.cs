@@ -20,6 +20,8 @@ namespace ProjectManager.Application.interfaces
         DbSet<Priority> Priorities { get; set; }
         DbSet<FileType> FileTypes { get; set; }
         DbSet<File> Files { get; set; }
+        DbSet<NotificationEntity> Notifications { get; set; }
+        DbSet<NotificationType> NotificationTypes { get; set; }
 
         void Save();
         Task<int> SaveAsync(CancellationToken cancellationToken);

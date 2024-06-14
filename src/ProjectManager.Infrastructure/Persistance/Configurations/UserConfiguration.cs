@@ -30,6 +30,10 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
             HasMany(u => u.UserProjectTasks)
                 .WithRequired(upt => upt.User)
                 .HasForeignKey(upt => upt.UserId);
+
+            HasMany(u => u.Notifications)
+                .WithRequired(u => u.User)
+                .HasForeignKey(u => u.UserId);
         }
     }
 }

@@ -476,6 +476,8 @@
   <ItemGroup>
     <Compile Include="ApplicationDependencyInjection.cs" />
     <Compile Include="Common\Extensions\DataTableExtensions.cs" />
+    <Compile Include="DataTransferObjects\NotificationDtos\NotificationListDto.cs" />
+    <Compile Include="DataTransferObjects\NotificationDtos\NotificationResponseDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorModalDataDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorRecomandationDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorsResponseDto.cs" />
@@ -504,6 +506,10 @@
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
+    <Compile Include="Notifications\Commands\CreateNotificationCommand.cs" />
+    <Compile Include="Notifications\Commands\DeleteMultipleNotificationCommand.cs" />
+    <Compile Include="Notifications\Commands\DeleteSingleNotificationCommand.cs" />
+    <Compile Include="Notifications\Queries\GetNotificationListQuerry.cs" />
     <Compile Include="ProjectCollaborator\Commands\CreateProjectCollaboratorCommandValidator.cs" />
     <Compile Include="ProjectCollaborator\Commands\RemoveProjectCollaboratorCommand.cs" />
     <Compile Include="ProjectCollaborator\Commands\UpdateProjectOwnership.cs" />
@@ -560,6 +566,7 @@
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
