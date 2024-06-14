@@ -25,9 +25,9 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     {
                         new UserProjectTask()
                         {
-                            UserId = 4, // Assuming the user id
-                            User = null, // You can set this to null as it will be overwritten by the context later
-                            ProjectTaskId = 1 // Assuming the project task id
+                            UserId = 1, 
+                            User = null,
+                            ProjectTaskId = 1 
                         }
                     }
                 },
@@ -86,7 +86,7 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     {
                         new UserProjectTask()
                         {
-                            UserId = 4, // Assuming the user id
+                            UserId = 1, // Assuming the user id
                             ProjectTaskId = 1 // Assuming the project task id
                         }
                     }
@@ -126,7 +126,7 @@ namespace ProjectManager.Infrastructure.DataSeeder.Seeds
                     {
                         new UserProjectTask()
                         {
-                            UserId = 4, // Assuming the user id
+                            UserId = 1, // Assuming the user id
                             ProjectTaskId = 1 // Assuming the project task id
                         }
                     }

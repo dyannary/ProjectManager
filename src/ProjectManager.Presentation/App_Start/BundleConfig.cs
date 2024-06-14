@@ -28,13 +28,13 @@ namespace ProjectManager.Presentation
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/lib/jquery-datatables").Include(
-             "~/lib/jquery-datatables/css/jquery.dataTables.css"
-            //"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.css"
+             "~/lib/jquery-datatables/css/jquery.dataTables.css",
+            "~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.css"
             ));
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
-            "~/lib/jquery-datatables/js/jquery.dataTables.js"
-            //"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.js",
-            //"~/lib/jquery-contextmenu/dist/jquery.ui.position.min.js"
+            "~/lib/jquery-datatables/js/jquery.dataTables.js",
+            "~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.js",
+            "~/lib/jquery-contextmenu/dist/jquery.ui.position.min.js"
             ));
 
             //bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
@@ -59,6 +59,9 @@ namespace ProjectManager.Presentation
 
             bundles.Add(new Bundle("~/bundles/Admin").Include(
                     "~/Scripts/Admin/UserManagement.js"));
+
+            bundles.Add(new Bundle("~/bundles/ProjectTask").Include(
+                    "~/Scripts/ProjectTask/UserProject.js"));
 
 
             //bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/toastr.js"));

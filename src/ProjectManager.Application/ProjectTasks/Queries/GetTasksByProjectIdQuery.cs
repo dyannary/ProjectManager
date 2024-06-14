@@ -37,12 +37,11 @@ namespace ProjectManager.Application.ProjectTasks.Queries
                 Description = task.Description,
                 TaskStartDate = task.TaskStartDate,
                 TaskEndDate = task.TaskEndDate,
-                ProjectTaskType = task.ProjectTaskType.Name,
-                ProjectTaskState = task.ProjectTaskState.Name,
-                ProjectName = project.Name,
-                Priority = task.Priority.Name,
-                AssignedTo = task.UserProjectTasks.FirstOrDefault() != null ? $"{task.UserProjectTasks.FirstOrDefault().User.FirstName} {task.UserProjectTasks.FirstOrDefault().User.LastName}" : "Not Assigned",
-                PhotoPath = task.UserProjectTasks.FirstOrDefault().User.PhotoPath,
+                PriorityId = task.PriorityId,
+                TaskStateId = task.ProjectTaskState.Id,
+                TaskTypeId = task.ProjectTaskType.Id,
+                AssignedTo = task.UserProjectTasks.FirstOrDefault().User.UserName,
+                PhotoPath = task.UserProjectTasks.FirstOrDefault()?.User?.PhotoPath,
             }).ToList();
 
             return tasks;

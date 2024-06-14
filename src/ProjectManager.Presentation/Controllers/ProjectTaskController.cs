@@ -1,18 +1,17 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.ProjectTask;
 using ProjectManager.Application.Extensionms;
-using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.Projects.Queries;
 using ProjectManager.Application.ProjectTasks.Queries;
 using ProjectManager.Application.ProjectTasks.Queries.GetTasksByFilterQuery.cs;
 using ProjectManager.Application.TableParameters;
-using ProjectManager.Application.User.Commands.CreateUser;
-using ProjectManager.Application.User.Queries;
-using ProjectManager.Application.UserManagement.Queries.GetUsersRole;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using ProjectManager.Application.ProjectTasks.Commands;
+using ProjectManager.Application.ProjectTasks.Commands.UpdateTask;
+using ProjectManager.Application.ProjectTasks.Commands.DeleteTask;
 using System.Net;
 
 namespace ProjectManager.Presentation.Controllers
@@ -27,14 +26,15 @@ namespace ProjectManager.Presentation.Controllers
             _mediator = mediator;
         }
 
-        // GET: ProjectTask
+        #region CRUD Operations
         public async Task<ActionResult> Index(int? Id)
         {
 
             var responseProjectList = await _mediator.Send(new GetProjectsForDropDownQuerry() { UserID = GetUserId() });
 
-            if (!responseProjectList.Any()){
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            if (!responseProjectList.Any())
+            {
+                return HttpNotFound();
             }
 
             int ProjectId = responseProjectList.FirstOrDefault().Id;
@@ -48,30 +48,35 @@ namespace ProjectManager.Presentation.Controllers
                 LoggedUserId = GetUserId()
             });
 
-            if (responseProject == null)
+            var projectTaskList = new ProjectTaskList
             {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-            }
-
-            var projectTask = await _mediator.Send(new GetTasksByProjectId()
-            {
-                Id = ProjectId
-            });
+                ProjectId = ProjectId
+            };
 
             var model = new ProjectTaskDto
             {
                 Project = responseProject,
                 ProjectsList = responseProjectList.ToList(),
-                ProjectTasks = projectTask.Where(task => task.ProjectName.ToLower() == responseProject.Name.ToLower()).ToList()
+                ProjectTaskList = projectTaskList
             };
 
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> TasksTable(DataTableParameters parameters, CancellationToken cancellationToken)
+        public async Task<ActionResult> GetTaskDetails(int id)
         {
-            var tasks = await _mediator.Send(new GetTasksByFilterQuery(parameters), cancellationToken);
+            var response = await _mediator.Send(new GetTaskByIdQuery
+            {
+                Id = id
+            });
+
+            return PartialView("_GetProjectTaskDetailsModal", response);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> TasksTable(int projectId, DataTableParameters parameters, CancellationToken cancellationToken)
+        {
+            var tasks = await _mediator.Send(new GetTasksByFilterQuery(projectId, parameters), cancellationToken);
 
             return Json(new
             {
@@ -85,24 +90,41 @@ namespace ProjectManager.Presentation.Controllers
         #region Add Task
         public async Task<ActionResult> AddTask(int id)
         {
-            var response = await _mediator.Send(new GetUserByIdQuery
+            var addTaskDto = new AddTaskDto
             {
-                Id = id
-            });
+                ProjectId = id
+            };
 
-            var responseUsersRoles = await _mediator.Send(new GetUsersRoleQuery { });
+            var resposeTaskPriorities = await _mediator.Send(new GetTaskPriorityQuery { });
 
-            ViewBag.UserRoles = new SelectList(responseUsersRoles, "Id", "Name");
+            var responseTaskType = await _mediator.Send(new GetTaskTypeQuery() { });
 
-            return PartialView("_AddUserModal", response);
+            var responseTaskState = await _mediator.Send(new GetTaskStateQuery() { });
+
+            var responseUsers = await _mediator.Send(new GetProjectUsersQuery() { Id = id });
+
+
+            ViewBag.Priorities = new SelectList(resposeTaskPriorities, "Id", "Name");
+
+            ViewBag.TaskType = new SelectList(responseTaskType, "Id", "Name");
+
+            ViewBag.TaskState = new SelectList(responseTaskState, "Id", "Name");
+
+            ViewBag.UsersInProject = new SelectList(responseUsers, "Id", "Name");
+
+            return PartialView("_AddProjectTaskModal", addTaskDto);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTask(AddUserDto data)
+        public async Task<ActionResult> AddTask(AddTaskDto data)
         {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { StatusCode = 500 });
+            }
             try
             {
-                var addedUser = await _mediator.Send(new AddUserCommand { Data = data });
+                var addedUser = await _mediator.Send(new CreateTaskCommand { Data = data });
                 if (addedUser)
                 {
                     return Json(new { StatusCode = 201 });
@@ -120,6 +142,79 @@ namespace ProjectManager.Presentation.Controllers
 
         #endregion
 
+        #region Update Task
+
+        [HttpGet]
+        public async Task<ActionResult> UpdateTask(int id)
+        {
+            var response = await _mediator.Send(new GetTaskByIdQuery
+            {
+                Id = id
+            });
+
+            var resposeTaskPriorities = await _mediator.Send(new GetTaskPriorityQuery { });
+
+            var responseTaskType = await _mediator.Send(new GetTaskTypeQuery() { });
+
+            var responseTaskState = await _mediator.Send(new GetTaskStateQuery() { });
+
+
+            ViewBag.Priorities = new SelectList(resposeTaskPriorities, "Id", "Name");
+
+            ViewBag.TaskType = new SelectList(responseTaskType, "Id", "Name");
+
+            ViewBag.TaskState = new SelectList(responseTaskState, "Id", "Name");
+
+            return PartialView("_UpdateProjectTaskModal", response);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateTask(UpdateTaskDto data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { StatusCode = 500 });
+            }
+            try
+            {
+                var addedUser = await _mediator.Send(new UpdateTaskCommand { Data = data });
+                if (addedUser)
+                {
+                    return Json(new { StatusCode = 201 });
+                }
+                else
+                {
+                    return Json(new { StatusCode = 500 });
+                }
+            }
+            catch
+            {
+                return Json(new { StatusCode = 500 });
+            }
+        }
+
+        #endregion
+
+        #region Delete Task
+
+        [HttpGet]
+        public ActionResult DeleteTask(int id)
+        {
+            return PartialView("_DeleteTaskModal", id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteTasks(int id)
+        {
+            var taskToDelete = await _mediator.Send(new DeleteTaskCommand { TaskId = id });
+
+            if (taskToDelete)
+                return Json(new { StatusCode = 201 });
+            else
+                return Json(new { StatusCode = 500 });
+        }
+
+        #endregion
 
         [HttpGet]
         public async Task<ActionResult> RefreshDetailCard(int id)
@@ -141,12 +236,21 @@ namespace ProjectManager.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> RefreshTable(int id)
         {
-            var viewModel = await _mediator.Send(new GetTasksByProjectId
+            
+            var tasks = await _mediator.Send(new GetTasksByProjectId
             {
                 Id = id
             });
 
-            return PartialView("_ProjectTasksTable", viewModel);
+            if (tasks is null)
+                return Json(new { StatusCode = 500 });
+
+            var model = new ProjectTaskList
+            {
+                ProjectId = id
+            };
+
+            return PartialView("_ProjectTaskTable", model);
         }
 
         public ActionResult GoBackToProjects()
@@ -163,3 +267,4 @@ namespace ProjectManager.Presentation.Controllers
 
     }
 }
+#endregion

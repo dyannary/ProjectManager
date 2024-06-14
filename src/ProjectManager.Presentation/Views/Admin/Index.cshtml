@@ -21,8 +21,6 @@
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-    </tbody>
 </table>
 
 <style>
@@ -32,10 +30,6 @@
         border-radius: 50%; 
         margin-right: 10px; 
     }
-
-/*    .bi bi-search {
-        padding: 2px 2px 2px 2px;
-    }*/
 </style>
 
 @section scripts {
@@ -74,31 +68,29 @@
                 "serverSide": true,
                 "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-
-                //"dom": "<'row-4'<'col-sm-6'l><'col-sm-12'f><'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>", // Includes search input box ("f") //f, r, t, l, p
-
-                processing: true,
-
-                stateSave: true,
-
-
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>", // Includes search input box ("f") //f, r, t, l, 
+                "sProcessing": false,
                 "pageLength": 15,
                 "order": [[6, 'desc']],
                 ajax: {
                     "url": "/Admin/UserTable",
                     "type": "POST",
                     "dataType": "json",
+                    "beforeSend": function (xhr) {
+                        $('#refreshMessage').text('Refreshing...').show();
+                    },
+                },
+                "drawCallback": function (settings) {
+                    $('#refreshMessage').hide();
                 },
                 "buttons": [
                     {
                         text: 'Add User',
                         action: function (e, dt, node, config) {
-                            // Define your custom action for the button here
                             alert('Add User button clicked');
                         }
                     },
-                    'copy', 'csv', 'excel', 'pdf', 'print' // You can add other buttons like copy, csv, etc.
+                    'copy', 'csv', 'excel', 'pdf', 'print'
                 ],
                 "columns": [
                     { "data": "Id", "title": "Id", "name": "Id", "visible": false },
@@ -110,7 +102,6 @@
                         "render": function (data, type, full, meta) {
                             var avatar = '<img src="' + full.PhotoPath + '" class="avatar" width="30px">';
                             return avatar + ' ' + data;
-
                         },
                         "autoWidth": true
                     },
@@ -149,7 +140,6 @@
                             return data;
                         }
                     },
-
                     {
                         "data": "Actions",
                         "title": "Actions",
@@ -163,10 +153,7 @@
                         }
                     }
                 ],
-                "pagingType": "full_numbers", // Use full_numbers for your pagination style
-                //"initComplete": function () {
-                //    $('.dataTables_filter input[type="search"]').attr('placeholder', 'Search').addClass('form-control');
-                //},
+                "pagingType": "full_numbers", 
                 "language": {
                     "search": '<i class="bi bi-search"></i>',
                     "searchPlaceholder": "Search",
