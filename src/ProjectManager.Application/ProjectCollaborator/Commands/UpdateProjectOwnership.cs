@@ -37,13 +37,17 @@ namespace ProjectManager.Application.ProjectCollaborator.Commands
             userProjectForOwner.UserProjectRole = UserRole;
             userProjectForNewOwner.UserProjectRole = CreatorRole;
 
-
-            _context.UserProjects.AddOrUpdate(userProjectForOwner);
-            _context.UserProjects.AddOrUpdate(userProjectForNewOwner);
-
-            if (await _context.SaveAsync(cancellationToken) == 1)
+            try
+            {
+                _context.UserProjects.AddOrUpdate(userProjectForOwner);
+                _context.UserProjects.AddOrUpdate(userProjectForNewOwner);
+                await _context.SaveAsync(cancellationToken);
                 return true;
-            else return false; 
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 

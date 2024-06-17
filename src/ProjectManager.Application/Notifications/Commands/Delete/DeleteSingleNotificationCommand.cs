@@ -33,6 +33,7 @@ namespace ProjectManager.Application.Notifications.Commands
             try
             {
                 _context.Notifications.Remove(notificationToDelete);
+                await _context.SaveAsync(cancellationToken);
                 return true;
             } catch
             {

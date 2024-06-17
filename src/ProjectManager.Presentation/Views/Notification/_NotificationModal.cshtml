@@ -18,11 +18,11 @@
                  }, new { @class = "form-select m-2", onchange = "GetNotification()" })
 
 
-                <button class="btn btn-outline-danger">Remove all</button>
+                <button class="btn btn-outline-danger" onclick="RemoveMultipleNotificationsHandler()">Remove all</button>
     </div>
 
     <div id="NotificationList">
-        @Html.Partial("_NotificationList", Model);
+        @Html.Partial("_NotificationList", Model)
     </div>
 
     <div class="modal-footer">

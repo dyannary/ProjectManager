@@ -10,7 +10,7 @@
 
     const data = { id: id };
     if (parameters.hasOwnProperty('additionalData')) {
-        Object.assign(data, parameters.additionalData); // Merge additional data if provided
+        Object.assign(data, parameters.additionalData); 
     }
 
     $.ajax(

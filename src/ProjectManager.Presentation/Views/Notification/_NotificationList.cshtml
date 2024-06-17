@@ -6,15 +6,9 @@
     {
         <div class="card border-2 m-2">
             <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h4 class="card-title">@notification.Message</h4>
-                        <p>@notification.Created.ToShortDateString()</p>
-                    </div>
-                    <div>
+                <div class="justify-content-between">
+                        <b class="card-title">@notification.Message</b>
                         <button class="btn border-0"><img src="@Url.Content("~/Content/Images/App/remove.png")" class="img-fluid" style="width: 30px; height: 30px;" alt="Remove" onclick="RemoveSingleNotificationHandler(@notification.Id)" /></button>
-                        <p>Type: @notification.Type</p>
-                    </div>
                 </div>
             </div>
         </div>

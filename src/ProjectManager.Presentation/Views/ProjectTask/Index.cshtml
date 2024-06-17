@@ -26,12 +26,11 @@
 
 <div class="card">
     <div class="card-header">
-        <div id="TasksTable">
-            @Html.Partial("_ProjectTasksTable", Model.ProjectTasks)
+        <div id="ProjectTaskTable">
+            @Html.Partial("_ProjectTaskTable", Model.ProjectTaskList)
         </div>
     </div>
 </div>
-
 
 @section Scripts {
     <script>
@@ -59,8 +58,8 @@
                 type: 'GET',
                 data: { id: selectedProject },
                 success: function (result) {
-                    $("#TasksTable").empty();
-                    $("#TasksTable").html(result);
+                    $("#ProjectTaskTable").empty();
+                    $("#ProjectTaskTable").html(result);
                 },
                 error: function (xhr, status, error) {
                     alert('Error: ' + error);

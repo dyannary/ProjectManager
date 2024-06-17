@@ -10,6 +10,11 @@
     {
       "library": "fontawesome-iconpicker@3.2.0",
       "destination": "lib/fontawesome-iconpicker/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "jquery-contextmenu@2.9.2",
+      "destination": "lib/jquery-contextmenu/"
     }
   ]
 }

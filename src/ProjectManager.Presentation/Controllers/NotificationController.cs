@@ -59,6 +59,18 @@ namespace ProjectManager.Presentation.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<ActionResult> RemoveMultipleNotifications()
+        {
+            var command = await _mediator.Send(new DeleteMultipleNotificationCommand
+            {
+                LoggedUserId = GetUserId(),
+            });
+
+            return Json(new { success = command });
+
+        }
+
         public int GetUserId()
         {
             int id = ClaimsExtensions.GetUserId(User);

@@ -14,6 +14,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    
+    <script>
+        $(document).ready(function () {
+            function updateNotificationCount() {
+                $.ajax({
+                    url: '@Url.Action("GetNotificationCount", "Home")',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#notificationCount').text(data);
+                    },
+                    error: function (error) {
+                        console.log("Error fetching notification count: ", error);
+                    }
+                });
+            }
+
+            function getUserPhoto() {
+                                $.ajax({
+                    url: '@Url.Action("GetUserPhoto", "Home")',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#UserAvatar').attr('src', data);
+                    },
+                    error: function (error) {
+                        console.log("Error fetching photo for user: ", error);
+                    }
+                });
+            }
+
+            updateNotificationCount();
+            setInterval(updateNotificationCount, 60000);
+
+            getUserPhoto();
+
+        });
+    </script>
+
 
     <style>
         body {
@@ -101,10 +138,13 @@
                     <div class="d-flex align-items-center m-1">
                         <div style="text-align: center;">
                             <div style="border-radius: 50%; overflow: hidden; margin-top: 5px; width: 50px; height: 50px;">
-                                <img class="avatar avatar-lg" src='/Content/Images/Default/default_avatar.jpg' />
+                                <img class="avatar avatar-lg" alt="User avatar" id="UserAvatar"/>
                             </div>
                         </div>
                         <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
+                        <button class="bg-transparent border-0" id="modalConfirmButton" onclick="openModal({ url: '/Notification/OpenNotificationModal', data: 0 })"data-toggle="ajax-modal" data-trigger="Modal">
+                            <span id="notificationCount" style="background-color: red; color: white; border-radius: 50%; padding: 5px 10px;">0</span>
+                        </button>
                     </div>
 
                     <ul id="accountSubmenu" class="sub-menu" style="display: none;">
@@ -126,7 +166,6 @@
             {
                 <li><a href="#">@Html.ActionLink("Projects", "Index", "Project", new { area = "" }, new { @class = "nav-link" })</a></li>
                 <li><a href="#">@Html.ActionLink("Tasks", "Index", "ProjectTask", new { area = "" }, new { @class = "nav-link" })</a></li>
-                <li><a class="nav-link" id="modalConfirmButton" onclick="openModal({ url: '/Notification/OpenNotificationModal', data: 0 })" data-toggle="ajax-modal" data-trigger="Modal">Notification</a></li>
             }
         </ul>
     </div>
@@ -149,6 +188,7 @@
     @Scripts.Render("~/bundles/UserProjects")
     @Scripts.Render("~/bundles/Admin")
     @Scripts.Render("~/bundles/Notification")
+    @Scripts.Render("~/bundles/ProjectTask")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/datatables")
 

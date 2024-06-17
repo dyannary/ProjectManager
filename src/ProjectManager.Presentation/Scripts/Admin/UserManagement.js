@@ -20,9 +20,9 @@
         },
     });
 }
+
 function reloadData() {
     
     var table = $('#UserDatabase').DataTable();
     table.ajax.reload();
-   
 }

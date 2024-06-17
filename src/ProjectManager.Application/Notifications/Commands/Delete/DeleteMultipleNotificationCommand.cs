@@ -29,6 +29,7 @@ namespace ProjectManager.Application.Notifications.Commands
             try
             {
                 _context.Notifications.RemoveRange(notificationsToDelete);
+                await _context.SaveAsync(cancellationToken);
                 return true;
             } catch
             {

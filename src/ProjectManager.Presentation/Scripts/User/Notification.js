@@ -29,10 +29,27 @@ function RemoveSingleNotificationHandler(id) {
         type: 'POST',
         data: {id : id},
         success: function (success) {
-            if (success === true) {
+            if (success) {
                 GetNotification();
             } else {
                 alert(`Notification Couldn't be removed`);
+            }
+        },
+        error: function () {
+            alert("Internal error");
+        }
+    });
+}
+
+function RemoveMultipleNotificationsHandler() {
+    $.ajax({
+        url: '../Notification/RemoveMultipleNotifications',
+        type: 'POST',
+        success: function (success) {
+            if (success) {
+                GetNotification();
+            } else {
+                alert(`Notifications Couldn't be removed`);
             }
         },
         error: function () {
