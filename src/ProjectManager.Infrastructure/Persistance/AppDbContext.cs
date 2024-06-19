@@ -1,7 +1,6 @@
 ﻿using ProjectManager.Application.interfaces;
 using ProjectManager.Domain.Entities;
 using ProjectManager.Infrastructure.Persistance.Configurations;
-using System;
 using System.Data.Entity;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +27,8 @@ namespace ProjectManager.Infrastructure.Persistance
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<FileType> FileTypes { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<NotificationEntity> Notifications { get; set; }
+        public DbSet<NotificationType> NotificationTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
@@ -45,6 +46,8 @@ namespace ProjectManager.Infrastructure.Persistance
             builder.Configurations.Add(new PriorityConfiguration());
             builder.Configurations.Add(new FileConfiguration());
             builder.Configurations.Add(new FileTypeConfiguration());
+            builder.Configurations.Add(new NotificationConfiguration());
+            builder.Configurations.Add(new NotificationTypeConfiguration());
         }
 
         public void Save()

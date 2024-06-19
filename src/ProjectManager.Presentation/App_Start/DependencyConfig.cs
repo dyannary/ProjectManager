@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using MediatR;
 using ProjectManager.Application;
+using Autofac.Integration.SignalR;
 
 namespace ProjectManager.Presentation
 {
@@ -24,6 +25,8 @@ namespace ProjectManager.Presentation
                 return t => componentContext.Resolve(t);
             });
 
+            builder.RegisterHubs(Assembly.GetExecutingAssembly());
+
             builder.Register(a => HttpContext.Current.GetOwinContext().Authentication).As<IAuthenticationManager>();
 
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
@@ -37,7 +40,7 @@ namespace ProjectManager.Presentation
 
             var container = builder.Build();
 
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            DependencyResolver.SetResolver(new Autofac.Integration.Mvc.AutofacDependencyResolver(container));
         }
     }
 }

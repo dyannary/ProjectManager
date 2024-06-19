@@ -1,4 +1,5 @@
-﻿using ProjectManager.Infrastructure.Persistance;
+﻿using MediatR;
+using ProjectManager.Infrastructure.Persistance;
 using System.Web;
 using System.Web.Optimization;
 
@@ -37,6 +38,11 @@ namespace ProjectManager.Presentation
             "~/lib/jquery-contextmenu/dist/jquery.ui.position.min.js"
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
+            "~/Scripts/jquery.signalR-2.4.3.min.js",
+            "~/signalr/hubs"
+            ));
+
             //bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
             //"~/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.js"
             ////"~/lib/jquery-contextmenu/dist/jquery.contextMenu.min.js",
@@ -56,12 +62,18 @@ namespace ProjectManager.Presentation
 
             bundles.Add(new Bundle("~/bundles/UserProjects").Include(
                     "~/Scripts/User/UserProjects.js"));
-
+            
             bundles.Add(new Bundle("~/bundles/Admin").Include(
                     "~/Scripts/Admin/UserManagement.js"));
 
             bundles.Add(new Bundle("~/bundles/ProjectTask").Include(
                     "~/Scripts/ProjectTask/UserProject.js"));
+
+            bundles.Add(new Bundle("~/bundles/Notification").Include(
+                    "~/Scripts/User/Notification.js"));
+
+            bundles.Add(new Bundle("~/bundles/NotificationLayout").Include(
+                    "~/Scripts/Layout/LayoutNotification.js"));
 
 
             //bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/toastr.js"));

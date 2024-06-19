@@ -13,6 +13,9 @@ using ProjectManager.Application.ProjectTasks.Commands;
 using ProjectManager.Application.ProjectTasks.Commands.UpdateTask;
 using ProjectManager.Application.ProjectTasks.Commands.DeleteTask;
 using System.Net;
+using ProjectManager.Application.Notifications.Commands.Send;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System;
 
 namespace ProjectManager.Presentation.Controllers
 {
@@ -127,6 +130,16 @@ namespace ProjectManager.Presentation.Controllers
                 var addedUser = await _mediator.Send(new CreateTaskCommand { Data = data });
                 if (addedUser)
                 {
+
+                    // Send Notification
+                    await _mediator.Send(new SendNotificationCommand
+                    {
+                        ForUser_Username = data.AssignedTo,
+                        ProjectId = data.ProjectId,
+                        Message = "You are assigned to a new task for project: ",
+                        NotificationType = Application.Enums.NotificationTypeEnum.Task
+                    });
+
                     return Json(new { StatusCode = 201 });
                 }
                 else

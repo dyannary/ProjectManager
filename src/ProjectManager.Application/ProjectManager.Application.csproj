@@ -40,6 +40,9 @@
     <Reference Include="Autofac, Version=8.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Autofac.8.0.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.SignalR, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.SignalR.3.0.2\lib\net40\Autofac.Integration.SignalR.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -66,6 +69,12 @@
     </Reference>
     <Reference Include="MediatR.Extensions.Microsoft.DependencyInjection, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MediatR.Extensions.Microsoft.DependencyInjection.5.0.2\lib\netstandard2.0\MediatR.Extensions.Microsoft.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Antiforgery, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNetCore.Antiforgery.2.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Antiforgery.dll</HintPath>
@@ -253,6 +262,15 @@
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Net.Http.Headers.2.1.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -264,6 +282,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -476,6 +497,8 @@
   <ItemGroup>
     <Compile Include="ApplicationDependencyInjection.cs" />
     <Compile Include="Common\Extensions\DataTableExtensions.cs" />
+    <Compile Include="DataTransferObjects\NotificationDtos\NotificationListDto.cs" />
+    <Compile Include="DataTransferObjects\NotificationDtos\NotificationResponseDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorModalDataDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorRecomandationDto.cs" />
     <Compile Include="DataTransferObjects\ProjectCollaborator\CollaboratorsResponseDto.cs" />
@@ -503,10 +526,17 @@
     <Compile Include="DataTransferObjects\Projects\ProjectByIdDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectToCreateDto.cs" />
     <Compile Include="Enums\FileTypeEnum.cs" />
+    <Compile Include="Enums\NotificationTypeEnum.cs" />
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
+    <Compile Include="Hubs\NotificationHub.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IFileService.cs" />
     <Compile Include="Interfaces\IPasswordEncryptionService.cs" />
+    <Compile Include="Notifications\Commands\Delete\DeleteMultipleNotificationCommand.cs" />
+    <Compile Include="Notifications\Commands\Delete\DeleteSingleNotificationCommand.cs" />
+    <Compile Include="Notifications\Commands\Send\SendNotificationCommand.cs" />
+    <Compile Include="Notifications\Queries\GetNotificationListQuerry.cs" />
+    <Compile Include="Notifications\Queries\GetNumberOfNotificationQuerry.cs" />
     <Compile Include="ProjectCollaborator\Commands\CreateProjectCollaboratorCommandValidator.cs" />
     <Compile Include="ProjectCollaborator\Commands\RemoveProjectCollaboratorCommand.cs" />
     <Compile Include="ProjectCollaborator\Commands\UpdateProjectOwnership.cs" />
@@ -539,6 +569,8 @@
     <Compile Include="ProjectTasks\Queries\GetTaskTypeQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Interfaces\INotificationService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\PasswordEncryptionService.cs" />
     <Compile Include="Common\TableParameters\DataTableColumn.cs" />
     <Compile Include="Common\TableParameters\DataTableOrder.cs" />
@@ -550,6 +582,7 @@
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommandValidator.cs" />
     <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommand.cs" />
     <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Queries\GetUserPhoto\GetUserPhotoByEmailQuerry.cs" />
     <Compile Include="UserManagement\Queries\GetUsersByFilter\GetUsersByFilterQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUserById\GetUserByIdQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUserById\GetUserByUsernameAndPasswordQuerry.cs" />
@@ -570,6 +603,13 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.6.4.js" />
+    <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

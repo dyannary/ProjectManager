@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Integration.SignalR;
 using FluentValidation;
 using ProjectManager.Application.DataTransferObjects.ProjectCollaborator;
 using ProjectManager.Application.DataTransferObjects.Projects;
@@ -9,6 +10,7 @@ using ProjectManager.Application.Projects.Commands.Create;
 using ProjectManager.Application.Projects.Commands.Update;
 using ProjectManager.Application.Services;
 using ProjectManager.Application.User.Commands.LoginUser;
+using System.Reflection;
 
 namespace ProjectManager.Application
 {
@@ -18,11 +20,15 @@ namespace ProjectManager.Application
         {
             builder.RegisterType<PasswordEncryptionService>().As<IPasswordEncryptionService>();
             builder.RegisterType<FileService>().As<IFileService>();
+            builder.RegisterType<NotificationService>().As<INotificationService>().InstancePerLifetimeScope();
 
             builder.RegisterType<LoginUserCommandValidator>().As<IValidator<LoginUserDto>>();
             builder.RegisterType<CreateProjectCommandValidator>().As<IValidator<ProjectToCreateDto>>();
             builder.RegisterType<UpdateProjectCommandValidator>().As<IValidator<ProjectByIdDto>>();
             builder.RegisterType<CreateProjectCollaboratorCommandValidator>().As<IValidator<CollaboratorToCreateDto>>();
+
+            builder.RegisterHubs(Assembly.GetExecutingAssembly());
+
         }
     }
 }

@@ -1,10 +1,19 @@
-﻿using System.Web.Mvc;
+﻿using MediatR;
+using System.Web.Mvc;
 
 namespace ProjectManager.Presentation.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+
+        private readonly IMediator _mediator;
+
+        public HomeController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -23,6 +32,5 @@ namespace ProjectManager.Presentation.Controllers
 
             return View();
         }
-
     }
 }

@@ -18,4 +18,3 @@ function toggleSubMenu(submenu) {
         subMenuElement.style.display = "none";
     }
 }
-

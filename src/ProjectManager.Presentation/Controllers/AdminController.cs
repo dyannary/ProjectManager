@@ -6,6 +6,7 @@ using ProjectManager.Application.User.Commands.UpdateUser;
 using ProjectManager.Application.User.Queries;
 using ProjectManager.Application.UserManagement.Commands.DeleteUser;
 using ProjectManager.Application.UserManagement.Queries;
+using ProjectManager.Application.UserManagement.Queries.GetUserPhoto;
 using ProjectManager.Application.UserManagement.Queries.GetUsersRole;
 using System;
 using System.Linq;
@@ -84,6 +85,17 @@ namespace ProjectManager.Presentation.Controllers
             });
 
             return PartialView("_GetUserDetailsModal", response);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getUserPhoto()
+        {
+            string photoPath = await _mediator.Send(new GetUserPhotoByEmailQuerry
+            {
+                Email = User.Identity.Name
+            });
+
+            return Json(photoPath, JsonRequestBehavior.AllowGet);
         }
 
         #region Add User

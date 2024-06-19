@@ -83,6 +83,8 @@
     <Compile Include="Common\AuditableEntity.cs" />
     <Compile Include="Entities\File.cs" />
     <Compile Include="Entities\FileType.cs" />
+    <Compile Include="Entities\NotificationEntity.cs" />
+    <Compile Include="Entities\NotificationType.cs" />
     <Compile Include="Entities\Priority.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\ProjectState.cs" />

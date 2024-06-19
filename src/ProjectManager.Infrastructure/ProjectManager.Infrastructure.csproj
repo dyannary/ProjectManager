@@ -99,9 +99,15 @@
     <Compile Include="Migrations\202406051323542_AddUserPhotoPath.Designer.cs">
       <DependentUpon>202406051323542_AddUserPhotoPath.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202406130824301_Add_Notification_and_NotificationType_Tables.cs" />
+    <Compile Include="Migrations\202406130824301_Add_Notification_and_NotificationType_Tables.Designer.cs">
+      <DependentUpon>202406130824301_Add_Notification_and_NotificationType_Tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\FileConfiguration.cs" />
     <Compile Include="Persistance\Configurations\FileTypeConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\NotificationConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\NotificationTypeConfiguration.cs" />
     <Compile Include="Persistance\Configurations\PriorityConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectTaskConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectTaskStateConfiguration.cs" />
@@ -145,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202406051323542_AddUserPhotoPath.resx">
       <DependentUpon>202406051323542_AddUserPhotoPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406130824301_Add_Notification_and_NotificationType_Tables.resx">
+      <DependentUpon>202406130824301_Add_Notification_and_NotificationType_Tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

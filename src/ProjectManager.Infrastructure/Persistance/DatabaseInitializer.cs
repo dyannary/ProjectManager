@@ -1,13 +1,8 @@
-﻿using ProjectManager.Application.DataTransferObjects.ProjectTask;
-using ProjectManager.Domain.Entities;
+﻿using ProjectManager.Domain.Entities;
 using ProjectManager.Infrastructure.DataSeeder.Seeds;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Net;
-using System.Net.Mime;
-using System.Threading.Tasks;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
@@ -48,7 +43,21 @@ namespace ProjectManager.Infrastructure.Persistance
             if (!context.ProjectTasks.Any())
                 CreateProjectTasks(context);
 
+            if (!context.NotificationTypes.Any())
+                CreateNotificationTypes(context);
+
             base.Seed(context);
+        }
+
+        private void CreateNotificationTypes(AppDbContext context)
+        {
+            var types = new List<NotificationType>()
+            {
+                new NotificationType {Name = "Project Collaborators", Description = "Notification type for collaborators"},
+                new NotificationType {Name = "Task", Description = "Notification type for tasks"},
+            };
+            types.ForEach(type => context.NotificationTypes.Add(type));
+            context.SaveChanges();
         }
 
         private void CreateRolesForUser(AppDbContext context)
