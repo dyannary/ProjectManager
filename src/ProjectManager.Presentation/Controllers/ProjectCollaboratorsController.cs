@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using Microsoft.Ajax.Utilities;
 using ProjectManager.Application.DataTransferObjects.ProjectCollaborator;
-using ProjectManager.Application.DataTransferObjects.Projects;
 using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.Notifications.Commands.Send;
 using ProjectManager.Application.ProjectCollaborator.Commands;
@@ -131,6 +129,7 @@ namespace ProjectManager.Presentation.Controllers
                             ForUser_Username = collaboratorToCreateDto.UserName,
                             Message = "You have been added to project: ",
                             ProjectId = projectId,
+                            NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
                 }
 
@@ -162,6 +161,7 @@ namespace ProjectManager.Presentation.Controllers
                         ForUser_Username = collaboratorUserName,
                         Message = "Your role has been changed for project: ",
                         ProjectId = projectId,
+                        NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
                 }
 
@@ -192,6 +192,7 @@ namespace ProjectManager.Presentation.Controllers
                         ForUser_Username = collaboratorUserName,
                         Message = "You have been removed from project: ",
                         ProjectId = projectId,
+                        NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
                 }
                 return Json(new { success = response, projectId });
@@ -220,6 +221,7 @@ namespace ProjectManager.Presentation.Controllers
                     ForUser_Username = collaboratorUserName,
                     Message = "You have got creator role for project: ",
                     ProjectId = projectId,
+                    NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                 });
             }
 

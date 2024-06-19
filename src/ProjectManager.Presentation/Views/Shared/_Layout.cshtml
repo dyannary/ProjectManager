@@ -13,107 +13,8 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.12/signalr.min.js"></script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-    
-    <script>
-        $(document).ready(function () {
-            function updateNotificationCount() {
-                $.ajax({
-                    url: '@Url.Action("GetNotificationCount", "Home")',
-                    type: 'GET',
-                    success: function (data) {
-                        $('#notificationCount').text(data);
-                    },
-                    error: function (error) {
-                        console.log("Error fetching notification count: ", error);
-                    }
-                });
-            }
-
-            function getUserPhoto() {
-                                $.ajax({
-                    url: '@Url.Action("GetUserPhoto", "Home")',
-                    type: 'GET',
-                    success: function (data) {
-                        $('#UserAvatar').attr('src', data);
-                    },
-                    error: function (error) {
-                        console.log("Error fetching photo for user: ", error);
-                    }
-                });
-            }
-
-            updateNotificationCount();
-            setInterval(updateNotificationCount, 60000);
-
-            getUserPhoto();
-
-        });
-    </script>
-
-
-    <style>
-        body {
-            font-family: "Lato", sans-serif;
-        }
-
-        .sidenav {
-            height: 100%;
-            position: fixed;
-            z-index: 1;
-            width: 0;
-            top: 0;
-            left: 0;
-            background-color: #303340;
-            overflow: auto;
-            transition: 0.3s;
-            padding-top: 60px;
-        }
-
-            .sidenav a {
-                padding: 8px 0px 0px 0px;
-                text-decoration: none;
-                font-size: 25px;
-                color: #818181;
-                display: block;
-                transition: 0.3s;
-            }
-
-                .sidenav a:hover {
-                    color: #f1f1f1;
-                }
-
-            .sidenav .closebtn {
-                position: absolute;
-                top: 0;
-                right: 25px;
-                font-size: 36px;
-                margin-left: 50px;
-            }
-
-        .sub-menu {
-            padding-left: 10px;
-        }
-
-            .sub-menu a {
-                padding-left: 25px;
-            }
-
-        #main {
-            transition: margin-left .3s;
-            padding: 16px;
-        }
-
-        ul {
-            list-style-position: inside;
-        }
-
-        li {
-            margin-left: 0;
-            padding-left: 0;
-            list-style-type: none;
-        }
-    </style>
 
 </head>
 <body>
@@ -125,51 +26,7 @@
         </div>
     </div>
 
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <ul>
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <li><a href="#">@Html.ActionLink("Sign In", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</a></li>
-            }
-            else
-            {
-                <li>
-                    <div class="d-flex align-items-center m-1">
-                        <div style="text-align: center;">
-                            <div style="border-radius: 50%; overflow: hidden; margin-top: 5px; width: 50px; height: 50px;">
-                                <img class="avatar avatar-lg" alt="User avatar" id="UserAvatar"/>
-                            </div>
-                        </div>
-                        <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
-                        <button class="bg-transparent border-0" id="modalConfirmButton" onclick="openModal({ url: '/Notification/OpenNotificationModal', data: 0 })"data-toggle="ajax-modal" data-trigger="Modal">
-                            <span id="notificationCount" style="background-color: red; color: white; border-radius: 50%; padding: 5px 10px;">0</span>
-                        </button>
-                    </div>
-
-                    <ul id="accountSubmenu" class="sub-menu" style="display: none;">
-                        <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    </ul>
-                </li>
-            }
-        </ul>
-        <hr style="width:100%;text-align:left;margin-left:0; color: white;">
-
-        <ul>
-            @if (User.IsInRole("admin"))
-            {
-                <li><a href="#">@Html.ActionLink("Users", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</a></li>
-            }
-            else if (User.IsInRole("user"))
-            {
-                <li><a href="#">@Html.ActionLink("Projects", "Index", "Project", new { area = "" }, new { @class = "nav-link" })</a></li>
-                <li><a href="#">@Html.ActionLink("Tasks", "Index", "ProjectTask", new { area = "" }, new { @class = "nav-link" })</a></li>
-            }
-        </ul>
-    </div>
-
+    @Html.Partial("_SideMenu")
 
     <div id="main">
         <span style="font-size:30px;cursor:pointer" id="openButton" onclick="openNav()">&#9776;</span>
@@ -191,8 +48,7 @@
     @Scripts.Render("~/bundles/ProjectTask")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/datatables")
-
-
     @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/signalR")
 </body>
 </html>

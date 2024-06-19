@@ -13,7 +13,6 @@ namespace ProjectManager.Application.Notification.Queries
     {
         public int LoggedUserId { get; set; }
         public string type { get; set; }
-        public DateTime CreatedDate { get; set; }
     }
 
     public class GetNotificationListHandler : IRequestHandler<GetNotificationListQuerry, IEnumerable<NotificationListDto>>
@@ -29,13 +28,9 @@ namespace ProjectManager.Application.Notification.Queries
         {
             var notifications = _context.Notifications.Where(n => n.UserId == request.LoggedUserId).AsQueryable();
 
-            if (!string.IsNullOrEmpty(request.type))
+            if (!string.IsNullOrEmpty(request.type) && request.type != "all")
             {
                 notifications = notifications.Where(n => n.Type.Name == request.type);
-            }
-            if (request.CreatedDate != DateTime.MinValue && request.CreatedDate != null)
-            {
-                notifications = notifications.Where(n => n.Created == request.CreatedDate);
             }
 
             var response = notifications.Select(n => new NotificationListDto

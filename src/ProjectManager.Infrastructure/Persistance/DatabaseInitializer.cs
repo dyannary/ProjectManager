@@ -53,11 +53,8 @@ namespace ProjectManager.Infrastructure.Persistance
         {
             var types = new List<NotificationType>()
             {
-                new NotificationType {Name = "Others", Description = "Notification type for others"},
-                new NotificationType {Name = "Project", Description = "Notification type for projects"},
                 new NotificationType {Name = "Project Collaborators", Description = "Notification type for collaborators"},
                 new NotificationType {Name = "Task", Description = "Notification type for tasks"},
-                new NotificationType {Name = "User Management", Description = "Notification type for user namangement"},
             };
             types.ForEach(type => context.NotificationTypes.Add(type));
             context.SaveChanges();

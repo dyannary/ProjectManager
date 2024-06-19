@@ -137,7 +137,7 @@ namespace ProjectManager.Presentation.Controllers
                         ForUser_Username = data.AssignedTo,
                         ProjectId = data.ProjectId,
                         Message = "You are assigned to a new task for project: ",
-                        NotificationType = "Task"
+                        NotificationType = Application.Enums.NotificationTypeEnum.Task
                     });
 
                     return Json(new { StatusCode = 201 });

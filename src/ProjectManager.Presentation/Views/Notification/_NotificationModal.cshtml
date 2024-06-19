@@ -11,10 +11,8 @@
                 @Html.DropDownList("NotificationType", new List<SelectListItem>
                  {
                    new SelectListItem {Text = "All", Value = "all" },
-                   new SelectListItem {Text = "For Project", Value = "Project"},
+                   new SelectListItem {Text = "For Project", Value = "Project Collaborators"},
                    new SelectListItem {Text = "For Task", Value = "Task"},
-                   new SelectListItem {Text = "For User management", Value = "collaborationprojects"},
-                   new SelectListItem {Text = "For Others", Value = "User Management"},
                  }, new { @class = "form-select m-2", onchange = "GetNotification()" })
 
 

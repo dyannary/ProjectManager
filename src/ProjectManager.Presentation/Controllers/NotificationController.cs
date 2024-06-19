@@ -2,6 +2,7 @@
 using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.Notification.Queries;
 using ProjectManager.Application.Notifications.Commands;
+using ProjectManager.Application.Notifications.Queries;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -41,9 +42,21 @@ namespace ProjectManager.Presentation.Controllers
             var response = await _mediator.Send(new GetNotificationListQuerry
             {
                 LoggedUserId = GetUserId(),
+                type = NotificationType
             });
 
             return PartialView("_NotificationList", response);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetNotificationCount()
+        {
+            int count = await _mediator.Send(new GetNumberOfNotificationQuerry
+            {
+                ForUserId = GetUserId(),
+            });
+
+            return Json(count, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
