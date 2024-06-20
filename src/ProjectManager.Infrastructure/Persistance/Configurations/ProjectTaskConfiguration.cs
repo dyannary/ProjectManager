@@ -21,7 +21,7 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
 
             HasMany(f => f.Files)
                 .WithRequired(pt => pt.ProjectTask)
-                .HasForeignKey(ft => ft.FileTypeId);
+                .HasForeignKey(ft => ft.ProjectTaskId);
 
             HasMany(upt => upt.UserProjectTasks)
                 .WithRequired(pt => pt.ProjectTask)

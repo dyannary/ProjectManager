@@ -1,5 +1,5 @@
 ﻿function reloadTaskData() {
-
+    debugger;
     var table = $('#TasksTable2').DataTable();
     table.ajax.reload();
 }
@@ -25,4 +25,72 @@ function deleteTask(id) {
             }
         },
     });
+}
+
+function handleCreateUpdateTask(response) {
+    debugger;
+
+    if (response.errors) {
+        $('span[data-valmsg-for]').text('');
+
+        for (var key in response.errors) {
+            var messages = response.errors[key];
+            var errorElement = $('span[data-valmsg-for="' + key + '"]');
+            errorElement.text(messages);
+        }
+       
+    } else {
+        $('#modal').modal('hide');
+        reloadTaskData();
+    }
+}
+
+function preview() {
+    let fileInput = document.getElementById("file-input");
+    let imageContainer = document.getElementById("images");
+    
+    for (let i of fileInput.files) {
+        let reader = new FileReader();
+        let figure = document.createElement("figure");
+        let figCap = document.createElement("figcaption");
+        let deleteBtn = document.createElement("button");
+
+        figCap.innerText = i.name;
+        figure.appendChild(figCap);
+
+        reader.onload = () => {
+            let img = document.createElement("img");
+            img.setAttribute("src", reader.result);
+            figure.insertBefore(img, figCap); 
+
+            deleteBtn.textContent = "x";
+            deleteBtn.classList.add("delete-btn");
+            deleteBtn.addEventListener("click", () => deleteImage(figure));
+            figure.appendChild(deleteBtn);
+
+            figure.addEventListener("dblclick", () => openImageModal(img));
+        }
+
+        reader.readAsDataURL(i);
+
+        imageContainer.appendChild(figure);
+    }
+}
+
+function deleteImage(figureElement) {
+    figureElement.remove(); 
+}
+
+function openImageModal(imageElement) {
+    let modal = document.getElementById("imageModal");
+    let modalImg = document.getElementById("modalImage");
+
+    modal.style.display = "block";
+    modalImg.src = imageElement.src;
+    
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 }

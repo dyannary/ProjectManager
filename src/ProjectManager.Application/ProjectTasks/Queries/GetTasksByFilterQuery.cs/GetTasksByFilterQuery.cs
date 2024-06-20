@@ -42,7 +42,6 @@ namespace ProjectManager.Application.ProjectTasks.Queries.GetTasksByFilterQuery.
                     Created = pt.Created,
                     Name = pt.Name,
                     AssignedTo = pt.UserProjectTasks.FirstOrDefault().User.UserName,
-                   // AssignedTo = pt.UserProjectTasks.FirstOrDefault() != null ? $"{pt.UserProjectTasks.FirstOrDefault().User.FirstName} {pt.UserProjectTasks.FirstOrDefault().User.LastName}" : "Not Assigned",
                     ProjectTaskType = pt.ProjectTaskType.Name,
                     ProjectTaskState = pt.ProjectTaskState.Name,
 

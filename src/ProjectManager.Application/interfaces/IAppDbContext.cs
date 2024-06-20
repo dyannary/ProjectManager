@@ -18,7 +18,6 @@ namespace ProjectManager.Application.interfaces
         DbSet<ProjectState> ProjectStates { get; set; }
         DbSet<Project> Projects { get; set; }
         DbSet<Priority> Priorities { get; set; }
-        DbSet<FileType> FileTypes { get; set; }
         DbSet<File> Files { get; set; }
         DbSet<NotificationEntity> Notifications { get; set; }
         DbSet<NotificationType> NotificationTypes { get; set; }

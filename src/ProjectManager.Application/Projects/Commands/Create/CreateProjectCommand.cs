@@ -8,7 +8,6 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using ProjectManager.Domain.Entities;
 using ProjectManager.Application.Interfaces;
-using ProjectManager.Application.Enums;
 
 namespace ProjectManager.Application.Projects.Commands.Create
 {
@@ -31,24 +30,14 @@ namespace ProjectManager.Application.Projects.Commands.Create
 
         public async Task<bool> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-
-            FileTypeEnum fileType = FileTypeEnum.Default;
-            string filePathResponse = _fileService.SaveFile(request.Project.File, fileType);
-
-
-            if (request.Project.File != null)
-            {
-                fileType = FileTypeEnum.Image;
-                filePathResponse = _fileService.SaveFile(request.Project.File, fileType);
-            }
-            else
-            {
-                filePathResponse = "/Content/Images/Default/defaultImage.jpg";
-            }
+            string filePathResponse = await _fileService.SaveFile(request.Project.File);
 
             var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == request.Project.ProjectStateID);
+
             var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserID);
+
             var userProjectRole = await _context.UserProjectRole.FirstOrDefaultAsync(upr => upr.Name == "ProjectCreator");
+
             var projectToCreate = new Project
             {
                 Name = request.Project.Name,
@@ -71,7 +60,9 @@ namespace ProjectManager.Application.Projects.Commands.Create
             };
 
             _context.Projects.Add(projectToCreate);
+
             _context.UserProjects.AddOrUpdate(userProject);
+
             try
             {
                 await _context.SaveAsync(cancellationToken);

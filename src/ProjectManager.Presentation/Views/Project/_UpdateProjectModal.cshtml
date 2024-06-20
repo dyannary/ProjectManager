@@ -74,8 +74,8 @@
                     @Html.LabelFor(model => model.ProjectStateID, "Project state", htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-md-6">
-                    @Html.DropDownListFor(model => model.ProjectStateID, (SelectList)ViewBag.ProjectStates, "Select Project State", new { @class = "form-select dropdown-toggle" })
-                    @Html.ValidationMessageFor(model => model.ProjectStateID, "", new { @class = "text-danger", data_valmsg_for = "ProjectStateID" })
+                    @Html.DropDownListFor(model => model.ProjectStateID, (SelectList)ViewBag.ProjectStates, "Select state", new { @class = "form-select dropdown-toggle" })
+                    @Html.ValidationMessageFor(model => model.ProjectStateID, "", new { @class = "text-danger" })
                 </div>
             </div>
 

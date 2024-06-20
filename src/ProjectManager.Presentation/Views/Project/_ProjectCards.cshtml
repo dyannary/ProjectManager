@@ -9,7 +9,9 @@
                     <div class="row no-gutters">
                         <div class="col-md-5">
                             <div class="square-image-container">
-                                <img class="card-img ma square-image img-thumbnail" src="@Url.Content(card.PhotoPath)" alt="Card image">
+                                <img class="card-img ma square-image img-thumbnail" 
+                                     src="@Url.Content(card.PhotoPath)" 
+                                     alt="Card image">
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -18,10 +20,17 @@
                                 <p class="card-text">@card.Description</p>
 
                                 <div class="dropdown dropdown-top-right">
-                                    <button class="dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="dropdown-toggle bg-transparent border-0" 
+                                            type="button" id="dropdownMenuButton" 
+                                            data-toggle="dropdown" aria-haspopup="true" 
+                                            aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item" id="modalUpdateProject" onclick="openModal({url: '/Project/OpenUpdateModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">Update</button>
+                                        <button class="dropdown-item" 
+                                                id="modalUpdateProject" 
+                                                onclick="openModal({url: '/Project/OpenUpdateModal', data: @card.Id})" 
+                                                data-toggle="ajax-modal" 
+                                                data-trigger="Modal">Update</button>
 
                                         <form action="../Project/GotoProjectDetails" method="get">
                                             <input type="hidden" name="Id" value="@card.Id" />
@@ -30,12 +39,23 @@
 
                                         @if (card.IsEnabled == false)
                                         {
-
-                                            <button class="dropdown-item" id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">Disable</button>
+                                            <button class="dropdown-item" 
+                                                    id="modalConfirmButton" 
+                                                    onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" 
+                                                    data-toggle="ajax-modal" 
+                                                    data-trigger="Modal">
+                                                Disable
+                                            </button>
                                         }
                                         else
                                         {
-                                            <button class="dropdown-item " id="modalConfirmButton" onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" data-toggle="ajax-modal" data-trigger="Modal">Enable</button>
+                                            <button class="dropdown-item " 
+                                                    id="modalConfirmButton" 
+                                                    onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" 
+                                                    data-toggle="ajax-modal" 
+                                                    data-trigger="Modal">
+                                                Enable
+                                            </button>
                                         }
                                     </div>
                                 </div>

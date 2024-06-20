@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.Projects;
-using ProjectManager.Application.Enums;
 using ProjectManager.Application.interfaces;
 using ProjectManager.Application.Interfaces;
 using System;
@@ -36,19 +35,20 @@ namespace ProjectManager.Application.Projects.Commands.Update
 
             var projectToUpdate = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.Project.Id);
 
-            string photoPath = "";
-            string path = projectToUpdate.PhotoPath;
-            HttpPostedFileBase file = request.Project.File;
+            var path = projectToUpdate.PhotoPath;
 
-            if (request.Project.RemoveFile != true)
-                if (request.Project.File != null)
-                   photoPath = _fileService.UpdateFile(file, FileTypeEnum.Image, path);
-                else if (path == null)
-                    photoPath = _fileService.UpdateFile(file, FileTypeEnum.Default, path);
-                else 
-                    photoPath = path;
+            string photoPath;
+
+            if (request.Project.File != null || request.Project.RemoveFile == true)
+            {
+                var isRemoved = request.Project.RemoveFile;
+
+                HttpPostedFileBase file = request.Project.File;
+
+                photoPath = await _fileService.GetPhotoPath(file, path, isRemoved);
+            }
             else
-                photoPath = _fileService.UpdateFile(file, FileTypeEnum.Default, path);
+                photoPath = path;   
 
             projectToUpdate.Name = request.Project.Name;
             projectToUpdate.Description = request.Project.Description;
@@ -73,5 +73,4 @@ namespace ProjectManager.Application.Projects.Commands.Update
             }
         }
     }
-
 }

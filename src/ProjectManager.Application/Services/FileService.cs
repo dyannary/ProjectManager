@@ -1,38 +1,24 @@
-﻿using ProjectManager.Application.Enums;
-using ProjectManager.Application.Interfaces;
+﻿using ProjectManager.Application.Interfaces;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ProjectManager.Application.Services
 {
     public class FileService : IFileService
     {
-        public string SaveFile(HttpPostedFileBase file, FileTypeEnum type)
+        private readonly string _defaultPath = $"~/Content/Images/";
+
+        public async Task<string> SaveFile(HttpPostedFileBase file)
         {
-            string path = "";
-            #region GetPath
-            if (type == FileTypeEnum.Default)
-                return "~/Content/Default/defaultImage.jpg";
-
-            else if (type == FileTypeEnum.Image)
-            {
-                if (IsImage(file))
-                    path = "~/Content/Images";
-                else
-                    return "~/Content/Default/defaultImage.jpg";
-            }
-            else
-                path = "~/Content/Files";
-            #endregion
-
             if (file != null && file.ContentLength > 0)
-                return UploadPhoto(file, path);
+                return await UploadPhoto(file, _defaultPath);
             else
-            return "~/Content/Images/Default/defaultImage.jpg";
+                return _defaultPath;
         }
 
-        public string UpdateFile(HttpPostedFileBase file, FileTypeEnum type, string path)
+        public async Task<string> UpdateFile(HttpPostedFileBase file, string path)
         {
             string pathMapped = HttpContext.Current.Server.MapPath(path);
 
@@ -42,29 +28,7 @@ namespace ProjectManager.Application.Services
                     File.Delete(pathMapped);
             }
 
-            #region GetPath
-            if (type == FileTypeEnum.Default)
-                return "~/Content/Images/Default/defaultImage.jpg";
-
-            else if (type == FileTypeEnum.Image)
-            {
-                if (IsImage(file))
-                    path = "~/Content/Images";
-                else
-                    return "~/Content/Default/defaultImage.jpg";
-            }
-            else
-                path = "~/Content/Files";
-            #endregion
-
-            if (file != null && file.ContentLength > 0)
-            {
-                return UploadPhoto(file, path);
-            }
-            else
-                return "~/Content/Default/defaultImage.jpg";
-
-
+            return await UploadPhoto(file, _defaultPath);
         }
 
         public bool RemoveFile(string path)
@@ -82,48 +46,51 @@ namespace ProjectManager.Application.Services
                 {
                     return false;
                 }
-            } else 
+            }
+            else
                 return false;
         }
 
         #region private methods
-        private string UploadPhoto(HttpPostedFileBase file, string path)
+        private async Task<string> UploadPhoto(HttpPostedFileBase file, string path)
         {
-
             string pathMapped = HttpContext.Current.Server.MapPath(path);
             string filename = Path.GetFileName(file.FileName);
             string savePath = Path.Combine(pathMapped, filename);
 
             if (File.Exists(savePath))
             {
-                string fileNameWithouExtension = Path.GetFileNameWithoutExtension(file.FileName);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.FileName);
                 string fileExtension = Path.GetExtension(file.FileName);
-                string newFileName = fileNameWithouExtension + "-" + Guid.NewGuid().ToString() + fileExtension;
+                string newFileName = fileNameWithoutExtension + "-" + Guid.NewGuid().ToString() + fileExtension;
                 savePath = Path.Combine(pathMapped, newFileName);
             }
 
-            file.SaveAs(savePath);
-            return path + "/" + file.FileName;
-        }
-
-        public bool IsImage(HttpPostedFileBase file)
-        {
-
-            string fileExtension = Path.GetExtension(file.FileName);
-
             try
             {
-                if (fileExtension.Equals(".jpg") || fileExtension.Equals(".png") || fileExtension.Equals(".jpeg") || fileExtension.Equals(".gif"))
-                    return true;
+                using (var fileStream = new FileStream(savePath, FileMode.Create))
+                {
+                    await file.InputStream.CopyToAsync(fileStream);
+                }
+
+                return $"{path}/{Path.GetFileName(savePath)}";
+
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw;
             }
-            return false;
         }
+
+        public async Task<string> GetPhotoPath(HttpPostedFileBase file, string path, bool isRemoved)
+        {
+            if(isRemoved)
+                return $"{_defaultPath}/Default/defaultImage.jpg";
+
+            return await UpdateFile(file, path);
+        }
+
         #endregion
-
-
     }
 }
