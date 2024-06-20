@@ -25,7 +25,6 @@ namespace ProjectManager.Infrastructure.Persistance
         public DbSet<ProjectState> ProjectStates { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Priority> Priorities { get; set; }
-        public DbSet<FileType> FileTypes { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<NotificationEntity> Notifications { get; set; }
         public DbSet<NotificationType> NotificationTypes { get; set; }

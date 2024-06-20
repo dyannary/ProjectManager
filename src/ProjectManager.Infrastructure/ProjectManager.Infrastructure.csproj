@@ -103,6 +103,14 @@
     <Compile Include="Migrations\202406130824301_Add_Notification_and_NotificationType_Tables.Designer.cs">
       <DependentUpon>202406130824301_Add_Notification_and_NotificationType_Tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202406181320480_DeleteFileTypeTable.cs" />
+    <Compile Include="Migrations\202406181320480_DeleteFileTypeTable.Designer.cs">
+      <DependentUpon>202406181320480_DeleteFileTypeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406201328323_DeleteMaxLengthOfFileName.cs" />
+    <Compile Include="Migrations\202406201328323_DeleteMaxLengthOfFileName.Designer.cs">
+      <DependentUpon>202406201328323_DeleteMaxLengthOfFileName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\FileConfiguration.cs" />
     <Compile Include="Persistance\Configurations\FileTypeConfiguration.cs" />
@@ -130,10 +138,6 @@
       <Project>{87af0c31-5f78-4498-b913-49e138a594e4}</Project>
       <Name>ProjectManager.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj">
-      <Project>{36b4c4d8-ad3a-459a-806e-11c982d4e3e0}</Project>
-      <Name>ProjectManager.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -154,6 +158,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202406130824301_Add_Notification_and_NotificationType_Tables.resx">
       <DependentUpon>202406130824301_Add_Notification_and_NotificationType_Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406181320480_DeleteFileTypeTable.resx">
+      <DependentUpon>202406181320480_DeleteFileTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406201328323_DeleteMaxLengthOfFileName.resx">
+      <DependentUpon>202406201328323_DeleteMaxLengthOfFileName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

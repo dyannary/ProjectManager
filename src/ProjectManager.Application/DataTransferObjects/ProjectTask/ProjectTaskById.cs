@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjectManager.Application.DataTransferObjects.ProjectTask
 {
@@ -15,6 +16,6 @@ namespace ProjectManager.Application.DataTransferObjects.ProjectTask
         public int PriorityId {  get; set; }
         public int ProjectId {  get; set; }
         public string AssignedTo {  get; set; }
-        public string PhotoPath {  get; set; }
+        public List<string> PhotoPaths {  get; set; } 
     }
 }

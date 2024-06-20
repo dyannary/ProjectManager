@@ -3,6 +3,7 @@ using ProjectManager.Application.DataTransferObjects.ProjectTask;
 using ProjectManager.Application.interfaces;
 using ProjectManager.Domain.Entities;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,8 +34,6 @@ namespace ProjectManager.Application.ProjectTasks.Commands.UpdateTask
             toUpdate.TaskTypeId = command.Data.TaskTypeId;
             toUpdate.TaskStateId = command.Data.TaskStateId;
             toUpdate.PriorityId = command.Data.PriorityId;
-            //To update StartDate of Task
-      
 
             var assignedUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == command.Data.AssignedTo);
             if (assignedUser != null)

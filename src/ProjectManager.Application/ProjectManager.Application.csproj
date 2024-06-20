@@ -557,6 +557,7 @@
     <Compile Include="Projects\Queries\GetProjectUsersQuery.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectResponseDto.cs" />
     <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommand.cs" />
+    <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommandValidator.cs" />
     <Compile Include="ProjectTasks\Commands\DeleteTask\DeleteTaskCommand.cs" />
     <Compile Include="ProjectTasks\Commands\UpdateTask\UpdateTaskCommand.cs" />
     <Compile Include="ProjectTasks\Queries\GetTaskByIdQuery.cs" />
@@ -593,12 +594,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj">
-      <Project>{36b4c4d8-ad3a-459a-806e-11c982d4e3e0}</Project>
-      <Name>ProjectManager.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />

@@ -7,6 +7,9 @@ using System.Data.Entity;
 using System.Linq;
 using ProjectManager.Domain.Entities;
 using System.Data.Entity.Migrations;
+using ProjectManager.Application.Interfaces;
+using System;
+using System.Data.Entity.Validation;
 
 namespace ProjectManager.Application.ProjectTasks.Commands
 {
@@ -18,9 +21,12 @@ namespace ProjectManager.Application.ProjectTasks.Commands
     public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, bool>
     {
         private readonly IAppDbContext _context;
-        public CreateTaskCommandHandler(IAppDbContext context)
+        private readonly IFileService _fileService;
+
+        public CreateTaskCommandHandler(IAppDbContext context, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
 
         public async Task<bool> Handle(CreateTaskCommand command, CancellationToken cancellationToken)
@@ -32,19 +38,44 @@ namespace ProjectManager.Application.ProjectTasks.Commands
                 return false;
             }
 
-            var task = new Domain.Entities.ProjectTask
-            { 
+            var task = new ProjectTask
+            {
                 Name = model.Name,
                 Description = model.Description,
                 TaskTypeId = model.TaskTypeId,
                 TaskStateId = model.TaskStateId,
                 PriorityId = model.PriorityId,
                 ProjectId = model.ProjectId,
-                TaskStartDate = System.DateTime.Now,
-                TaskEndDate = System.DateTime.Now
+                TaskStartDate = DateTime.Now,
+                TaskEndDate = DateTime.Now
             };
 
-            var assignedUsers = await _context.Users.Where(user => model.AssignedTo.Contains(user.UserName)).ToListAsync();
+            if (model.Files != null) 
+            {
+                foreach (var file in model.Files)
+                {
+                    var filePath = await _fileService.SaveFile(file);
+
+                    var taskFile = new File
+                    {
+                        FileName = filePath,
+                        ProjectTask = task,
+                        FileData = "img"
+                    };
+
+                    try
+                    {
+                        _context.Files.Add(taskFile);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                        throw;
+                    }
+                }
+            }
+
+            var assignedUsers = await _context.Users.Where(user => user.Id == model.AssignedTo).ToListAsync();
 
             try
             {
@@ -52,7 +83,7 @@ namespace ProjectManager.Application.ProjectTasks.Commands
                 {
                     var userProjectTask = new UserProjectTask
                     {
-                        UserId = user.Id,
+                        UserId = user.Id, 
                         ProjectTask = task
                     };
 
@@ -66,10 +97,28 @@ namespace ProjectManager.Application.ProjectTasks.Commands
 
             _context.ProjectTasks.AddOrUpdate(task);
 
-            int result = await _context.SaveAsync(cancellationToken);
-
-            return result > 0;
+            try
+            {
+                int result = await _context.SaveAsync(cancellationToken);
+                return result > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    Console.WriteLine($"Entity of type {eve.Entry.Entity.GetType().Name} in state {eve.Entry.State} has the following validation errors:");
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine($"- Property: {ve.PropertyName}, Error: {ve.ErrorMessage}");
+                    }
+                }
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw;
+            }
         }
-
     }
 }

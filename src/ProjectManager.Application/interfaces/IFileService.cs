@@ -1,12 +1,13 @@
-﻿using ProjectManager.Application.Enums;
+﻿using System.Threading.Tasks;
 using System.Web;
 
 namespace ProjectManager.Application.Interfaces
 {
     public interface IFileService
     {
-         string SaveFile(HttpPostedFileBase file, FileTypeEnum type);
-         string UpdateFile(HttpPostedFileBase file, FileTypeEnum type, string path);
-         bool RemoveFile(string path);
+        Task<string> GetPhotoPath(HttpPostedFileBase file, string path, bool isRemoved);
+        Task<string> SaveFile(HttpPostedFileBase file);
+        Task<string> UpdateFile(HttpPostedFileBase file, string path);
+        bool RemoveFile(string path);
     }
 }

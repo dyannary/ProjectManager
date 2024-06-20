@@ -34,7 +34,6 @@ namespace ProjectManager.Presentation.Controllers
             return id; 
         }
 
-
         public async Task<ActionResult> Index()
         {
             var response = await _mediator.Send(new GetProjectsByFilterQuery

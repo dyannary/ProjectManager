@@ -18,48 +18,69 @@
             @Html.HiddenFor(model => model.ProjectId)
             <div class="form-horizontal">
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
                         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AssignedTo, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.AssignedTo, "Assigned To", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-6">
                         @Html.EditorFor(model => model.AssignedTo, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TaskStateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.TaskStateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
                         @Html.DropDownListFor(model => model.TaskStateId, (SelectList)ViewBag.TaskState, "Select state", new { @class = "form-select dropdown-toggle" })
                         @Html.ValidationMessageFor(model => model.TaskStateId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TaskTypeId, "Type", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.TaskTypeId, "Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
                         @Html.DropDownListFor(model => model.TaskTypeId, (SelectList)ViewBag.TaskType, "Select type", new { @class = "form-select dropdown-toggle" })
                         @Html.ValidationMessageFor(model => model.TaskTypeId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PriorityId, "Priority", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.PriorityId, "Priority", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
                         @Html.DropDownListFor(model => model.PriorityId, (SelectList)ViewBag.Priorities, "Select Priority", new { @class = "form-select dropdown-toggle" })
                         @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 100%; height: 100px;" })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.PhotoPaths, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.PhotoPaths, new { @class = "form-control", style = "width: 100%; height: 100px;" })
+                        @Html.ValidationMessageFor(model => model.PhotoPaths, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
             </div>
         </div>
         <div class="modal-footer">

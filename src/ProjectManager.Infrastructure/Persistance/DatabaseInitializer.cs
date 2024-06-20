@@ -37,6 +37,9 @@ namespace ProjectManager.Infrastructure.Persistance
             if (!context.Priorities.Any())
                 CreatePriotities(context);
 
+            //if (!context.Files.Any())
+            //    CreateFile(context);
+
             if (!context.Projects.Any())
                 CreateProjects(context);
 
@@ -150,6 +153,23 @@ namespace ProjectManager.Infrastructure.Persistance
             };
 
             priorities.ForEach(p => context.Priorities.Add(p));
+            context.SaveChanges();
+        }
+
+        private void CreateFile(AppDbContext context)
+        {
+            var file = new List<File>()
+            {
+                new File 
+                {
+                    FileName = "~/Content/Images/Default/defaultImage.jpg",
+                    FileData = "test",
+                    IsDeleted = false,
+                    ProjectTaskId = 2,
+                },
+            };
+
+            file.ForEach(pts => context.Files.Add(pts));
             context.SaveChanges();
         }
 
