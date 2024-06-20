@@ -2,8 +2,11 @@
 using MediatR;
 using Microsoft.Owin.Security;
 using ProjectManager.Application.DataTransferObjects.User;
+using ProjectManager.Application.Extensionms;
 using ProjectManager.Application.User.Commands.LoginUser;
 using ProjectManager.Application.User.Queries;
+using ProjectManager.Application.UserManagement.Commands.UpdatePassword;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,13 +21,13 @@ namespace ProjectManager.Presentation.Controllers
         private readonly IMediator _mediator;
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
         private readonly IValidator<LoginUserDto> _loginValidator;
-
-        public AccountController(IMediator mediator, IValidator<LoginUserDto> loginValidator)
+        private readonly IValidator<UserPasswordChangeDto> _changePaswordValidator;
+        public AccountController(IMediator mediator, IValidator<LoginUserDto> loginValidator, IValidator<UserPasswordChangeDto> changePaswordValidator)
         {
             _mediator = mediator;
             _loginValidator = loginValidator;
+            _changePaswordValidator = changePaswordValidator;
         }
-
 
         [AllowAnonymous]
         public ActionResult Login()
@@ -89,10 +92,64 @@ namespace ProjectManager.Presentation.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> UserSettings(UserPasswordChangeDto entity)
+        {
+            var validatorResponse = _changePaswordValidator.Validate(entity);
+
+            if (!validatorResponse.IsValid)
+            {
+                var errors = validatorResponse.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, errors });
+            }
+
+            try
+            {
+                entity.Id = GetUserId();
+                var responseChange = await _mediator.Send(new UpdateUserPasswordCommand
+                {
+                    Passwords = entity
+                });
+
+                if (responseChange == "succes")
+                    return Json(new { success = true });
+                else
+                {
+                    ModelState.AddModelError("", responseChange);
+                    return Json(new { success = false });
+                }
+
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Internal server error");
+                return Json(new { success = false });
+            }
+        }
+
         public ActionResult Logout()
         {
             authenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
+
+
+        public int GetUserId()
+        {
+            int id = ClaimsExtensions.GetUserId(User);
+            return id;
+        }
+
+        #region
+
+        public ActionResult OpenChangePasswordModal()
+        {
+            return PartialView("_ChangUserPasswordModal", new UserPasswordChangeDto());
+        }
+
+        #endregion
+
     }
 }

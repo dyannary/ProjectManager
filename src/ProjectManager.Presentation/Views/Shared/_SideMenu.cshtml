@@ -21,8 +21,12 @@
                 </div>
 
                 <ul id="accountSubmenu" class="sub-menu" style="display: none;">
-                    <li>@Html.ActionLink("My account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Settings", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>
+                        <a href="#" class="nav-link" id="modalConfirmButton" onclick="openModal({ url: '/Account/OpenChangePasswordModal', data: 0 })"
+                                data-toggle="ajax-modal" data-trigger="Modal">
+                            Change Password
+                        </a>
+                    </li>
                     <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </li>
