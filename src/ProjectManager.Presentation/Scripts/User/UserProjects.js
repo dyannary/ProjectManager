@@ -99,3 +99,17 @@ function HandleCreateUpdateCollaborator(response) {
         }
     }
 }
+    function HandleChangePasswordUser(response) {
+            debugger;
+    if (response.success) {
+        $('#modal').modal('hide');
+            } else if (response.errors !== null) {
+        $('span[data-valmsg-for]').text('');
+
+    for (var key in response.errors) {
+                    var messages = response.errors[key];
+    var errorElement = $('span[data-valmsg-for="' + key + '"]');
+    errorElement.text(messages);
+                }
+            }
+        }

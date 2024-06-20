@@ -473,6 +473,7 @@
     <Content Include="Views\ProjectTask\_GetProjectTaskDetailsModal.cshtml" />
     <Content Include="Views\ProjectTask\_DeleteTaskModal.cshtml" />
     <Content Include="Views\Shared\_SideMenu.cshtml" />
+    <Content Include="Views\Account\_ChangUserPasswordModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

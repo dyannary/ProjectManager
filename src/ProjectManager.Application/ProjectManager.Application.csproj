@@ -525,6 +525,7 @@
     <Compile Include="DataTransferObjects\Projects\CardDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectByIdDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectToCreateDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserPasswordChangeDto.cs" />
     <Compile Include="Enums\FileTypeEnum.cs" />
     <Compile Include="Enums\NotificationTypeEnum.cs" />
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
@@ -580,6 +581,8 @@
     <Compile Include="UserManagement\Commands\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommand.cs" />
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Commands\UpdatePassword\UpdateUserPasswordCommand.cs" />
+    <Compile Include="UserManagement\Commands\UpdatePassword\UpdateUserPasswordValidator.cs" />
     <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommand.cs" />
     <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommandValidator.cs" />
     <Compile Include="UserManagement\Queries\GetUserPhoto\GetUserPhotoByEmailQuerry.cs" />

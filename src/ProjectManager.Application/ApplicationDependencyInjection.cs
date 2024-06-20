@@ -10,6 +10,7 @@ using ProjectManager.Application.Projects.Commands.Create;
 using ProjectManager.Application.Projects.Commands.Update;
 using ProjectManager.Application.Services;
 using ProjectManager.Application.User.Commands.LoginUser;
+using ProjectManager.Application.UserManagement.Commands.UpdatePassword;
 using System.Reflection;
 
 namespace ProjectManager.Application
@@ -26,6 +27,7 @@ namespace ProjectManager.Application
             builder.RegisterType<CreateProjectCommandValidator>().As<IValidator<ProjectToCreateDto>>();
             builder.RegisterType<UpdateProjectCommandValidator>().As<IValidator<ProjectByIdDto>>();
             builder.RegisterType<CreateProjectCollaboratorCommandValidator>().As<IValidator<CollaboratorToCreateDto>>();
+            builder.RegisterType<UpdateUserPasswordValidator>().As<IValidator<UserPasswordChangeDto>>();
 
             builder.RegisterHubs(Assembly.GetExecutingAssembly());
 
