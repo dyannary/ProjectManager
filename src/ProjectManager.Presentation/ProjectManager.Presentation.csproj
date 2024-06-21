@@ -480,16 +480,6 @@
     <Folder Include="Content\Files\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProjectManager.Application\ProjectManager.Application.csproj">
-      <Project>{87af0c31-5f78-4498-b913-49e138a594e4}</Project>
-      <Name>ProjectManager.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProjectManager.Infrastructure\ProjectManager.Infrastructure.csproj">
-      <Project>{0a634e23-6e38-4199-bfa0-0498e9bad7ac}</Project>
-      <Name>ProjectManager.Infrastructure</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
@@ -518,6 +508,12 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.5.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.5.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectManager.Infrastructure\ProjectManager.Infrastructure.csproj">
+      <Project>{0a634e23-6e38-4199-bfa0-0498e9bad7ac}</Project>
+      <Name>ProjectManager.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

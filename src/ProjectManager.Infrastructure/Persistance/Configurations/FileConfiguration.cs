@@ -9,11 +9,10 @@ namespace ProjectManager.Infrastructure.Persistance.Configurations
         {
             HasKey(f => f.Id);
 
-            Property(f => f.FileName).IsRequired().HasMaxLength(70);
+            Property(f => f.FileName).IsRequired();
             Property(f => f.FileData).IsRequired();
             Property(f => f.IsDeleted).IsRequired();
-            Property(f => f.ProjectTaskId).IsOptional();
-            Property(f => f.FileTypeId).IsOptional();
+            Property(f => f.ProjectTaskId).IsRequired();
         }
     }
 }

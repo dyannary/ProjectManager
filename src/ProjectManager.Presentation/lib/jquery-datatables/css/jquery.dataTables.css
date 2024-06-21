@@ -301,7 +301,6 @@ table.dataTable td {
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
-  *cursor: hand;
   color: #333 !important;
   border: 1px solid transparent;
   border-radius: 2px;

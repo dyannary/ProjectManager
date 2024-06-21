@@ -41,7 +41,6 @@ namespace ProjectManager.Application.ProjectTasks.Queries
                 TaskStateId = task.ProjectTaskState.Id,
                 TaskTypeId = task.ProjectTaskType.Id,
                 AssignedTo = task.UserProjectTasks.FirstOrDefault().User.UserName,
-                PhotoPath = task.UserProjectTasks.FirstOrDefault()?.User?.PhotoPath,
             }).ToList();
 
             return tasks;

@@ -16,6 +16,7 @@ using System.Net;
 using ProjectManager.Application.Notifications.Commands.Send;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System;
+using FluentValidation;
 
 namespace ProjectManager.Presentation.Controllers
 {
@@ -23,10 +24,13 @@ namespace ProjectManager.Presentation.Controllers
     {
 
         private readonly IMediator _mediator;
+        private readonly IValidator<AddTaskDto> _addTaskValidator;
 
-        public ProjectTaskController(IMediator mediator)
+        public ProjectTaskController(IMediator mediator,
+            IValidator<AddTaskDto> addTaskValidator)
         {
             _mediator = mediator;
+            _addTaskValidator = addTaskValidator;
         }
 
         #region CRUD Operations
@@ -121,10 +125,16 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddTask(AddTaskDto data)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _addTaskValidator.Validate(data);
+
+            if (!validationResult.IsValid)
             {
-                return Json(new { StatusCode = 500 });
+                var errors = validationResult.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, errors });
             }
+
             try
             {
                 var addedUser = await _mediator.Send(new CreateTaskCommand { Data = data });
@@ -134,7 +144,7 @@ namespace ProjectManager.Presentation.Controllers
                     // Send Notification
                     await _mediator.Send(new SendNotificationCommand
                     {
-                        ForUser_Username = data.AssignedTo,
+                        ForUser_Username = data.AssignedTo.ToString(),
                         ProjectId = data.ProjectId,
                         Message = "You are assigned to a new task for project: ",
                         NotificationType = Application.Enums.NotificationTypeEnum.Task
@@ -277,7 +287,6 @@ namespace ProjectManager.Presentation.Controllers
             int id = ClaimsExtensions.GetUserId(user);
             return id;
         }
-
     }
 }
 #endregion

@@ -526,7 +526,6 @@
     <Compile Include="DataTransferObjects\Projects\ProjectByIdDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectToCreateDto.cs" />
     <Compile Include="DataTransferObjects\User\UserPasswordChangeDto.cs" />
-    <Compile Include="Enums\FileTypeEnum.cs" />
     <Compile Include="Enums\NotificationTypeEnum.cs" />
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
     <Compile Include="Hubs\NotificationHub.cs" />
@@ -558,6 +557,7 @@
     <Compile Include="Projects\Queries\GetProjectUsersQuery.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectResponseDto.cs" />
     <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommand.cs" />
+    <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommandValidator.cs" />
     <Compile Include="ProjectTasks\Commands\DeleteTask\DeleteTaskCommand.cs" />
     <Compile Include="ProjectTasks\Commands\UpdateTask\UpdateTaskCommand.cs" />
     <Compile Include="ProjectTasks\Queries\GetTaskByIdQuery.cs" />
@@ -598,12 +598,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj">
-      <Project>{36b4c4d8-ad3a-459a-806e-11c982d4e3e0}</Project>
-      <Name>ProjectManager.Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
@@ -613,6 +607,12 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.js" />
     <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj">
+      <Project>{36b4c4d8-ad3a-459a-806e-11c982d4e3e0}</Project>
+      <Name>ProjectManager.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
