@@ -473,6 +473,7 @@
     <Content Include="Views\ProjectTask\_GetProjectTaskDetailsModal.cshtml" />
     <Content Include="Views\ProjectTask\_DeleteTaskModal.cshtml" />
     <Content Include="Views\Shared\_SideMenu.cshtml" />
+    <Content Include="Views\Account\_ChangUserPasswordModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -509,10 +510,6 @@
     <Content Include="Scripts\jquery-3.5.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProjectManager.Application\ProjectManager.Application.csproj">
-      <Project>{87af0c31-5f78-4498-b913-49e138a594e4}</Project>
-      <Name>ProjectManager.Application</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ProjectManager.Infrastructure\ProjectManager.Infrastructure.csproj">
       <Project>{0a634e23-6e38-4199-bfa0-0498e9bad7ac}</Project>
       <Name>ProjectManager.Infrastructure</Name>
