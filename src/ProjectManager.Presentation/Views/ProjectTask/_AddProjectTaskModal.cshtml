@@ -10,7 +10,7 @@
     {
         HttpMethod = "POST",
         OnSuccess = "handleCreateUpdateTask"
-    }, new { enctype = "multipart/form-data", id = "taskForm" }))
+    }, new { enctype = "multipart/form-data", id = "taskForm"}))
     {
         <div class="modal-body">
             @Html.AntiForgeryToken()
@@ -76,14 +76,19 @@
                 <div class="form-group row mb-2">
                     <div class="col-md-6">
                         @Html.LabelFor(model => model.Files, "Upload images", htmlAttributes: new { @class = "control-label" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger", data_valmsg_for = "Files" })
                     </div>
                     <div class="col-md-6">
                         <div class="container">
                             <label for="file-input">
                                 <i class="bi bi-upload upload-icon"></i><br>
                             </label>
+                            <div id="file-size-error" class="text-danger" style="display: none;">
+                                File size exceeds the limit of 5 MB.
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 <input type="file" id="file-input" name="Files" class="form-control"
                        accept="image/*" style="display:none;" onchange="preview()" multiple />

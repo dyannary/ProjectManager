@@ -48,8 +48,17 @@ function handleCreateUpdateTask(response) {
 function preview() {
     let fileInput = document.getElementById("file-input");
     let imageContainer = document.getElementById("images");
-    
+    var maxSize = 5 * 1024 * 1024;
+
     for (let i of fileInput.files) {
+        if (i.size > maxSize) {
+            document.getElementById('file-size-error').style.display = 'block';
+            fileInput.value = '';
+            return;
+        } else {
+            document.getElementById('file-size-error').style.display = 'none';
+        }
+
         let reader = new FileReader();
         let figure = document.createElement("figure");
         let figCap = document.createElement("figcaption");
@@ -61,7 +70,7 @@ function preview() {
         reader.onload = () => {
             let img = document.createElement("img");
             img.setAttribute("src", reader.result);
-            figure.insertBefore(img, figCap); 
+            figure.insertBefore(img, figCap);
 
             deleteBtn.textContent = "x";
             deleteBtn.classList.add("delete-btn");
@@ -69,7 +78,7 @@ function preview() {
             figure.appendChild(deleteBtn);
 
             figure.addEventListener("dblclick", () => openImageModal(img));
-        }
+        };
 
         reader.readAsDataURL(i);
 
