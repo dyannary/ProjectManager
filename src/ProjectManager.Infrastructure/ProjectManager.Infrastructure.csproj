@@ -125,6 +125,10 @@
     <Folder Include="Persistance\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ProjectManager.Application\ProjectManager.Application.csproj">
+      <Project>{87af0c31-5f78-4498-b913-49e138a594e4}</Project>
+      <Name>ProjectManager.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj">
       <Project>{36b4c4d8-ad3a-459a-806e-11c982d4e3e0}</Project>
       <Name>ProjectManager.Domain</Name>
