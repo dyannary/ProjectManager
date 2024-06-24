@@ -43,7 +43,8 @@ namespace ProjectManager.Application.UserManagement.UpdateUserByClient
 
             string newFilePath = await _fileService.GetPhotoPath(request.User.Photo, userToUpdate.PhotoPath, request.User.RemovePhoto, true);
 
-            userToUpdate.PhotoPath = newFilePath;
+            if (newFilePath != null)
+                userToUpdate.PhotoPath = newFilePath;
 
             userToUpdate.UserName = request.User.Username;
             userToUpdate.FirstName = request.User.FirstName;

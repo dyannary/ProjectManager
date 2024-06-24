@@ -36,16 +36,13 @@ function updateNotificationCountForStart() {
 }
 
 function getUserPhoto() {
-    debugger;
     $.ajax({
         url: '../Account/GetUserPhoto',
         type: 'GET',
         success: function (data) {
-            debugger;
             $('#UserAvatar').attr('src', data);
         },
         error: function (error) {
-            debugger;
             console.log("Error fetching photo for user");
         }
     });
@@ -56,9 +53,11 @@ function getUserUsername() {
         url: '../Account/GetUserUsername',
         type: 'GET',
         success: function (data) {
+            debugger
             $('#username').text(data)
         },
         error: function (error) {
+            debugger
             console.log("Error fetching username for user");
         }
     });
