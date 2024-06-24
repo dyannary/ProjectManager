@@ -339,6 +339,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CustomCss\Layout.css" />
     <Content Include="Content\Images\App\background.jpg" />
     <Content Include="Content\Images\App\notificationIcon.png" />
     <Content Include="Content\Images\App\remove.png" />
@@ -422,7 +423,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\Layout\LayoutNotification.js" />
+    <Content Include="Scripts\Layout\SideLayoutScrips.js" />
     <Content Include="Scripts\Layout\LayoutScripts.js" />
     <Content Include="Scripts\Layout\Site.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -474,6 +475,7 @@
     <Content Include="Views\ProjectTask\_DeleteTaskModal.cshtml" />
     <Content Include="Views\Shared\_SideMenu.cshtml" />
     <Content Include="Views\Account\_ChangUserPasswordModal.cshtml" />
+    <Content Include="Views\Account\_UpdateUserByClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

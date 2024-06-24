@@ -8,7 +8,7 @@ namespace ProjectManager.Application.Services
 {
     public class FileService : IFileService
     {
-        private readonly string _defaultPath = $"~/Content/Images/";
+        private readonly string _defaultPath = $"/Content/Images";
 
         public async Task<string> SaveFile(HttpPostedFileBase file)
         {
@@ -24,7 +24,7 @@ namespace ProjectManager.Application.Services
 
             if (File.Exists(pathMapped))
             {
-                if (Path.GetFileName(path) != "defaultImage.jpg")
+                if (Path.GetFileName(path) != "defaultImage.jpg" && Path.GetFileName(path) != "default_avatar.jpg")
                     File.Delete(pathMapped);
             }
 
@@ -39,7 +39,8 @@ namespace ProjectManager.Application.Services
             {
                 try
                 {
-                    File.Delete(pathMapped);
+                    if (Path.GetFileName(path) != "defaultImage.jpg" && Path.GetFileName(path) != "default_avatar.jpg")
+                        File.Delete(pathMapped);
                     return true;
                 }
                 catch
@@ -83,12 +84,16 @@ namespace ProjectManager.Application.Services
             }
         }
 
-        public async Task<string> GetPhotoPath(HttpPostedFileBase file, string path, bool isRemoved)
+        public async Task<string> GetPhotoPath(HttpPostedFileBase file, string path, bool isRemoved, bool user = false)
         {
             if(isRemoved)
-                return $"{_defaultPath}/Default/defaultImage.jpg";
+                if (user)
+                    return $"{_defaultPath}/Default/default_avatar.jpg";
+                else 
+                    return $"{_defaultPath}/Default/defaultImage.jpg";
 
-            return await UpdateFile(file, path);
+            return file == null ? null : await UpdateFile(file, path);
+
         }
 
         #endregion

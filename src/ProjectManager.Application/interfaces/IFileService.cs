@@ -5,7 +5,7 @@ namespace ProjectManager.Application.Interfaces
 {
     public interface IFileService
     {
-        Task<string> GetPhotoPath(HttpPostedFileBase file, string path, bool isRemoved);
+        Task<string> GetPhotoPath(HttpPostedFileBase file, string path, bool isRemoved, bool user = false);
         Task<string> SaveFile(HttpPostedFileBase file);
         Task<string> UpdateFile(HttpPostedFileBase file, string path);
         bool RemoveFile(string path);

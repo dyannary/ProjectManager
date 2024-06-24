@@ -519,6 +519,7 @@
     <Compile Include="DataTransferObjects\User\LoginUserDto.cs" />
     <Compile Include="DataTransferObjects\User\AddUserDto.cs" />
     <Compile Include="DataTransferObjects\User\UserByIdDto.cs" />
+    <Compile Include="DataTransferObjects\User\UserByIdForClientDto.cs" />
     <Compile Include="DataTransferObjects\User\UserByUsernameAndPasswordDto.cs" />
     <Compile Include="DataTransferObjects\User\UserDto.cs" />
     <Compile Include="DataTransferObjects\Projects\ProjectByFiltersDto.cs" />
@@ -583,8 +584,11 @@
     <Compile Include="UserManagement\Commands\LoginUser\LoginUserCommandValidator.cs" />
     <Compile Include="UserManagement\Commands\UpdatePassword\UpdateUserPasswordCommand.cs" />
     <Compile Include="UserManagement\Commands\UpdatePassword\UpdateUserPasswordValidator.cs" />
+    <Compile Include="UserManagement\Commands\UpdateUserByClient\UpdateUserByClientValidator.cs" />
     <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommand.cs" />
     <Compile Include="UserManagement\Commands\UpdateUser\UpdateUserCommandValidator.cs" />
+    <Compile Include="UserManagement\Queries\GetUserById\GetUserByIdForClientQuerry.cs" />
+    <Compile Include="UserManagement\Queries\GetUsername\GetUsernameByEmailQuerry.cs" />
     <Compile Include="UserManagement\Queries\GetUserPhoto\GetUserPhotoByEmailQuerry.cs" />
     <Compile Include="UserManagement\Queries\GetUsersByFilter\GetUsersByFilterQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUserById\GetUserByIdQuery.cs" />
@@ -592,6 +596,7 @@
     <Compile Include="UserManagement\Queries\GetUsersRole\GetUsersRoleQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUsers\GetUsersQuery.cs" />
     <Compile Include="UserManagement\Queries\GetUsers\GetUsersQueryValidation.cs" />
+    <Compile Include="UserManagement\Commands\UpdateUserByClient\UpdateUserByClientCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,38 +1,38 @@
 ﻿<div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
-        @if (!User.Identity.IsAuthenticated)
-        {
-            <li><a href="#">@Html.ActionLink("Sign In", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</a></li>
-        }
-        else
-        {
-            <li>
-                <div class="d-flex align-items-center m-1">
-                    <div style="text-align: center;">
-                        <div style="border-radius: 50%; overflow: hidden; margin-top: 5px; width: 50px; height: 50px;">
-                            <img class="avatar avatar-lg" alt="User avatar" id="UserAvatar" />
-                        </div>
-                    </div>
-                    <a href="#" onclick="toggleSubMenu('account')" style="font-size: inherit">@User.Identity.Name</a>
-                    <button class="bg-transparent border-0" id="modalConfirmButton" onclick="openModal({ url: '/Notification/OpenNotificationModal', data: 0 })" data-toggle="ajax-modal" data-trigger="Modal">
-                        <span id="notificationCount" style="background-color: red; color: white; border-radius: 50%; padding: 5px 10px;">0</span>
-                    </button>
+    <li>
+        <div class="d-flex align-items-center m-1">
+            <div style="text-align: center; margin-right: 10px">
+                <div class="avatar-container">
+                    <img class="avatar avatar-lg" alt="User avatar" id="UserAvatar" />
                 </div>
+            </div>
 
-                <ul id="accountSubmenu" class="sub-menu" style="display: none;">
-                    <li>
-                        <a href="#" class="nav-link" id="modalConfirmButton" onclick="openModal({ url: '/Account/OpenChangePasswordModal', data: 0 })"
-                                data-toggle="ajax-modal" data-trigger="Modal">
-                            Change Password
-                        </a>
-                    </li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
-            </li>
-        }
-    </ul>
-    <hr style="width:100%;text-align:left;margin-left:0; color: white;">
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: inherit" id="username"></a>
+
+                <div class="dropdown-menu bg-light bg-opacity-75"  aria-labelledby="dropdownMenuButton">
+                    <a href="#" class="dropdown-item text-dark text-center" id="modalConfirmButton" onclick="openModal({ url: '/Account/OpenEditUserByClientModal', data: 0 })"
+                       data-toggle="ajax-modal" data-trigger="Modal">
+                        Settings
+                    </a>
+                    <a href="#" class="dropdown-item text-dark text-center" id="modalConfirmButton" onclick="openModal({ url: '/Account/OpenChangePasswordModal', data: 0 })"
+                       data-toggle="ajax-modal" data-trigger="Modal">
+                        Change Password
+                    </a>
+                    <a href="#">@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "dropdown-item text-dark text-center" })</a>
+                </div>
+            </div>
+
+            <button class="bg-transparent border-0" id="modalConfirmButton" onclick="openModal({ url: '/Notification/OpenNotificationModal', data: 0 })" data-toggle="ajax-modal" data-trigger="Modal">
+                <span id="notificationCount" style="background-color: red; color: white; border-radius: 50%; padding: 5px 10px;">0</span>
+            </button>
+        </div>
+
+        </li>
+        </ul>
+         <hr style="width:100%;text-align:left;margin-left:0; color: white;">
 
     <ul>
         @if (User.IsInRole("admin"))
@@ -48,66 +48,3 @@
 </div>
 
 @Scripts.Render("~/bundles/NotificationLayout")
-
-<style>
-    body {
-        font-family: "Lato", sans-serif;
-    }
-
-    .sidenav {
-        height: 100%;
-        position: fixed;
-        z-index: 1;
-        width: 0;
-        top: 0;
-        left: 0;
-        background-color: #303340;
-        overflow: auto;
-        transition: 0.3s;
-        padding-top: 60px;
-    }
-
-        .sidenav a {
-            padding: 8px 0px 0px 0px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-
-            .sidenav a:hover {
-                color: #f1f1f1;
-            }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-    .sub-menu {
-        padding-left: 10px;
-    }
-
-        .sub-menu a {
-            padding-left: 25px;
-        }
-
-    #main {
-        transition: margin-left .3s;
-        padding: 16px;
-    }
-
-    ul {
-        list-style-position: inside;
-    }
-
-    li {
-        margin-left: 0;
-        padding-left: 0;
-        list-style-type: none;
-    }
-</style>
