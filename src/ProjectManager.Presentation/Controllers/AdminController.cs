@@ -87,17 +87,6 @@ namespace ProjectManager.Presentation.Controllers
             return PartialView("_GetUserDetailsModal", response);
         }
 
-        [HttpGet]
-        public async Task<JsonResult> getUserPhoto()
-        {
-            string photoPath = await _mediator.Send(new GetUserPhotoByEmailQuerry
-            {
-                Email = User.Identity.Name
-            });
-
-            return Json(photoPath, JsonRequestBehavior.AllowGet);
-        }
-
         #region Add User
         public async Task<ActionResult> AddUser(int id)
         {

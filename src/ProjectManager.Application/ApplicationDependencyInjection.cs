@@ -5,6 +5,7 @@ using ProjectManager.Application.Interfaces;
 using ProjectManager.Application.Services;
 using ProjectManager.Application.User.Commands.LoginUser;
 using ProjectManager.Application.UserManagement.Commands.UpdatePassword;
+using ProjectManager.Application.UserManagement.Commands.UpdateUserByClient;
 using System.Reflection;
 using System.Linq;
 
