@@ -21,13 +21,14 @@
         </tr>
     </thead>
 </table>
+
 <script>
     $(document).ready(function () {
         initializeTaskDataTable();
     });
 
     function initializeTaskDataTable() {
-        debugger;
+
         var table = $('#TasksTable2').DataTable({
             select: 'single',
             "serverSide": true,
@@ -141,7 +142,7 @@
                 },
             },
         });
-        debugger;
+       
         var contextmenu = $('#TasksTable2').contextMenu({
             selector: 'tr',
             trigger: 'right',
@@ -152,7 +153,9 @@
                         openModal({ data: row.data()["Id"], url: '../ProjectTask/UpdateTask/'});
                         break;
                     case 'Details':
-                        openModal({ data: row.data()["Id"], url: '../ProjectTask/GetTaskDetails/' })
+                        var form = $('<form action="../ProjectTask/GotoProjectTaskDetails" method="get"></form>');
+                        form.append('<input type="hidden" name="Id" value="' + row.data()["Id"] + '" />');
+                        form.appendTo('body').submit().remove(); 
                         break;
                     case 'Delete':
                         openModal({ data: row.data()["Id"], url: '../ProjectTask/DeleteTask/' })
@@ -171,7 +174,7 @@
         
         return table;
     }
-    debugger;
+   
     function drawPatrialView(url, divId) {
         $.ajax({
             url: url,

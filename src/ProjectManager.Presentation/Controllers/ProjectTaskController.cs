@@ -77,7 +77,7 @@ namespace ProjectManager.Presentation.Controllers
                 Id = id
             });
 
-            return PartialView("_GetProjectTaskDetailsModal", response);
+            return PartialView("GetTaskDetailsView", response);
         }
 
         [HttpPost]
@@ -166,6 +166,17 @@ namespace ProjectManager.Presentation.Controllers
         #endregion
 
         #region Update Task
+
+        public async Task<ActionResult> GotoProjectTaskDetails(int id)
+        {
+            var response = await _mediator.Send(new GetTaskByIdQuery
+            {
+                Id = id
+            });
+
+            return View("_GetProjectTaskDetailsModal", response);
+        }
+
 
         [HttpGet]
         public async Task<ActionResult> UpdateTask(int id)
