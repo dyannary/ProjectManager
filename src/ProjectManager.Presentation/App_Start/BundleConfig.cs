@@ -7,7 +7,9 @@ namespace ProjectManager.Presentation
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-3.5.1.min.js",
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -16,7 +18,8 @@ namespace ProjectManager.Presentation
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -37,23 +40,17 @@ namespace ProjectManager.Presentation
             "~/signalr/hubs"
             ));
 
-            bundles.Add(new Bundle("~/bundles/OpenModal").Include(
-                      "~/Scripts/user/OpenModal.js"));
+            bundles.Add(new Bundle("~/bundles/CustomJs").Include(
+                      "~/Scripts/user/OpenModal.js",
+                      "~/Scripts/Layout/LayoutScripts.js",
+                      "~/Scripts/User/UserProjects.js",
+                      "~/Scripts/Admin/UserManagement.js",
+                      "~/Scripts/ProjectTask/UserProject.js",
+                      "~/Scripts/User/Notification.js"));
 
-            bundles.Add(new Bundle("~/bundles/LayoutScripts").Include(
-                    "~/Scripts/Layout/LayoutScripts.js"));
-
-            bundles.Add(new Bundle("~/bundles/UserProjects").Include(
-                    "~/Scripts/User/UserProjects.js"));
-            
-            bundles.Add(new Bundle("~/bundles/Admin").Include(
-                    "~/Scripts/Admin/UserManagement.js"));
-
-            bundles.Add(new Bundle("~/bundles/ProjectTask").Include(
-                    "~/Scripts/ProjectTask/UserProject.js"));
-
-            bundles.Add(new Bundle("~/bundles/Notification").Include(
-                    "~/Scripts/User/Notification.js"));
+            bundles.Add(new Bundle("~/bundles/Popper").Include(
+                "~/Scripts/umd/popper.min.js"
+                ));
 
             bundles.Add(new Bundle("~/bundles/NotificationLayout").Include(
                     "~/Scripts/Layout/SideLayoutScrips.js"));
