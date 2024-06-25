@@ -2,14 +2,14 @@
     font-family: "Lato", sans-serif;
 }
 
-.avatar-container {
+.avatar-container-menu {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     overflow: hidden;
 }
 
-.avatar {
+.avatar-menu {
     width: 100%;
     height: auto;
     display: block;
