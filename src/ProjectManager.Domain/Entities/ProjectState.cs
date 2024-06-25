@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProjectManager.Domain.Entities
 {
-    public class ProjectState : Entity<int>
+    public class ProjectState : Entity
     {
         public string Name { get; set; }
         public string Description { get; set; }

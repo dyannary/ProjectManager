@@ -1,0 +1,121 @@
+﻿@model ProjectManager.Application.DataTransferObjects.Projects.ProjectResponseDto
+
+<div class="container">
+    <div class="row">
+        @foreach (var card in Model.Projects)
+        {
+            <div class="col-lg-4 col col-sm-12 mb-4">
+                <div class="card h-100">
+                    <div class="row no-gutters">
+                        <div class="col-md-5">
+                            <div class="square-image-container">
+                                <img class="card-img ma square-image img-thumbnail" 
+                                     src="@Url.Content(card.PhotoPath)" 
+                                     alt="Card image">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title">@card.Name</h4>
+                                <p class="card-text">@card.Description</p>
+
+                                <div class="dropdown dropdown-top-right">
+                                    <button class="dropdown-toggle bg-transparent border-0" 
+                                            type="button" id="dropdownMenuButton" 
+                                            data-toggle="dropdown" aria-haspopup="true" 
+                                            aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <button class="dropdown-item" 
+                                                id="modalUpdateProject" 
+                                                onclick="openModal({url: '/Project/OpenUpdateModal', data: @card.Id})" 
+                                                data-toggle="ajax-modal" 
+                                                data-trigger="Modal">Update</button>
+
+                                        <form action="../Project/GotoProjectDetails" method="get">
+                                            <input type="hidden" name="Id" value="@card.Id" />
+                                            <button type="submit" class="dropdown-item">Details</button>
+                                        </form>
+
+                                        @if (card.IsEnabled == false)
+                                        {
+                                            <button class="dropdown-item" 
+                                                    id="modalConfirmButton" 
+                                                    onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" 
+                                                    data-toggle="ajax-modal" 
+                                                    data-trigger="Modal">
+                                                Disable
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="dropdown-item " 
+                                                    id="modalConfirmButton" 
+                                                    onclick="openModal({url: '/Project/OpenDisableProjectModal', data: @card.Id})" 
+                                                    data-toggle="ajax-modal" 
+                                                    data-trigger="Modal">
+                                                Enable
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+    .square-image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding-top: 100%;
+    }
+
+    .dropdown-top-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .square-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+
+<nav aria-label="Page navigation" class="d-flex justify-content-end">
+    <ul class="pagination">
+
+        @if (Model.CurrentPage - 1 > 0)
+        {
+            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(Model.CurrentPage - 1))">&laquo;</a></li>
+        }
+
+        @for (int i = Model.FromPage; i <= Model.MaxPage; i++)
+        {
+            if (Model.CurrentPage == i)
+            {
+                <li class="page-item active"><a class="page-link btn" id="CurrentPage" onclick="GetProjectCards(@i)">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@i)">@i</a></li>
+            }
+        }
+
+        @if (Model.MaxPage != Model.CurrentPage)
+        {
+            <li class="page-item"><a class="page-link btn" onclick="GetProjectCards(@(Model.CurrentPage + 1))">&raquo;</a></li>
+        }
+    </ul>
+</nav>

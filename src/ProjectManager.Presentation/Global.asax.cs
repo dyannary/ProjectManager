@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿
+using FluentValidation.Mvc;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -14,8 +15,9 @@ namespace ProjectManager.Presentation
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            DependencyConfig.RegisterDependencies();
+            FluentValidationModelValidatorProvider.Configure();
 
+            DependencyConfig.RegisterDependencies();
         }
     }
 }

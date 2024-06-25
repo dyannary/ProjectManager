@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=8.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Autofac.8.0.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.2.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -49,6 +49,9 @@
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.4.1.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -76,10 +79,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSeeder\Seeds\ProjectsSeed.cs" />
+    <Compile Include="DataSeeder\Seeds\ProjectTasksSeed.cs" />
+    <Compile Include="DataSeeder\Seeds\UsersSeed.cs" />
     <Compile Include="InfrastructureDependencyInjection.cs" />
+    <Compile Include="Migrations\202405150855274_init.cs" />
+    <Compile Include="Migrations\202405150855274_init.Designer.cs">
+      <DependentUpon>202405150855274_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405200708343_add_photoPath_In_Projects.cs" />
+    <Compile Include="Migrations\202405200708343_add_photoPath_In_Projects.Designer.cs">
+      <DependentUpon>202405200708343_add_photoPath_In_Projects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405281338517_extend_project_description_size_limit.cs" />
+    <Compile Include="Migrations\202405281338517_extend_project_description_size_limit.Designer.cs">
+      <DependentUpon>202405281338517_extend_project_description_size_limit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406051323542_AddUserPhotoPath.cs" />
+    <Compile Include="Migrations\202406051323542_AddUserPhotoPath.Designer.cs">
+      <DependentUpon>202406051323542_AddUserPhotoPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406201509330_CombineNotificationsAndTasks.cs" />
+    <Compile Include="Migrations\202406201509330_CombineNotificationsAndTasks.Designer.cs">
+      <DependentUpon>202406201509330_CombineNotificationsAndTasks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistance\AppDbContext.cs" />
     <Compile Include="Persistance\Configurations\FileConfiguration.cs" />
-    <Compile Include="Persistance\Configurations\FileTypeConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\NotificationConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\NotificationTypeConfiguration.cs" />
     <Compile Include="Persistance\Configurations\PriorityConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectTaskConfiguration.cs" />
     <Compile Include="Persistance\Configurations\ProjectTaskStateConfiguration.cs" />
@@ -89,7 +116,9 @@
     <Compile Include="Persistance\Configurations\RoleConfiguration.cs" />
     <Compile Include="Persistance\Configurations\UserConfiguration.cs" />
     <Compile Include="Persistance\Configurations\UserProjectConfiguration.cs" />
+    <Compile Include="Persistance\Configurations\UserProjectRoleConfiguration.cs" />
     <Compile Include="Persistance\Configurations\UserProjectTaskConfiguration.cs" />
+    <Compile Include="Persistance\DatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +137,23 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202405150855274_init.resx">
+      <DependentUpon>202405150855274_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405200708343_add_photoPath_In_Projects.resx">
+      <DependentUpon>202405200708343_add_photoPath_In_Projects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405281338517_extend_project_description_size_limit.resx">
+      <DependentUpon>202405281338517_extend_project_description_size_limit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406051323542_AddUserPhotoPath.resx">
+      <DependentUpon>202406051323542_AddUserPhotoPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406201509330_CombineNotificationsAndTasks.resx">
+      <DependentUpon>202406201509330_CombineNotificationsAndTasks.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

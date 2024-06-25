@@ -1,0 +1,17 @@
+﻿@using ProjectManager.Application.DataTransferObjects.NotificationDots;
+@model IEnumerable<NotificationListDto>
+
+<div style="max-height: 700px; overflow-y: auto">
+    @foreach (var notification in Model)
+    {
+        <div class="card border-2 m-2">
+            <div class="card-body justify-content-between d-flex align-items-center">
+                    <b class="card-title">@notification.Message</b>
+                    <div class="justify-content-between">
+                        <button class="btn border-0"><img src="@Url.Content("~/Content/Images/App/remove.png")" class="img-fluid" style="width: 30px; height: 30px;" alt="Remove" onclick="RemoveSingleNotificationHandler(@notification.Id)" /></button>
+                        <p>@notification.Created.ToShortDateString()</p>
+                    </div>
+            </div>
+        </div>
+    }
+</div>

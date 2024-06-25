@@ -1,0 +1,153 @@
+﻿@using ProjectManager.Application.DataTransferObjects.ProjectTask
+@model ProjectTaskById
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Update task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    @using (Ajax.BeginForm("UpdateTask", "ProjectTask", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "reloadTaskData"
+    }, new { enctype = "multipart/form-data", id = "taskForm"}))
+    {
+        <div class="modal-body">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ProjectId)
+            <div class="form-horizontal">
+
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.AssignedTo, "Assigned To", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.AssignedTo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.TaskStateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.TaskStateId, (SelectList)ViewBag.TaskState, "Select state", new { @class = "form-select dropdown-toggle" })
+                        @Html.ValidationMessageFor(model => model.TaskStateId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.TaskTypeId, "Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.TaskTypeId, (SelectList)ViewBag.TaskType, "Select type", new { @class = "form-select dropdown-toggle" })
+                        @Html.ValidationMessageFor(model => model.TaskTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.PriorityId, "Priority", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.PriorityId, (SelectList)ViewBag.Priorities, "Select Priority", new { @class = "form-select dropdown-toggle" })
+                        @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 100%; height: 100px;" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Files, "Upload images", htmlAttributes: new { @class = "control-label" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger"})
+                    </div>
+                    <div class="col-md-6">
+                        <div class="container">
+                            <label for="file-input">
+                                <i class="bi bi-upload upload-icon"></i><br>
+                            </label>
+                            <div id="file-size-error" class="text-danger" style="display: none;">
+                                File size exceeds the limit of 5 MB.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="max-height: 255px; overflow-y: auto; overflow-x: hidden">
+                    <div id="images" class="image-container">
+                        <div class="row mt-3">
+                            @if (Model.PhotoPaths != null)
+                            {
+                                foreach (var photoPath in Model.PhotoPaths)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="square-image-container">
+                                            <img src="@Url.Content(photoPath)" class="img-fluid square-image" alt="Task Photo">
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <div class="square-image-container">
+                                        <input type="file" id="file-input" name="Files" class="form-control"
+                                               accept="image/*" style="display:none;" onchange="preview()" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+       
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Add</button>
+        </div>
+    }
+</div>
+
+
+<style>
+
+    .square-image-container {
+        width: 100%;
+        padding-top: 100%;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1.5em;
+    }
+
+    .square-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    figcaption {
+        display: none;
+    }
+
+</style>
+

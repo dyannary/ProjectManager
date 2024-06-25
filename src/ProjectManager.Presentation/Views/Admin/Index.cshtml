@@ -1,0 +1,173 @@
+﻿<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<div class="text">
+    <button type="button" class="btn btn-danger" onclick="openModal({url: '/Admin/AddUser', data: 0})" data-bs-toggle="modal" data-bs-target="#addUserModal">Add</button>
+</div>
+
+
+<table id="UserDatabase" class="table-borderless row-border border-light"  width ="100%" cellspacing="0">
+    <thead style="background-color: #2f3248; color: #ffffff" class="table-light">
+        <tr>
+            <th>Id</th>
+            <th>RoleId</th>
+            <th>UserName</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Email</th>
+            <th>CreatedDate</th>
+            <th>IsEnabled</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+<style>
+    .avatar {
+        width: 30px; 
+        height: 30px; 
+        border-radius: 50%; 
+        margin-right: 10px; 
+    }
+</style>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            initializeUserDataTable();
+
+            $(document).contextMenu({
+                selector: 'tr',
+                trigger: 'right',
+                callback: function (key, options) {
+                    let row = table.row(options.$trigger);
+                    row.select();
+
+                    switch (key) {
+                        case 'details':
+                            window.location.href = "#Admin/GetUserDetails/" + row.data()["Id"];
+                            break;
+                        case 'edit':
+                            window.location.href = "#Admin/UpdateUser/" + row.data()["Id"];
+                            break;
+                        default:
+                            break;
+                    }
+                },
+                items: {
+                    "edit": { name: "Edit" },
+                    "details": { name: "Details" }
+                }
+            });
+        });
+
+        function initializeUserDataTable() {
+            var table = $('#UserDatabase').DataTable({
+
+                "serverSide": true,
+                "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>", // Includes search input box ("f") //f, r, t, l, 
+                "sProcessing": false,
+                "pageLength": 15,
+                "order": [[6, 'desc']],
+                ajax: {
+                    "url": "/Admin/UserTable",
+                    "type": "POST",
+                    "dataType": "json",
+                    "beforeSend": function (xhr) {
+                        $('#refreshMessage').text('Refreshing...').show();
+                    },
+                },
+                "drawCallback": function (settings) {
+                    $('#refreshMessage').hide();
+                },
+                "buttons": [
+                    {
+                        text: 'Add User',
+                        action: function (e, dt, node, config) {
+                            alert('Add User button clicked');
+                        }
+                    },
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                "columns": [
+                    { "data": "Id", "title": "Id", "name": "Id", "visible": false },
+                    { "data": "RoleId", "title": "RoleId", "name": "RoleId", "visible": false },
+                    {
+                        "data": "UserName",
+                        "title": "UserName",
+                        "name": "UserName",
+                        "render": function (data, type, full, meta) {
+                            var avatar = '<img src="' + full.PhotoPath + '" class="avatar" width="30px">';
+                            return avatar + ' ' + data;
+                        },
+                        "autoWidth": true
+                    },
+                    { "data": "FirstName", "title": "FirstName", "name": "FirstName", "autoWidth": true },
+                    { "data": "LastName", "title": "LastName", "name": "LastName", "autoWidth": true },
+                    { "data": "Email", "title": "Email", "name": "Email", "autoWidth": true },
+                    {
+                        "data": "CreatedDate",
+                        "title": "CreatedDate",
+                        "name": "CreatedDate",
+                        "autoWidth": true,
+                        "render": function (data, type, row) {
+                            if (type === 'display') {
+                                var date = new Date(parseInt(data.substr(6)));
+                                var day = date.getDate();
+                                var month = date.getMonth() + 1;
+                                var year = date.getFullYear();
+                                return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "data": "IsEnabled",
+                        "title": "IsEnabled",
+                        "name": "IsEnabled",
+                        "autoWidth": true,
+                        "render": function (data, type) {
+                            if (type === 'display') {
+                                if (data === true || data === 'true') {
+                                    return '<i class="fas fa-check-circle text-success"></i>';
+                                } else {
+                                    return '<i class="fas fa-times-circle text-danger"></i>';
+                                }
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "data": "Actions",
+                        "title": "Actions",
+                        "dataSorter": false,
+                        "orderable": false,
+                        "render": function (data, type, full, meta) {
+                            var idUser = full.Id;
+
+                            return `<button class="btn" id="modalConfirmButton" onclick="openModal({url: '/Admin/UpdateUser', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal"><i class="bi bi-pencil-square"></i></button>` +
+                                `<button class="btn" id="modalConfirmButton" onclick="openModal({url: '/Admin/GetUserDetails', data: ${idUser}})" data-toggle="ajax-modal" data-trigger="Modal"><i class="bi bi-info-circle"></i></button>`;
+                        }
+                    }
+                ],
+                "pagingType": "full_numbers", 
+                "language": {
+                    "search": '<i class="bi bi-search"></i>',
+                    "searchPlaceholder": "Search",
+                    "paginate": {
+                        "first": "First",
+                        "previous": "&laquo;",
+                        "next": "&raquo;",
+                        "last": "Last"
+                    },
+                    
+                },
+            });
+
+            return table;
+        }
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿body {
+    font-family: "Lato", sans-serif;
+}
+
+.avatar-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.sidenav {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    width: 0;
+    top: 0;
+    left: 0;
+    background-color: #303340;
+    overflow: auto;
+    transition: 0.3s;
+    padding-top: 60px;
+}
+
+    .sidenav a {
+        padding: 8px 0px 0px 0px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+.sub-menu {
+    padding-left: 10px;
+}
+
+    .sub-menu a {
+        padding-left: 25px;
+    }
+
+#main {
+    transition: margin-left .3s;
+    padding: 16px;
+}
+
+ul {
+    list-style-position: inside;
+}
+
+li {
+    margin-left: 0;
+    padding-left: 0;
+    list-style-type: none;
+}

@@ -1,13 +1,12 @@
-﻿using ProjectManager.Domain.Entities;
-using System;
+﻿using System;
 
 namespace ProjectManager.Domain.Common
 {
-    public abstract class AuditableEntity<T> : Entity<T>
+    public abstract class AuditableEntity : Entity
     {
-        public User CreatedBy { get; set; } = null;
+        public int? CreatedBy { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        public User LastModifiedBy { get; set; } = null;
-        public DateTime LastModified { get; set; } = DateTime.Now;
+        public int? LastModifiedBy { get; set; }
+        public DateTime? LastModified { get; set; } = DateTime.Now;
     }
 }

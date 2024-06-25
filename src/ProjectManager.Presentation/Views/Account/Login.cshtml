@@ -1,0 +1,65 @@
+﻿@model ProjectManager.Application.DataTransferObjects.User.LoginUserDto
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    <style>
+        body {
+            background: linear-gradient(90deg, rgba(223,223,223,1) 0%, rgba(179,179,179,1) 50%, rgba(223,223,223,1) 100%);
+        }
+
+        .element {
+            max-width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="container-fluid body-content justify-content-center align-items-center shadow p-3 bg-white rounded-2 col-3">
+        <section>
+            <h1 class="text-center">Login</h1>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" });
+            }
+        </section>
+        <section class="justify-content-center mx-auto element">
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken();
+
+            <div class="form-group align-content-center">
+                @Html.LabelFor(u => u.UserName)
+                @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(u => u.UserName, null, new { @class = "text-danger" })
+            </div>
+                <div class="form-group mt-2 align-content-center">
+                    @Html.LabelFor(u => u.Password)
+                    @Html.TextBoxFor(u => u.Password, new {@class = "form-control", type = "password"})
+                    @Html.ValidationMessageFor(u => u.Password, null, new {@class = "text-danger"})
+                </div>
+
+                <div class="justify-content-center d-flex">
+                    <button type="submit" class="btn btn-secondary mt-3">Login</button>
+                </div>
+            }
+        </section>
+        </div>
+
+</body>
+</html>
+
