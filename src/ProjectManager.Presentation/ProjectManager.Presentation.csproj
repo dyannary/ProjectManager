@@ -465,7 +465,6 @@
     <Content Include="Views\ProjectCollaborators\_RemoveCollaboratorModal.cshtml" />
     <Content Include="Views\ProjectCollaborators\_CollaboratorsTable.cshtml" />
     <Content Include="Views\ProjectCollaborators\_TransferProjectOwnershipModal.cshtml" />
-    <Content Include="Views\ProjectTask\_ProjectTasksTable.cshtml" />
     <Content Include="Views\Notification\_NotificationModal.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Notification\_NotificationList.cshtml" />
@@ -475,6 +474,7 @@
     <Content Include="Views\ProjectTask\_DeleteTaskModal.cshtml" />
     <Content Include="Views\Shared\_SideMenu.cshtml" />
     <Content Include="Views\Account\_ChangUserPasswordModal.cshtml" />
+    <Content Include="Views\ProjectTask\GetTaskDetailsView.cshtml" />
     <Content Include="Views\Account\_UpdateUserByClient.cshtml" />
   </ItemGroup>
   <ItemGroup>

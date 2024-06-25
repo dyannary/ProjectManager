@@ -95,8 +95,25 @@ function openImageModal(imageElement) {
     let modalImg = document.getElementById("modalImage");
 
     modal.style.display = "block";
+
+    //if it is details page then without src, if add image, it needs src
     modalImg.src = imageElement.src;
     
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
+function openImageModalForDetails(imageElement) {
+    let modal = document.getElementById("imageModal");
+    let modalImg = document.getElementById("modalImage");
+
+    modal.style.display = "block";
+    
+    modalImg.src = imageElement;
+
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";

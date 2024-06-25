@@ -8,9 +8,9 @@ namespace ProjectManager.Application.ProjectTasks.Commands.CreateTask
         public CreateTaskCommandValidator() 
         {
             RuleFor(model => model.Name).NotEmpty().WithMessage("Name cannot be empty")
-                    .NotNull().WithMessage("Name cannot be null")
-                    .MaximumLength(50).WithMessage("Name can have maximum 50 character")
-                    .WithName("Name");
+                .NotNull().WithMessage("Name cannot be null")
+                .MaximumLength(50).WithMessage("Name can have maximum 50 character")
+                .WithName("Name");
 
             RuleFor(model => model.TaskStateId).NotNull().WithMessage("Task state cannot be null")
                 .InclusiveBetween(1, 3).WithMessage("This is not a valid task state")

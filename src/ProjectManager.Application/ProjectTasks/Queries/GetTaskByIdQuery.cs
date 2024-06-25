@@ -41,7 +41,8 @@ namespace ProjectManager.Application.ProjectTasks.Queries
                 TaskTypeId = task.ProjectTaskType.Id,
                 TaskStateId = task.ProjectTaskState.Id,
                 PriorityId = task.Priority.Id,
-                ProjectId = task.ProjectId
+                ProjectId = task.ProjectId,
+                PhotoPaths = task.Files.Select(f => f.FileName).ToList()
             };
 
             if (task.UserProjectTasks.Any())

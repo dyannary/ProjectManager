@@ -10,7 +10,7 @@
     {
         HttpMethod = "POST",
         OnSuccess = "reloadTaskData"
-    }))
+    }, new { enctype = "multipart/form-data", id = "taskForm"}))
     {
         <div class="modal-body">
             @Html.AntiForgeryToken()
@@ -73,14 +73,49 @@
                     </div>
                 </div>
 
-                @*<div class="form-group">
-                    @Html.LabelFor(model => model.PhotoPaths, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.PhotoPaths, new { @class = "form-control", style = "width: 100%; height: 100px;" })
-                        @Html.ValidationMessageFor(model => model.PhotoPaths, "", new { @class = "text-danger" })
+                <div class="form-group row mb-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Files, "Upload images", htmlAttributes: new { @class = "control-label" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger"})
                     </div>
-                </div>*@
+                    <div class="col-md-6">
+                        <div class="container">
+                            <label for="file-input">
+                                <i class="bi bi-upload upload-icon"></i><br>
+                            </label>
+                            <div id="file-size-error" class="text-danger" style="display: none;">
+                                File size exceeds the limit of 5 MB.
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div style="max-height: 255px; overflow-y: auto; overflow-x: hidden">
+                    <div id="images" class="image-container">
+                        <div class="row mt-3">
+                            @if (Model.PhotoPaths != null)
+                            {
+                                foreach (var photoPath in Model.PhotoPaths)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="square-image-container">
+                                            <img src="@Url.Content(photoPath)" class="img-fluid square-image" alt="Task Photo">
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <div class="square-image-container">
+                                        <input type="file" id="file-input" name="Files" class="form-control"
+                                               accept="image/*" style="display:none;" onchange="preview()" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+       
             </div>
         </div>
         <div class="modal-footer">
@@ -89,3 +124,30 @@
         </div>
     }
 </div>
+
+
+<style>
+
+    .square-image-container {
+        width: 100%;
+        padding-top: 100%;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1.5em;
+    }
+
+    .square-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    figcaption {
+        display: none;
+    }
+
+</style>
+
