@@ -11,13 +11,13 @@ using System.Web;
 
 namespace ProjectManager.Application.Projects.Commands.Update
 {
-    public class UpdateProjectCommand : IRequest<bool>
+    public class UpdateProjectCommand : IRequest<string>
     {
         public ProjectByIdDto Project { get; set; }
         public int UserID { get; set; }
     }
 
-    public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, bool>
+    public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, string>
     {
 
         private readonly IAppDbContext _context;
@@ -28,7 +28,7 @@ namespace ProjectManager.Application.Projects.Commands.Update
             _fileService = fileService;
         }
 
-        public async Task<bool> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
 
             var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == request.Project.ProjectStateID);
@@ -37,15 +37,25 @@ namespace ProjectManager.Application.Projects.Commands.Update
 
             var path = projectToUpdate.PhotoPath;
 
+            if (projectState == null || projectToUpdate == null)
+            {
+                return "The server couldn't proccess the data!";
+            }
+
             string photoPath;
 
             if (request.Project.File != null || request.Project.RemoveFile == true)
             {
-                var isRemoved = request.Project.RemoveFile;
-
-                HttpPostedFileBase file = request.Project.File;
-
-                photoPath = await _fileService.GetPhotoPath(file, path, isRemoved);
+                try
+                {
+                    var isRemoved = request.Project.RemoveFile;
+                    HttpPostedFileBase file = request.Project.File;
+                    photoPath = await _fileService.GetPhotoPath(file, path, isRemoved);
+                }
+                catch
+                {
+                    return "Couldn't upload the image, try again!";
+                }
             }
             else
                 photoPath = path;   
@@ -60,16 +70,15 @@ namespace ProjectManager.Application.Projects.Commands.Update
             projectToUpdate.LastModifiedBy = request.UserID;
             projectToUpdate.ProjectState = projectState;
 
-            _context.Projects.AddOrUpdate(projectToUpdate);
-
             try
             {
+                _context.Projects.AddOrUpdate(projectToUpdate);
                 await _context.SaveAsync(cancellationToken);
-                return true;
+                return "success";
             }
             catch
             {
-                return false;
+                return "A problem occured on the server!";
             }
         }
     }

@@ -11,13 +11,13 @@ using ProjectManager.Application.Interfaces;
 
 namespace ProjectManager.Application.Projects.Commands.Create
 {
-    public class CreateProjectCommand : IRequest<bool>
+    public class CreateProjectCommand : IRequest<string>
     {
         public ProjectToCreateDto Project { get; set; }
         public int UserID { get; set; }
     }
 
-    public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, bool>
+    public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, string>
     {
 
         private readonly IAppDbContext _context;
@@ -28,15 +28,26 @@ namespace ProjectManager.Application.Projects.Commands.Create
             _fileService = fileService;
         }
 
-        public async Task<bool> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
             string filePathResponse = await _fileService.SaveFile(request.Project.File);
+
+            if (filePathResponse == null)
+            {
+                return "Couldn't upload the file!";
+            }
 
             var projectState = await _context.ProjectStates.FirstOrDefaultAsync(ps => ps.Id == request.Project.ProjectStateID);
 
             var User = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserID);
 
             var userProjectRole = await _context.UserProjectRole.FirstOrDefaultAsync(upr => upr.Name == "ProjectCreator");
+
+            if (projectState == null || User == null || userProjectRole == null)
+            {
+                return "The server coundn't process the data!";
+            }
+
 
             var projectToCreate = new Project
             {
@@ -59,18 +70,16 @@ namespace ProjectManager.Application.Projects.Commands.Create
                 UserProjectRole = userProjectRole,
             };
 
-            _context.Projects.Add(projectToCreate);
-
-            _context.UserProjects.AddOrUpdate(userProject);
-
             try
             {
+                _context.Projects.Add(projectToCreate);
+                _context.UserProjects.AddOrUpdate(userProject);
                 await _context.SaveAsync(cancellationToken);
-                return true;
+                return "success";
             }
             catch
             {
-                return false;
+                return "A problem on the server occured";
             }
         }
     }

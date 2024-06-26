@@ -87,21 +87,25 @@ namespace ProjectManager.Presentation.Controllers
 
             try
             {
-                var responseCreate = await _mediator.Send(new CreateProjectCommand
+                string responseCreate = await _mediator.Send(new CreateProjectCommand
                 {
                     Project = projectDto,
                     UserID = GetUserId()
                 });
 
-                if (responseCreate)
-                    return Json(new { success = true });
+                if (responseCreate == "success")
+                {
+                    return Json(new { success = true, message = "Project created succesfuly!" });
+                }
                 else
-                    return Json(new { success = false });
+                {
+                    return Json(new { success = false, message = responseCreate });
+                }
 
             }
             catch
             {
-                return Json(new { success = false });
+                return Json(new { success = false, message = "A problem on the server occured. Try again!" });
             }
         }
 
@@ -120,21 +124,21 @@ namespace ProjectManager.Presentation.Controllers
 
             try
             {
-                var responseCreate = await _mediator.Send(new UpdateProjectCommand
+                string responseCreate = await _mediator.Send(new UpdateProjectCommand
                 {
                     Project = projectDto,
                     UserID = GetUserId()
                 });
 
-                if (responseCreate)
-                    return Json(new { success = true });
+                if (responseCreate == "success")
+                    return Json(new { success = true, message = "The project was update succesfuly" });
                 else
-                    return Json(new { success = false });
+                    return Json(new { success = false, message = responseCreate });
 
             }
             catch
             {
-                return Json(new { success = false });
+                return Json(new { success = false, message = "A problem occured on the server. Try again!" });
             }
         }
 
@@ -149,13 +153,15 @@ namespace ProjectManager.Presentation.Controllers
                 });
 
                 if (isDeleted)
-                    return Json(new { StatusCode = 204 });
+                {
+                    return Json(new { StatusCode = 204, message = "Project was updated succesfuly!" });
+                }
                 else
-                    return Json(new { StatusCode = 500 });
+                    return Json(new { StatusCode = 500, message = "A problem occured on the server. Try again!" });
             }
             catch
             {
-                return Json(new { StatusCode = 500 });
+                return Json(new { StatusCode = 500, message = "A problem occured on the server. Try again!" });
             }
         }
 

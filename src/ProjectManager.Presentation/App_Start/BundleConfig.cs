@@ -23,7 +23,8 @@ namespace ProjectManager.Presentation
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/toastr.css"));
 
             bundles.Add(new StyleBundle("~/lib/jquery-datatables").Include(
              "~/lib/jquery-datatables/css/jquery.dataTables.css",
@@ -50,6 +51,10 @@ namespace ProjectManager.Presentation
 
             bundles.Add(new Bundle("~/bundles/Popper").Include(
                 "~/Scripts/umd/popper.min.js"
+                ));
+
+            bundles.Add(new Bundle("~/bundles/toastr").Include(
+                "~/Scripts/toastr.js"
                 ));
 
             bundles.Add(new Bundle("~/bundles/NotificationLayout").Include(

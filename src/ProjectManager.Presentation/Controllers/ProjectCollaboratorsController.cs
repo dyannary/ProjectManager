@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace ProjectManager.Presentation.Controllers
 {
@@ -117,28 +118,32 @@ namespace ProjectManager.Presentation.Controllers
 
             try
             {
-                var response = await _mediator.Send(new CreateProjectCollaboratorCommand
+                string response = await _mediator.Send(new CreateProjectCollaboratorCommand
                 {
                     collaboratorToCreateDto = collaboratorToCreateDto,
                 });
 
-                if (response)
+                if (response == "success")
                 {
                     await _mediator.Send(new SendNotificationCommand
                     {
-                            ForUser_Username = collaboratorToCreateDto.UserName,
-                            Message = "You have been added to project: ",
-                            ProjectId = projectId,
-                            NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
+                        ForUser_Username = collaboratorToCreateDto.UserName,
+                        Message = "You have been added to project: ",
+                        ProjectId = projectId,
+                        NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
+                    return Json(new { success = true, projectId, message = "Collaborator was added succesfuly" });
+                }
+                else
+                {
+                    return Json(new { success = false, projectId, message = response });
                 }
 
-                return Json(new { success = response, projectId });
 
             }
             catch
             {
-                return Json(new { success = false, projectId });
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
             }
         }
 
@@ -154,7 +159,7 @@ namespace ProjectManager.Presentation.Controllers
                 Role = collaboratorProjectRole
             });
 
-                if (response)
+                if (response == "success")
                 {
                     await _mediator.Send(new SendNotificationCommand
                     {
@@ -163,14 +168,16 @@ namespace ProjectManager.Presentation.Controllers
                         ProjectId = projectId,
                         NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
+                    return Json(new { success = true, projectId, message = "Collborator was updated succesfuly" });
                 }
-
-                return Json(new { success = response, projectId });
-
+                else
+                {
+                    return Json(new { success = response, projectId, message = response });
+                }
             }
             catch
             {
-                return Json(new { success = false, projectId });
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
             }
         }
 
@@ -185,7 +192,7 @@ namespace ProjectManager.Presentation.Controllers
                     ProjectId = projectId
                 });
 
-                if (response)
+                if (response == "success")
                 {
                     await _mediator.Send(new SendNotificationCommand
                     {
@@ -194,38 +201,50 @@ namespace ProjectManager.Presentation.Controllers
                         ProjectId = projectId,
                         NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
+                    return Json(new { success = response, projectId, message = "Collaborator was removed succesfuly" });
                 }
-                return Json(new { success = response, projectId });
-
+                else
+                {
+                    return Json(new { success = response, projectId, message = response });
+                }
             }
             catch
             {
-                return Json(new { success = false, projectId });
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
             }
         }
 
         [HttpPost]
         public async Task<ActionResult> TransferProject(string collaboratorUserName, int projectId)
         {
-            var response = await _mediator.Send(new TransferProjectToCollaboratorCommand
-            {
-                CollaboratorUserName = collaboratorUserName,
-                OwnerId = GetUserId(),
-                ProjectId = projectId
-            });
-
-            if (response)
-            {
-                await _mediator.Send(new SendNotificationCommand
+            try {
+                var response = await _mediator.Send(new TransferProjectToCollaboratorCommand
                 {
-                    ForUser_Username = collaboratorUserName,
-                    Message = "You have got creator role for project: ",
-                    ProjectId = projectId,
-                    NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
+                    CollaboratorUserName = collaboratorUserName,
+                    OwnerId = GetUserId(),
+                    ProjectId = projectId
                 });
-            }
 
-            return View();
+                if (response == "success")
+                {
+                    await _mediator.Send(new SendNotificationCommand
+                    {
+                        ForUser_Username = collaboratorUserName,
+                        Message = "You have got creator role for project: ",
+                        ProjectId = projectId,
+                        NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
+                    });
+                    return Json(new { success = response, projectId, message = "Project was transfered succesfuly!" });
+                }
+                else
+                {
+                    return Json(new { success = response, projectId, message = response });
+                }
+            }
+            catch
+            {
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
+            }
         }
 
 

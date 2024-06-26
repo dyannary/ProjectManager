@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
-using System;
 
 namespace ProjectManager.Application.Extensionms
 {

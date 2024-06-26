@@ -5,14 +5,12 @@
 }
 
 function deleteTask(id) {
-    debugger;
     $.ajax({
         url: 'ProjectTask/DeleteTasks',
         type: 'DELETE',
         data: JSON.stringify({ id: id }),
         contentType: "application/json; charset=utf-8",
         success: function (result) {
-            debugger
             if (result.StatusCode === 204) {
 
                 var row = $('#TasksTable2').DataTable().row('#' + id);
@@ -21,16 +19,16 @@ function deleteTask(id) {
 
                 row.draw('full-hold');
             } else {
-                alert("A problem occured!");
+
             }
         },
     });
 }
 
 function handleCreateUpdateTask(response) {
-    debugger;
-
     if (response.errors) {
+        if (response.message !== null)
+            toastr.error(response.message);
         $('span[data-valmsg-for]').text('');
 
         for (var key in response.errors) {
@@ -40,6 +38,8 @@ function handleCreateUpdateTask(response) {
         }
        
     } else {
+        if (response.message !== null)
+            toastr.success(response.message);
         $('#modal').modal('hide');
         reloadTaskData();
     }

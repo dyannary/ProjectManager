@@ -1,22 +1,4 @@
-﻿$(function () {
-
-    getUserPhoto();
-    getUserUsername();
-
-    var connection = $.hubConnection('/signalr');
-    var hubProxy = connection.createHubProxy('notificationHub');
-
-    hubProxy.on('updateNotificationCount', function (data) {
-        updateNotificationCount(data)
-    });
-
-    connection.start().done(function () {
-        console.log('SignalR connected');
-        updateNotificationCountForStart();
-    });
-
-});
-function updateNotificationCount(data) {
+﻿function updateNotificationCount(data) {
     if (data > 9)
         data = "9+"
     $('#notificationCount').text(data);
@@ -53,11 +35,9 @@ function getUserUsername() {
         url: '../Account/GetUserUsername',
         type: 'GET',
         success: function (data) {
-            debugger
             $('#username').text(data)
         },
         error: function (error) {
-            debugger
             console.log("Error fetching username for user");
         }
     });

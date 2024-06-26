@@ -49,3 +49,30 @@
 
 @Scripts.Render("~/bundles/NotificationLayout")
 @Styles.Render("~/Content/CustomCss/layout.css")
+
+@* SignalR Script. It needs to be in this file! *@
+    <script>
+        $(function () {
+            var nameIdentifier = '@User.Identity.Name';
+
+            getUserPhoto();
+            getUserUsername();
+
+            var connection = $.hubConnection('/signalr');
+            connection.qs = { 'nameIdentifier': nameIdentifier }
+
+            var hubProxy = connection.createHubProxy('notificationHub');
+
+            hubProxy.on('updateNotificationCount', function (data) {
+                updateNotificationCount(data);
+                toastr.info("You've got a new notification");
+            });
+
+            connection.start().done(function () {
+                debugger
+                console.log('SignalR connected');
+                updateNotificationCountForStart();
+            });
+
+});
+    </script>
