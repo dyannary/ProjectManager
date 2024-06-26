@@ -4,6 +4,6 @@ namespace ProjectManager.Application.Services
 {
     public interface INotificationService
     {
-        Task NotifyAsync(int count);
+        Task NotifyAsync(int count, string nameIdentifier);
     }
 }

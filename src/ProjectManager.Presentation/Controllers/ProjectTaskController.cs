@@ -144,22 +144,22 @@ namespace ProjectManager.Presentation.Controllers
                     // Send Notification
                     await _mediator.Send(new SendNotificationCommand
                     {
-                        ForUser_Username = data.AssignedTo.ToString(),
+                        ForUser_Id = data.AssignedTo,
                         ProjectId = data.ProjectId,
                         Message = "You are assigned to a new task for project: ",
                         NotificationType = Application.Enums.NotificationTypeEnum.Task
                     });
 
-                    return Json(new { StatusCode = 201 });
+                    return Json(new { StatusCode = 201, message = "Task was created succesfuly!" });
                 }
                 else
                 {
-                    return Json(new { StatusCode = 500 });
+                    return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
                 }
             }
             catch
             {
-                return Json(new { StatusCode = 500 });
+                return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
             }
         }
 
@@ -214,16 +214,16 @@ namespace ProjectManager.Presentation.Controllers
                 var addedUser = await _mediator.Send(new UpdateTaskCommand { Data = data });
                 if (addedUser)
                 {
-                    return Json(new { StatusCode = 201 });
+                    return Json(new { StatusCode = 201, message = "The task was upated succesfuly" });
                 }
                 else
                 {
-                    return Json(new { StatusCode = 500 });
+                    return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
                 }
             }
             catch
             {
-                return Json(new { StatusCode = 500 });
+                return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
             }
         }
 
@@ -243,9 +243,9 @@ namespace ProjectManager.Presentation.Controllers
             var taskToDelete = await _mediator.Send(new DeleteTaskCommand { TaskId = id });
 
             if (taskToDelete)
-                return Json(new { StatusCode = 201 });
+                return Json(new { StatusCode = 201, message = "Task was deleted succesfuly!" });
             else
-                return Json(new { StatusCode = 500 });
+                return Json(new { StatusCode = 500, message = "A problem on the server occured. Try Again" });
         }
 
         #endregion

@@ -5,10 +5,13 @@
         data: JSON.stringify({ id: id }),
         contentType: "application/json; charset=utf-8",
         success: function (result) {
-            debugger
             if (result.StatusCode === 204) {
+                if (result.message !== null)
+                    toastr.success(result.message);
                 GetProjectCards();
             } else {
+                if (result.message !== null)
+                    toastr.error(result.message);
                 alert("A problem occured!");
             }
         },
@@ -16,12 +19,16 @@
 }
 
 function handleCreateUpdateProject(response) {
-    debugger;
-
     if (response.success) {
+         if (response.message !== null)
+            toastr.success(response.message);
+
         $('#modal').modal('hide');
         GetProjectCards(1);
     } else {
+        if (response.message !== null)
+            toastr.error(response.message);
+
         $('span[data-valmsg-for]').text('');
 
         for (var key in response.errors) {
@@ -85,11 +92,14 @@ function GetCollaborators(page, projectId) {
 }
 
 function HandleCreateUpdateCollaborator(response) {
-    debugger;
     if (response.success) {
+        if (response.message !== null)
+            toastr.success(response.message);
         $('#modal').modal('hide');
         GetCollaborators(1, response.projectId);
     } else {
+        if (response.message !== null)
+            toastr.error(response.message);
         $('span[data-valmsg-for]').text('');
 
         for (var key in response.errors) {
@@ -99,11 +109,15 @@ function HandleCreateUpdateCollaborator(response) {
         }
     }
 }
- function HandleChangePasswordUser(response) {
-    if (response.success) {
+ function HandleEditOrChangePasswordUser(response) {
+     if (response.success) {
+         if (response.message !== null)
+             toastr.success(response.message);
         $('#modal').modal('hide');
     }
-    else if (response.errors !== null) {
+     else if (response.errors !== null) {
+         if (response.message !== null)
+             toastr.error(response.message);
         $('span[data-valmsg-for]').text('');
 
     for (var key in response.errors) {

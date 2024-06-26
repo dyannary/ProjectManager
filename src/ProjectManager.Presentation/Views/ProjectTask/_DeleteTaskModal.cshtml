@@ -22,16 +22,18 @@
                 url: '/ProjectTask/DeleteTasks/' + taskId,
                 type: 'POST',
                 success: function (response) {
-                    if (response.statusCode === 201) {
-                       
+                    if (response.StatusCode === 201) {
+                        if (response.message !== null)
+                            toastr.success(response.message);
+                        $('#modal').modal('hide');
                         reloadTaskData();
                     } else {
-                       
-                        console.log('Error deleting task');
+                        if (response.message !== null)
+                            toastr.error(response.message);
                     }
                 },
                 error: function () {
-                    console.log('Error occurred while deleting task');
+                    toastr.error("An error occured on the server. Try again");
                 }
             });
         });

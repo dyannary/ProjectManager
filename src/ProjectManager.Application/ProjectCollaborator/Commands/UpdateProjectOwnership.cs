@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Application.ProjectCollaborator.Commands
 {
-    public class TransferProjectToCollaboratorCommand : IRequest<bool>
+    public class TransferProjectToCollaboratorCommand : IRequest<string>
     {
         public string CollaboratorUserName { get; set; }
         public int ProjectId { get; set; }
         public int OwnerId { get; set; }
     }
 
-    public class TransferProjectToCollaboratorHandler : IRequestHandler<TransferProjectToCollaboratorCommand, bool>
+    public class TransferProjectToCollaboratorHandler : IRequestHandler<TransferProjectToCollaboratorCommand, string>
     {
         private readonly IAppDbContext _context;
 
@@ -24,7 +24,7 @@ namespace ProjectManager.Application.ProjectCollaborator.Commands
             _context = context;
         }
 
-        public async Task<bool> Handle(TransferProjectToCollaboratorCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(TransferProjectToCollaboratorCommand request, CancellationToken cancellationToken)
         {
             var newOwnerId = await _context.Users.FirstOrDefaultAsync(n => n.UserName == request.CollaboratorUserName);
             var CreatorRole = await _context.UserProjectRole.FirstOrDefaultAsync(r => r.Name == "ProjectCreator");
@@ -34,6 +34,11 @@ namespace ProjectManager.Application.ProjectCollaborator.Commands
             var userProjectForOwner = await _context.UserProjects.FirstOrDefaultAsync(u => u.UserId == request.OwnerId && u.ProjectId == request.ProjectId); 
             var userProjectForNewOwner = await _context.UserProjects.FirstOrDefaultAsync(u => u.UserId == newOwnerId.Id && u.ProjectId == request.ProjectId);
 
+            if (newOwnerId == null || CreatorRole == null || UserRole == null || userProjectForOwner == null || userProjectForNewOwner == null)
+            {
+                return "The server couldn't procces the data. Try again!";
+            }
+
             userProjectForOwner.UserProjectRole = UserRole;
             userProjectForNewOwner.UserProjectRole = CreatorRole;
 
@@ -42,11 +47,11 @@ namespace ProjectManager.Application.ProjectCollaborator.Commands
                 _context.UserProjects.AddOrUpdate(userProjectForOwner);
                 _context.UserProjects.AddOrUpdate(userProjectForNewOwner);
                 await _context.SaveAsync(cancellationToken);
-                return true;
+                return "success";
             }
             catch
             {
-                return false;
+                return "A problem occured on the server. Try again!";
             }
         }
     }

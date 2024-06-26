@@ -30,13 +30,14 @@ function RemoveSingleNotificationHandler(id) {
         data: {id : id},
         success: function (success) {
             if (success) {
+                toastr.success("Notification was removed")
                 GetNotification();
             } else {
-                alert(`Notification Couldn't be removed`);
+                toastr.success("A problem on the server occured. Try Again")
             }
         },
         error: function () {
-            alert("Internal error");
+            toastr.success("A problem on the server occured. Try Again")
         }
     });
 }
@@ -48,12 +49,13 @@ function RemoveMultipleNotificationsHandler() {
         success: function (success) {
             if (success) {
                 GetNotification();
+                toastr.success("All notifications were removed")
             } else {
-                alert(`Notifications Couldn't be removed`);
+                toastr.success("A problem on the server occured. Try Again")
             }
         },
         error: function () {
-            alert("Internal error");
+            toastr.success("A problem on the server occured. Try Again")
         }
     });
 }

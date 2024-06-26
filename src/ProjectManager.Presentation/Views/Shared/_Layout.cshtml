@@ -14,6 +14,31 @@
     <script src="~/Scripts/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    @*Toastr config*@
+
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "iconClasses": {
+                "error": "toast-error",
+                "info": "toast-info",
+                "success": "toast-success",
+                "warning": "toast-warning"
+            }
+        }
+    </script>
+    @*End toastr config*@
+
 </head>
 <body>
 

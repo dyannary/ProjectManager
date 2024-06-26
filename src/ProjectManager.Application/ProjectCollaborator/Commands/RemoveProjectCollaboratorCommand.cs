@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.Application.ProjectCollaborator.Commands
 {
-    public class RemoveProjectCollaboratorCommand : IRequest<bool>
+    public class RemoveProjectCollaboratorCommand : IRequest<string>
     {
         public int ProjectId {  get; set; }
         public string CollaboratorUserName { get; set; }
     }
 
-    public class RemoveProjectCollaboratorHandler : IRequestHandler<RemoveProjectCollaboratorCommand, bool>
+    public class RemoveProjectCollaboratorHandler : IRequestHandler<RemoveProjectCollaboratorCommand, string>
     {
 
         private readonly IAppDbContext _context;
@@ -23,7 +23,7 @@ namespace ProjectManager.Application.ProjectCollaborator.Commands
             _context = context;
         }
 
-        public async Task<bool> Handle(RemoveProjectCollaboratorCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(RemoveProjectCollaboratorCommand request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(p => p.UserName == request.CollaboratorUserName);
             var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == request.ProjectId);
@@ -36,15 +36,15 @@ namespace ProjectManager.Application.ProjectCollaborator.Commands
                 {
                     _context.UserProjects.Remove(userProject);
                     await _context.SaveAsync(cancellationToken);
-                    return true;
+                    return "success";
                 }
                 catch
                 {
-                    return false;
+                    return "A problem occured on the server. Try again";
                 }
 
             }
-            else return false;
+            else return "The server couldn't procces the data. Try again";
         }
     }
 

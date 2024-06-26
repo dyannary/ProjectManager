@@ -12,6 +12,7 @@ namespace ProjectManager.Application.Notifications.Commands.Send
     public class SendNotificationCommand : IRequest<bool>
     {
         public string ForUser_Username { get; set; }
+        public int ForUser_Id { get; set; } = -1;
         public int ProjectId { get; set; }
         public NotificationTypeEnum NotificationType { get; set; }
         public string Message { get; set; }
@@ -30,7 +31,14 @@ namespace ProjectManager.Application.Notifications.Commands.Send
 
         public async Task<bool> Handle(SendNotificationCommand request, CancellationToken cancellationToken)
         {
-            var forUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == request.ForUser_Username);
+            string userUsername = request.ForUser_Username;
+            if (request.ForUser_Id != -1)
+            {
+                var userTemp = await _context.Users.FindAsync(request.ForUser_Id);
+                userUsername = userTemp.UserName;
+            }
+
+            var forUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userUsername);
             var notificationType = await _context.NotificationTypes.FirstOrDefaultAsync(n => n.Name == request.NotificationType.ToString().Replace("_", " "));
             var project = await _context.Projects.FindAsync(request.ProjectId);
 
@@ -51,7 +59,7 @@ namespace ProjectManager.Application.Notifications.Commands.Send
                 await _context.SaveAsync(cancellationToken);
 
                 int count = await _context.Notifications.CountAsync();
-                await _notificationService.NotifyAsync(count);
+                await _notificationService.NotifyAsync(count, forUser.Email);
 
                 return true;
             } catch

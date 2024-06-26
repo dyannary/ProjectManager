@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace ProjectManager.Presentation.Controllers
 {
@@ -107,7 +108,7 @@ namespace ProjectManager.Presentation.Controllers
                 var errors = validatorResponse.Errors
                                 .GroupBy(x => x.PropertyName)
                                 .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
-                return Json(new { success = false, errors });
+                return Json(new { success = false, errors, message = "Editing fields must comply with the requirements" });
             }
 
             try
@@ -119,11 +120,10 @@ namespace ProjectManager.Presentation.Controllers
                 });
 
                 if (responseChange == "succes")
-                    return Json(new { success = true });
+                    return Json(new { success = true, message = "Password was changed succesfuly!" });
                 else
                 {
-                    ModelState.AddModelError("", responseChange);
-                    return Json(new { success = false });
+                    return Json(new { success = false, message = responseChange });
                 }
 
             }
@@ -172,7 +172,7 @@ namespace ProjectManager.Presentation.Controllers
                 var errors = validatorResponse.Errors
                                 .GroupBy(x => x.PropertyName)
                                 .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
-                return Json(new { success = false, errors });
+                return Json(new { success = false, errors, message = "Editing fields must comply with the requirements" });
             }
 
             try
@@ -183,11 +183,10 @@ namespace ProjectManager.Presentation.Controllers
                 });
 
                 if (responseChange == "success")
-                    return Json(new { success = true });
+                    return Json(new { success = true, message = "Yout account was updated succesfuly!" });
                 else
                 {
-                    ModelState.AddModelError("", responseChange);
-                    return Json(new { success = false });
+                    return Json(new { success = false, message = responseChange });
                 }
 
             }

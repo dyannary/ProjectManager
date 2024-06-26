@@ -1,8 +1,9 @@
 ﻿using Microsoft.Owin;
 using Owin;
 using Microsoft.Owin.Security.Cookies;
- 
- 
+using Microsoft.Extensions.Options;
+
+
 [assembly: OwinStartup(typeof(ProjectManager.Presentation.App_Start.Startup))]
 namespace ProjectManager.Presentation.App_Start
 {

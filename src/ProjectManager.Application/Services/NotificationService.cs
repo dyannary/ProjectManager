@@ -5,9 +5,9 @@ namespace ProjectManager.Application.Services
 {
     public class NotificationService : INotificationService
     {
-        public Task NotifyAsync(int count)
+        public Task NotifyAsync(int count, string nameIdentifier)
         {
-            NotificationHub.SendNotification(count);
+            NotificationHub.SendNotification(count, nameIdentifier);
             return Task.CompletedTask;
         }
     }
