@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.ProjectTask;
-using ProjectManager.Application.Extensionms;
+using ProjectManager.Application.Extensions;
 using ProjectManager.Application.Projects.Queries;
 using ProjectManager.Application.ProjectTasks.Queries;
 using ProjectManager.Application.ProjectTasks.Queries.GetTasksByFilterQuery.cs;
@@ -14,8 +14,6 @@ using ProjectManager.Application.ProjectTasks.Commands.UpdateTask;
 using ProjectManager.Application.ProjectTasks.Commands.DeleteTask;
 using System.Net;
 using ProjectManager.Application.Notifications.Commands.Send;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System;
 using FluentValidation;
 
 namespace ProjectManager.Presentation.Controllers
@@ -141,7 +139,6 @@ namespace ProjectManager.Presentation.Controllers
                 if (addedUser)
                 {
 
-                    // Send Notification
                     await _mediator.Send(new SendNotificationCommand
                     {
                         ForUser_Id = data.AssignedTo,

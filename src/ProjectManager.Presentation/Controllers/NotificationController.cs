@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ProjectManager.Application.Extensionms;
+using ProjectManager.Application.Extensions;
 using ProjectManager.Application.Notification.Queries;
 using ProjectManager.Application.Notifications.Commands;
 using ProjectManager.Application.Notifications.Queries;

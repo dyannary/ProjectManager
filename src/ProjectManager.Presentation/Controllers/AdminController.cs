@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
+using ProjectManager.Application.DataTransferObjects.ProjectTask;
 using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.TableParameters;
 using ProjectManager.Application.User.Commands.CreateUser;
@@ -22,14 +24,17 @@ namespace ProjectManager.Presentation.Controllers
         #region Private Fields
 
         private readonly IMediator _mediator;
+        private readonly IValidator<AddTaskDto> _addTaskValidator;
 
         #endregion
 
         #region Constructor
 
-        public AdminController(IMediator mediator)
+        public AdminController(IMediator mediator,
+            IValidator<AddTaskDto> addTaskValidator)
         {
             _mediator = mediator;
+            _addTaskValidator = addTaskValidator;
         }
 
         #endregion
@@ -37,17 +42,6 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> UserTable(DataTableParameters parameters, CancellationToken cancellationToken)
         {
-            var customParameters = new DataTableParameters
-            {
-                TotalCount = parameters.TotalCount,
-                Draw = parameters.Draw,
-                Start = parameters.Start,
-                Length = parameters.Length,
-                Columns = parameters.Columns.Take(parameters.Columns.Count - 1).ToList(),
-                Search = parameters.Search,
-                Order = parameters.Order
-            };
-
             var users = await _mediator.Send(new GetUsersByFilterQuery(parameters), cancellationToken);
 
             return Json(new

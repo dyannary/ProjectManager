@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Owin.Security;
 using ProjectManager.Application.DataTransferObjects.User;
-using ProjectManager.Application.Extensionms;
+using ProjectManager.Application.Extensions;
 using ProjectManager.Application.User.Queries;
 using ProjectManager.Application.UserManagement.Commands.UpdatePassword;
 using ProjectManager.Application.UserManagement.Queries;

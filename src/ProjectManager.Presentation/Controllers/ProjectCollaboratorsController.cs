@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using ProjectManager.Application.DataTransferObjects.ProjectCollaborator;
-using ProjectManager.Application.Extensionms;
+using ProjectManager.Application.Extensions;
 using ProjectManager.Application.Notifications.Commands.Send;
 using ProjectManager.Application.ProjectCollaborator.Commands;
 using ProjectManager.Application.ProjectCollaborator.Queries;

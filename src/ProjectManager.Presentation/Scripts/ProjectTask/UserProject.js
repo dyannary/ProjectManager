@@ -1,5 +1,4 @@
 ﻿function reloadTaskData() {
-    debugger;
     var table = $('#TasksTable2').DataTable();
     table.ajax.reload();
 }

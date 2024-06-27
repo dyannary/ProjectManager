@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
 
-namespace ProjectManager.Application.Extensionms
+namespace ProjectManager.Application.Extensions
 {
     public static class ClaimsExtensions
     {
