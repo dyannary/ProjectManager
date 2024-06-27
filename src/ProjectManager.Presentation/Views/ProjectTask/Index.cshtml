@@ -9,14 +9,9 @@
 
             <p class="mb-0">Product details</p>
             <div class="d-flex">
-                <div class="form-group me-2">
-                    <div class="col-md-10">
-                        @Html.DropDownList("SelectedProject", new SelectList(Model.ProjectsList, "Id", "Name"), new { @class = "form-select dropdown-toggle", onchange = "refreshCard()" })
-                    </div>
-                </div>
                 <div class="col-auto">
 
-                    <a href="@Url.Action("Index", "Project")" class="btn btn-outline-dark">Projects</a>
+                    <a href="@Url.Action("Index", "Project")" class="btn btn-secondary">Projects</a>
                 </div>
             </div>
         </div>

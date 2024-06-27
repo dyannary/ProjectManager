@@ -24,7 +24,7 @@
             </div>
             @if (Model.LoggedUserRole != "User")
             {
-                <a href="@Url.Action("Index", "ProjectCollaborators", new { projectId = Model.Id })" class="btn btn-outline-dark">Manage collaborators</a>
+                <a href="@Url.Action("Index", "ProjectCollaborators", new { projectId = Model.Id })" class="btn btn-secondary">Manage collaborators</a>
             }
         </div>
     </div>
