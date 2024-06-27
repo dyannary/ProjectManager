@@ -1,11 +1,11 @@
 ﻿@model ProjectManager.Application.DataTransferObjects.ProjectCollaborator.CollaboratorsResponseDto
 
-<table class="table table-bordered">
-    <thead style="background-color: #2f3248; color: #ffffff">
+<table class="table table-bordered mb-5">
+    <thead class="table-secondary">
         <tr>
-            <th class="text-light">Username</th>
-            <th class="text-light">Role</th>
-            <th class="text-light">Action</th>
+            <th class="text-dark">Username</th>
+            <th class="text-dark">Role</th>
+            <th class="text-dark">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +20,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <button class="dropdown-item" id="modalConfirmButton"
                                     onclick="openModal({ url: '/ProjectCollaborators/OpenEditModal', data: @Model.ProjectId, additionalData: { collaboratorUserName: '@collaborator.UserName' } })" data-toggle="ajax-modal" data-trigger="Modal">
-                                Edit
+                                Change role
                             </button>
                             <button class="dropdown-item" id="modalConfirmButton"
                                     onclick="openModal({ url: '/ProjectCollaborators/OpenRemoveModal', data: @Model.ProjectId, additionalData: { collaboratorUserName: '@collaborator.UserName' } })" data-toggle="ajax-modal" data-trigger="Modal">
