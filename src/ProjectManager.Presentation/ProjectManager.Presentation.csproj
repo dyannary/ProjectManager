@@ -608,6 +608,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ProjectManager.Application\ProjectManager.Application.csproj">
       <Project>{87af0c31-5f78-4498-b913-49e138a594e4}</Project>
       <Name>ProjectManager.Application</Name>
@@ -616,12 +622,6 @@
       <Project>{0a634e23-6e38-4199-bfa0-0498e9bad7ac}</Project>
       <Name>ProjectManager.Infrastructure</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

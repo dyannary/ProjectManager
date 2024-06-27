@@ -3,6 +3,7 @@ using ProjectManager.Infrastructure.DataSeeder.Seeds;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Data.Entity;
 
 namespace ProjectManager.Infrastructure.Persistance
 {
