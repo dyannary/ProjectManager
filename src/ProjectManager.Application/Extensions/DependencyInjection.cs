@@ -3,17 +3,14 @@ using Autofac.Integration.SignalR;
 using FluentValidation;
 using ProjectManager.Application.Interfaces;
 using ProjectManager.Application.Services;
-using ProjectManager.Application.User.Commands.LoginUser;
-using ProjectManager.Application.UserManagement.Commands.UpdatePassword;
-using ProjectManager.Application.UserManagement.Commands.UpdateUserByClient;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
-namespace ProjectManager.Application
+namespace ProjectManager.Application.Extensions
 {
     public class ApplicationDependencyInjection
     {
-        public static void Register(ContainerBuilder builder)
+        public static void RegisterApplication(ContainerBuilder builder)
         {
             builder.RegisterType<PasswordEncryptionService>().As<IPasswordEncryptionService>();
             builder.RegisterType<FileService>().As<IFileService>();
@@ -25,7 +22,6 @@ namespace ProjectManager.Application
                 .InstancePerLifetimeScope();
 
             builder.RegisterHubs(Assembly.GetExecutingAssembly());
-
         }
     }
 }

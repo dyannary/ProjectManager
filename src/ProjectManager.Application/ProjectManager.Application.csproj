@@ -498,7 +498,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDependencyInjection.cs" />
     <Compile Include="Common\Extensions\DataTableExtensions.cs" />
     <Compile Include="DataTransferObjects\NotificationDtos\NotificationListDto.cs" />
     <Compile Include="DataTransferObjects\NotificationDtos\NotificationResponseDto.cs" />
@@ -532,6 +531,7 @@
     <Compile Include="DataTransferObjects\User\UserPasswordChangeDto.cs" />
     <Compile Include="Enums\NotificationTypeEnum.cs" />
     <Compile Include="Extensionms\ClaimsExtensions.cs" />
+    <Compile Include="Extensions\DependencyInjection.cs" />
     <Compile Include="Hubs\NotificationHub.cs" />
     <Compile Include="Interfaces\IAppDbContext.cs" />
     <Compile Include="Interfaces\IFileService.cs" />

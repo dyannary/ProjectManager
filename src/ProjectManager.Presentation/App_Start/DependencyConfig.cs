@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using MediatR;
 using ProjectManager.Application;
 using Autofac.Integration.SignalR;
+using ProjectManager.Application.Extensions;
 
 namespace ProjectManager.Presentation
 {
@@ -36,7 +37,7 @@ namespace ProjectManager.Presentation
                    .InstancePerLifetimeScope();
 
             InfrastructureDependencyInjection.Register(builder);
-            ApplicationDependencyInjection.Register(builder);
+            ApplicationDependencyInjection.RegisterApplication(builder);
 
             var container = builder.Build();
 
