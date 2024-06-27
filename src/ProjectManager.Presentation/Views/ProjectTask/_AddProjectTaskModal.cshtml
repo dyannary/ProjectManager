@@ -17,68 +17,70 @@
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.ProjectId)
             <div class="form-horizontal">
-                <div class="form-group row mb-2">
-                    <div class="col-md-6">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group row mb-2 px-4">
+                    <div class="col-6 col-md-4">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-form-label" })
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-8">
                         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", data_valmsg_for = "Name" })
                     </div>
                 </div>
-                <div class="form-group row mb-2">
-                    <div class="col-md-6">
-                        @Html.LabelFor(model => model.AssignedTo, "Assigned To", htmlAttributes: new { @class = "control-label" })
+
+                <div class="form-group row mb-2 px-4">
+                    <div class="col-6 col-md-4">
+                        @Html.LabelFor(model => model.AssignedTo, "Assigned To", htmlAttributes: new { @class = "control-label col-form-label" })
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-sm-6 col-md">
                         @Html.DropDownListFor(model => model.AssignedTo, (SelectList)ViewBag.UsersInProject, "Select user", new { @class = "form-select dropdown-toggle" })
                         @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger", data_valmsg_for = "AssignedTo" })
                     </div>
                 </div>
-                <div class="form-group row mb-2">
-                    <div class="col-md-6">
+
+                <div class="form-group row mb-2 px-4">
+                    <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.TaskStateId,
                        "State", htmlAttributes: new { @class = "control-label col-md-2" })
                     </div>
-                    <div class="col-md-6">
-                        @Html.DropDownListFor(model => model.TaskStateId, (SelectList)ViewBag.TaskState, "Select state", new { @class = "form-select dropdown-toggle" })
+                    <div class="col-12 col-md-8">
+                        @Html.DropDownListFor(model => model.TaskStateId, (SelectList)ViewBag.TaskState, "Select state", new { @class = "form-select dropdown-toggle custom-dropdown" })
                         @Html.ValidationMessageFor(model => model.TaskStateId, "", new { @class = "text-danger", data_valmsg_for = "TaskStateId" })
                     </div>
                 </div>
-                <div class="form-group row mb-2">
-                    <div class="col-md-6">
+                <div class="form-group row mb-2 px-4">
+                    <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.TaskTypeId, "Type", htmlAttributes: new { @class = "control-label col-md-2" })
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.TaskTypeId, (SelectList)ViewBag.TaskType, "Select type", new { @class = "form-select dropdown-toggle" })
                         @Html.ValidationMessageFor(model => model.TaskTypeId, "", new { @class = "text-danger", data_valmsg_for = "TaskTypeId" })
                     </div>
                 </div>
-                <div class="form-group row mb-2">
-                    <div class="col-md-6">
-                        @Html.LabelFor(model => model.PriorityId, "Priority", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group row mb-2 px-4">
+                    <div class="col-6 col-md-4">
+                        @Html.LabelFor(model => model.PriorityId, "Priority", htmlAttributes: new { @class = "control-label col-md-3" })
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.PriorityId, (SelectList)ViewBag.Priorities, "Select Priority", new { @class = "form-select dropdown-toggle" })
                         @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger", data_valmsg_for = "PriorityId" })
                     </div>
                 </div>
-                <div class="form-group row mb-2">
-                    <div class="col-md-6">
+                <div class="form-group row mb-2 px-4">
+                    <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-8">
                         @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 100%; height: 100px;" })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", data_valmsg_for = "Description" })
                     </div>
                 </div>
-                <div class="form-group row mb-2">
-                    <div class="col-md-6">
+                <div class="form-group row mb-2 px-4">
+                    <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.Files, "Upload images", htmlAttributes: new { @class = "control-label" })
                         @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger", data_valmsg_for = "Files" })
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-8">
                         <div class="container">
                             <label for="file-input">
                                 <i class="bi bi-upload upload-icon"></i><br>
@@ -112,8 +114,8 @@
             </div>
         </div>
         <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Add</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger">Add</button>
         </div>
     }
 </div>
@@ -209,6 +211,10 @@
         line-height: 1;
         cursor: pointer;
     }
-
+    .custom-dropdown option[value="Select State"] {
+        color: #666; /* culoare gri deschis */
+        font-style: italic; /* stil italic pentru hint */
+        display: none; /* ascunde opțiunea "Select state" din dropdown */
+    }
 
 </style>
