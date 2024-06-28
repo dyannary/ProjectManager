@@ -24,17 +24,17 @@ namespace ProjectManager.Presentation.Controllers
         #region Private Fields
 
         private readonly IMediator _mediator;
-        private readonly IValidator<AddTaskDto> _addTaskValidator;
+        private readonly IValidator<AddUserDto> _userValidator;
 
         #endregion
 
         #region Constructor
 
         public AdminController(IMediator mediator,
-            IValidator<AddTaskDto> addTaskValidator)
+            IValidator<AddUserDto> userValidator)
         {
             _mediator = mediator;
-            _addTaskValidator = addTaskValidator;
+            _userValidator = userValidator;
         }
 
         #endregion
@@ -99,9 +99,15 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddUser(AddUserDto data)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _userValidator.Validate(data);
+
+
+            if (!validationResult.IsValid)
             {
-                return Json(new { StatusCode = 500 });
+                var errors = validationResult.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, errors });
             }
             try
             {

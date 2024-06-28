@@ -281,7 +281,6 @@ table.dataTable td {
 }
 .dataTables_wrapper .dataTables_filter input {
   margin-left: 0.5em;
-  margin-bottom: 0.5em;
 }
 .dataTables_wrapper .dataTables_info {
   clear: both;
@@ -302,6 +301,7 @@ table.dataTable td {
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
+  *cursor: hand;
   color: #333 !important;
   border: 1px solid transparent;
   border-radius: 2px;
