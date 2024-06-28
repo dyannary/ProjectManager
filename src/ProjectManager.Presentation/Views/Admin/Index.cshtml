@@ -40,6 +40,13 @@
     <script>
         $(document).ready(function () {
             initializeUserDataTable();
+
+            var customButton = $('<button type="button" class="btn btn-primary">My Button</button>');
+            $(table.buttons().container()).prepend(customButton);
+
+            customButton.on('click', function () {
+                alert('Button activated');
+            });
         });
 
         function initializeUserDataTable() {
@@ -65,12 +72,11 @@
                 },
                 "buttons": [
                     {
-                        text: 'Add User',
-                        action: function (e, dt, node, config) {
-                            alert('Add User button clicked');
+                        "text": 'My button',
+                        "action": function (e, dt, node, config) {
+                            alert('Button activated');
                         }
-                    },
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    }
                 ],
                 "columns": [
                     { "data": "Id", "title": "Id", "name": "Id", "visible": false },
@@ -160,7 +166,7 @@
                     "Delete": { name: "Delete" }
                 }
             });
-
+            $("div.toolbar").html('<button type="button" class="btn btn-primary" onclick="openModal({url: \'/Admin/AddUser\', data: 0})" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>');
             return table;
         }
     </script>

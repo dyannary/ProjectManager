@@ -1,6 +1,16 @@
 ﻿@using ProjectManager.Application.DataTransferObjects.User
 @model AddUserDto
 
+<script>
+    $(document).ready(function () {
+        $('input[type=text], input[type=password], input[type=email], select').on('input', function () {
+            var fieldName = $(this).attr('name');
+            $('span[data-valmsg-for="' + fieldName + '"]').text('');
+            $(this).removeClass('is-invalid');
+        });
+    });
+</script>
+
 <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">Add user</h5>
@@ -9,8 +19,8 @@
     @using (Ajax.BeginForm("AddUser", "Admin", new AjaxOptions
     {
         HttpMethod = "POST",
-        OnSuccess = "reloadData"
-    }))
+        OnSuccess = "handleCreateUpdateUser"
+    }, new { enctype = "multipart/form-data", id = "userForm" }))
     {
         <div class="modal-body">
             @Html.AntiForgeryToken()
@@ -21,16 +31,16 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger validation-message", data_valmsg_for = "UserName" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
                     <div class="col-6 col-md-4">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2 required" })
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.TextBoxFor(model => model.Password, new { @class = "form-control", type = "password" })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger validation-message", data_valmsg_for = "Password" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -39,7 +49,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger validation-message", data_valmsg_for = "FirstName" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -48,25 +58,35 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger validation-message", data_valmsg_for = "LastName" })
                     </div>
                 </div>
+                @*<div class="form-group row mb-2 px-4">
+                        <div class="col-6 col-md-4">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+                        <div class="col-12 col-md-8">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" + (ViewData.ModelState["Email"]?.Errors.Count > 0 ? " is-invalid" : "") } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", data_valmsg_for = "Email" })
+                        </div>
+                    </div>*@
                 <div class="form-group row mb-2 px-4">
                     <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                     </div>
                     <div class="col-12 col-md-8">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" + (ViewData.ModelState["Email"]?.Errors.Count > 0 ? " is-invalid" : "") } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger validation-message", data_valmsg_for = "Email" })
                     </div>
                 </div>
+
                 <div class="form-group row mb-2 px-4">
                     <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.RoleId, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.RoleId, (SelectList)ViewBag.UserRoles, "Select Role", new { @class = "form-select dropdown-toggle" })
-                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger validation-message", data_valmsg_for = "RoleId" })
                     </div>
                 </div>
             </div>

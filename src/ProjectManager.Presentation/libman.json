@@ -15,6 +15,10 @@
       "provider": "unpkg",
       "library": "jquery-contextmenu@2.9.2",
       "destination": "lib/jquery-contextmenu/"
+    },
+    {
+      "library": "datatables-buttons@3.0.2",
+      "destination": "lib/datatables-buttons/"
     }
   ]
 }
