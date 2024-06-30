@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", data_valmsg_for = "Name" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger validation-message", data_valmsg_for = "Name" })
                     </div>
                 </div>
 
@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-12 col-sm-6 col-md">
                         @Html.DropDownListFor(model => model.AssignedTo, (SelectList)ViewBag.UsersInProject, "Select user", new { @class = "form-select dropdown-toggle" })
-                        @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger", data_valmsg_for = "AssignedTo" })
+                        @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger validation-message", data_valmsg_for = "AssignedTo" })
                     </div>
                 </div>
 
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.TaskStateId, (SelectList)ViewBag.TaskState, "Select state", new { @class = "form-select dropdown-toggle custom-dropdown" })
-                        @Html.ValidationMessageFor(model => model.TaskStateId, "", new { @class = "text-danger", data_valmsg_for = "TaskStateId" })
+                        @Html.ValidationMessageFor(model => model.TaskStateId, "", new { @class = "text-danger validation-message", data_valmsg_for = "TaskStateId" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.TaskTypeId, (SelectList)ViewBag.TaskType, "Select type", new { @class = "form-select dropdown-toggle" })
-                        @Html.ValidationMessageFor(model => model.TaskTypeId, "", new { @class = "text-danger", data_valmsg_for = "TaskTypeId" })
+                        @Html.ValidationMessageFor(model => model.TaskTypeId, "", new { @class = "text-danger validation-message", data_valmsg_for = "TaskTypeId" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -63,7 +63,7 @@
 
                     <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.PriorityId, (SelectList)ViewBag.Priorities, "Select Priority", new { @class = "form-select dropdown-toggle" })
-                        @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger", data_valmsg_for = "PriorityId" })
+                        @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger validation-message", data_valmsg_for = "PriorityId" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -72,13 +72,13 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 100%; height: 100px;" })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", data_valmsg_for = "Description" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger validation-message", data_valmsg_for = "Description" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
                     <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.Files, "Upload images", htmlAttributes: new { @class = "control-label" })
-                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger", data_valmsg_for = "Files" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger validation-message", data_valmsg_for = "Files" })
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="container">
@@ -121,11 +121,8 @@
 </div>
 
 <style>
-   /* .container p{
-        text-align: center;
-        margin: 20px 0 30px 0;
-    }*/
-    #images {
+
+    /*#images {
         width: 90%;
         position: relative;
         margin: auto;
@@ -212,9 +209,9 @@
         cursor: pointer;
     }
     .custom-dropdown option[value="Select State"] {
-        color: #666; /* culoare gri deschis */
-        font-style: italic; /* stil italic pentru hint */
-        display: none; /* ascunde opțiunea "Select state" din dropdown */
-    }
+        color: #666; 
+        font-style: italic; 
+        display: none;
+    }*/
 
 </style>
