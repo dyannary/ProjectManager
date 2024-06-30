@@ -147,7 +147,7 @@ namespace ProjectManager.Presentation.Controllers
                         NotificationType = Application.Enums.NotificationTypeEnum.Task
                     });
 
-                    return Json(new { StatusCode = 201, message = "Task was created succesfuly!" });
+                    return Json(new { StatusCode = 201, message = "Task was successfully created." });
                 }
                 else
                 {
@@ -211,7 +211,7 @@ namespace ProjectManager.Presentation.Controllers
                 var addedUser = await _mediator.Send(new UpdateTaskCommand { Data = data });
                 if (addedUser)
                 {
-                    return Json(new { StatusCode = 201, message = "The task was upated succesfuly" });
+                    return Json(new { StatusCode = 201, message = "Task was successfully updated." });
                 }
                 else
                 {

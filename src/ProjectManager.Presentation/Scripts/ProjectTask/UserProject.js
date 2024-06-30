@@ -23,26 +23,63 @@ function deleteTask(id) {
         },
     });
 }
-
 function handleCreateUpdateTask(response) {
     if (response.errors) {
-        if (response.message !== null)
-            toastr.error(response.message);
         $('span[data-valmsg-for]').text('');
+        $('input, select, textarea').removeClass('is-invalid'); // Remove error class initially
 
         for (var key in response.errors) {
             var messages = response.errors[key];
             var errorElement = $('span[data-valmsg-for="' + key + '"]');
             errorElement.text(messages);
+
+            var inputElement = $('[name="' + key + '"]');
+            inputElement.addClass('is-invalid');
         }
-       
+
+        $('input, select, textarea').on('input change', function() {
+            var errorSpan = $('span[data-valmsg-for="' + $(this).attr('name') + '"]');
+            $(this).removeClass('is-invalid');
+            errorSpan.text('');
+        });
+
     } else {
-        if (response.message !== null)
+        if (response.message !== null) {
             toastr.success(response.message);
+        }
         $('#modal').modal('hide');
         reloadTaskData();
     }
 }
+
+//function handleCreateUpdateTask(response) {
+//    if (response.errors) {
+//        $('span[data-valmsg-for]').text('');
+//        $('input, select, textarea').removeClass('input-validation-error'); // Remove error class initially
+
+//        for (var key in response.errors) {
+//            var messages = response.errors[key];
+//            var errorElement = $('span[data-valmsg-for="' + key + '"]');
+//            errorElement.text(messages);
+
+//            var inputElement = $('[name="' + key + '"]');
+//            inputElement.addClass('input-validation-error');
+//        }
+
+//        $('input, select, textarea').on('input change', function() {
+//            var errorSpan = $('span[data-valmsg-for="' + $(this).attr('name') + '"]');
+//            $(this).removeClass('input-validation-error');
+//            errorSpan.text('');
+//        });
+
+//    } else {
+//        if (response.message !== null)
+//            toastr.success(response.message);
+//        $('#modal').modal('hide');
+//        reloadTaskData();
+//    }
+//}
+
 
 function preview() {
     let fileInput = document.getElementById("file-input");

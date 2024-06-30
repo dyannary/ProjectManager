@@ -69,13 +69,9 @@ function reloadUserData() {
 //}
 
 
-
+debugger;
 function handleCreateUpdateUser(response) {
     if (response.errors) {
-        if (response.message !== null) {
-            toastr.error(response.message);
-        }
-
         $('span[data-valmsg-for]').text('');
 
         $('.is-invalid').removeClass('is-invalid');

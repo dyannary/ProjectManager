@@ -17,9 +17,8 @@
 <script>
     $(document).ready(function () {
         $('#deleteTaskButton').click(function () {
-            var taskId = @Model; 
             $.ajax({
-                url: '/ProjectTask/DeleteTasks/' + taskId,
+                url: '/ProjectTask/DeleteTasks/' + @Model,
                 type: 'POST',
                 success: function (response) {
                     if (response.StatusCode === 201) {

@@ -95,7 +95,7 @@ namespace ProjectManager.Presentation.Controllers
 
                 if (responseCreate == "success")
                 {
-                    return Json(new { success = true, message = "Project created succesfuly!" });
+                    return Json(new { success = true, message = "Project was successfully created." });
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace ProjectManager.Presentation.Controllers
                 });
 
                 if (responseCreate == "success")
-                    return Json(new { success = true, message = "The project was update succesfuly" });
+                    return Json(new { success = true, message = "Project was successfully updated." });
                 else
                     return Json(new { success = false, message = responseCreate });
 
@@ -154,7 +154,7 @@ namespace ProjectManager.Presentation.Controllers
 
                 if (isDeleted)
                 {
-                    return Json(new { StatusCode = 204, message = "Project was updated succesfuly!" });
+                    return Json(new { StatusCode = 204, message = "Project was successfully updated." });
                 }
                 else
                     return Json(new { StatusCode = 500, message = "A problem occured on the server. Try again!" });
