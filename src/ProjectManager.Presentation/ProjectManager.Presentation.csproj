@@ -339,6 +339,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CustomCss\CustomBootstrap.css" />
     <Content Include="Content\CustomCss\Layout.css" />
     <Content Include="Content\CustomCss\ProjectTasks.css" />
     <Content Include="Content\Images\App\background.jpg" />

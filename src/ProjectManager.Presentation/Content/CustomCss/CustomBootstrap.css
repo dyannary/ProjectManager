@@ -1,0 +1,40 @@
+﻿.btn-primary {
+    background-color: #EF8354;
+    border-color: #EF8354;
+    color: white;
+    font-size: 15px;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #C06943;
+        border-color: #C06943;
+        color: white;
+    }
+
+.btn-secondary {
+    background-color: #4F5D75;
+    border-color: #4F5D75;
+    color: white;
+    font-size: 15px;
+}
+
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+        background-color: #3D4759;
+        border-color: #3D4759;
+        color: white;
+    }
+
+.active {
+    background-color: #EF8354;
+    border-color: #EF8354;
+    color: white;
+}
+
+    .active:hover,
+    .active:focus {
+        background-color: #C06943;
+        border-color: #C06943;
+        color: white;
+    }

@@ -1,6 +1,6 @@
 ﻿@model ProjectManager.Application.DataTransferObjects.ProjectCollaborator.CollaboratorsResponseDto
 
-<table class="table table-bordered mb-5">
+<table class="table table-bordered bg-light bg-opacity-75 mb-5">
     <thead class="table-secondary">
         <tr>
             <th class="text-dark">Username</th>
@@ -8,7 +8,7 @@
             <th class="text-dark">Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="">
         @foreach (var collaborator in Model.CollaboratorsDetails)
         {
             <tr>

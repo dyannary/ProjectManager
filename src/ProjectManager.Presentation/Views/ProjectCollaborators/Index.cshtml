@@ -8,7 +8,7 @@
     <div class="col col-md-7">
         @if (Model.LoggedUserRole == "ProjectAdministrator" || Model.LoggedUserRole == "ProjectCreator")
         {
-            <button class="btn btn-secondary mb-4" id="modalConfirmButton" onclick="openModal({url: '/ProjectCollaborators/OpenAddModal', data: @Model.ProjectId})" data-toggle="ajax-modal" data-trigger="Modal">
+            <button class="btn btn-primary mb-4" id="modalConfirmButton" onclick="openModal({url: '/ProjectCollaborators/OpenAddModal', data: @Model.ProjectId})" data-toggle="ajax-modal" data-trigger="Modal">
                 Add colaborator
             </button>
         }
@@ -22,7 +22,7 @@
     </div>
 
     <div class="col col-md-2">
-        <a href="@Url.Action("Index", "ProjectTask", new { Id = Model.ProjectId })" class="btn btn-secondary">Back</a>
+        <a href="@Url.Action("Index", "ProjectTask", new { projectId = Model.ProjectId })" class="btn btn-secondary">Back</a>
     </div>
 
 </div>

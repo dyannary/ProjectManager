@@ -82,7 +82,7 @@ namespace ProjectManager.Presentation.Controllers
                 var errors = validatorResponse.Errors
                                 .GroupBy(x => x.PropertyName)
                                 .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
-                return Json (new {success = false, errors});
+                return Json (new {success = false, errors, message = "The data isn't valid"});
             }
 
             try
@@ -119,7 +119,7 @@ namespace ProjectManager.Presentation.Controllers
                 var errors = validatorResponse.Errors
                                 .GroupBy(x => x.PropertyName)
                                 .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
-                return Json(new { success = false, errors });
+                return Json(new { success = false, errors, message = "The data isn't valid" });
             }
 
             try
@@ -216,11 +216,5 @@ namespace ProjectManager.Presentation.Controllers
 
             return PartialView("_UpdateProjectModal", response);
         }
-
-        public ActionResult GotoProjectDetails(int id)
-        {
-            return RedirectToAction("Index", "ProjectTask", new {Id = id});
-        }
-
     }
 }

@@ -23,6 +23,7 @@ namespace ProjectManager.Presentation
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/CustomCss/CustomBootstrap.css",
                       "~/Content/site.css",
                       "~/Content/toastr.css"));
 
