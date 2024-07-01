@@ -45,31 +45,6 @@ function reloadUserData() {
     table.ajax.reload();
 }
 
-//function handleCreateUpdateUser(response) {
-//    if (response.errors) {
-//        if (response.message !== null)
-//            toastr.error(response.message);
-//        $('span[data-valmsg-for]').text('');
-
-//        for (var key in response.errors) {
-//            var messages = response.errors[key];
-//            var errorElement = $('span[data-valmsg-for="' + key + '"]');
-//            errorElement.text(messages); 
-
-//            var inputElement = $('[name="' + key + '"]');
-//            inputElement.addClass('is-invalid');
-//        }
-
-//    } else {
-//        if (response.message !== null)
-//            toastr.success(response.message);
-//        $('#modal').modal('hide');
-//        reloadUserData();
-//    }
-//}
-
-
-debugger;
 function handleCreateUpdateUser(response) {
     if (response.errors) {
         $('span[data-valmsg-for]').text('');

@@ -128,7 +128,7 @@
                                 return '<div style="text-align: left;">' + data + '</div>';
                         }
                     }
-                } 
+                }
             ],
             "pagingType": "full_numbers",
             "language": {
@@ -142,7 +142,7 @@
                 },
             },
         });
-       
+
         var contextmenu = $('#TasksTable2').contextMenu({
             selector: 'tr',
             trigger: 'right',
@@ -155,7 +155,7 @@
                     case 'Details':
                         var form = $('<form action="../ProjectTask/GotoProjectTaskDetails" method="get"></form>');
                         form.append('<input type="hidden" name="Id" value="' + row.data()["Id"] + '" />');
-                        form.appendTo('body').submit().remove(); 
+                        form.appendTo('body').submit().remove();
                         break;
                     case 'Delete':
                         openModal({ data: row.data()["Id"], url: '../ProjectTask/DeleteTask/' })
@@ -171,10 +171,10 @@
                 "Delete": { name: "Delete" }
             }
         });
-        
+
         return table;
     }
-   
+
     function drawPatrialView(url, divId) {
         $.ajax({
             url: url,

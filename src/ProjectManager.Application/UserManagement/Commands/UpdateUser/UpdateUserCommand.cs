@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using ProjectManager.Application.DataTransferObjects.User;
 using ProjectManager.Application.interfaces;
+using System;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,10 +47,28 @@ namespace ProjectManager.Application.User.Commands.UpdateUser
 
             toUpdate.IsEnabled = command.Data.IsEnabled;
 
-            if (await _context.SaveAsync(cancellationToken) == 1)
-                return true;
-            else 
-                return false;
+            try
+            {
+                int result = await _context.SaveAsync(cancellationToken);
+                return result > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    Console.WriteLine($"Entity of type {eve.Entry.Entity.GetType().Name} in state {eve.Entry.State} has the following validation errors:");
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine($"- Property: {ve.PropertyName}, Error: {ve.ErrorMessage}");
+                    }
+                }
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw;
+            }
         }
     }
 }

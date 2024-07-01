@@ -17,6 +17,7 @@ namespace ProjectManager.Application.DataTransferObjects.ProjectTask
         public int TaskStateId { get; set; }
         public int PriorityId { get; set; }
         public int ProjectId { get; set; }
+        public int AssignedToId { get; set; }
         public string AssignedTo { get; set; }
         public List<string> PhotoPaths { get; set; } 
         public List<HttpPostedFileBase> Files { get; set; }

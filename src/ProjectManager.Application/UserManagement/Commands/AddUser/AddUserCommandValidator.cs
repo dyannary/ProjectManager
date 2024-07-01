@@ -16,14 +16,15 @@ namespace ProjectManager.Application.UserManagement.Commands.AddUser
             RuleFor(model => model.UserName)
                 .NotEmpty().WithMessage("This field is required.")
                 .NotNull().WithMessage("This field is required.")
-                .MaximumLength(50).WithMessage("Name can have maximum 50 character.")
+                .MinimumLength(5).WithMessage("Username can have minimum 5 character.")
+                .MaximumLength(50).WithMessage("Username can have maximum 50 character.")
                 .Must(BeUniqueUserName).WithMessage("Username already exists.")
                 .WithName("Name");
 
             RuleFor(model => model.Password)
                 .NotEmpty().WithMessage("This field is required.")
                 .NotNull().WithMessage("This field is required.")
-                .MaximumLength(50).WithMessage("Name can have maximum 50 character.")
+                .MaximumLength(50).WithMessage("Password can have maximum 50 character.")
                 .Must(BeAValidPassword).WithMessage("Password must have at least 8 charactes, one non letter and digit.")
                 .WithName("Password");
 
@@ -31,12 +32,14 @@ namespace ProjectManager.Application.UserManagement.Commands.AddUser
                 .NotEmpty().WithMessage("This field is required.")
                 .NotNull().WithMessage("This field is required.")
                 .MaximumLength(50).WithMessage("First Name can have maximum 50 character.")
+                .Must(BeAValidFirstLastName).WithMessage("A name can only contain the letters.")
                 .WithName("FirstName");
 
             RuleFor(model => model.LastName)
                 .NotEmpty().WithMessage("This field is required.")
                 .NotNull().WithMessage("This field is required.")
                 .MaximumLength(50).WithMessage("Last Name can have maximum 50 character.")
+                .Must(BeAValidFirstLastName).WithMessage("A name can only contain the letters.")
                 .WithName("LastName");
 
             RuleFor(model => model.Email)
@@ -59,6 +62,14 @@ namespace ProjectManager.Application.UserManagement.Commands.AddUser
                 return false;
 
             return Regex.IsMatch(email, @"^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$");
+        }
+
+        private bool BeAValidFirstLastName(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return false;
+
+            return Regex.IsMatch(email, @"^[A-Z][a-zA-Z '.-]*[A-Za-z][^-]$");
         }
 
         private bool BeAValidPassword(string password)
