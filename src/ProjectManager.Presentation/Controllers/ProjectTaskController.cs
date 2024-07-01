@@ -32,7 +32,7 @@ namespace ProjectManager.Presentation.Controllers
         }
 
         #region CRUD Operations
-        public async Task<ActionResult> Index(int? Id)
+        public async Task<ActionResult> Index(int? projectId)
         {
 
             var responseProjectList = await _mediator.Send(new GetProjectsForDropDownQuerry() { UserID = GetUserId() });
@@ -42,20 +42,20 @@ namespace ProjectManager.Presentation.Controllers
                 return HttpNotFound();
             }
 
-            int ProjectId = responseProjectList.FirstOrDefault().Id;
+            int _projectId = responseProjectList.FirstOrDefault().Id;
 
-            if (Id != null)
-                ProjectId = Id.Value;
+            if (projectId != null)
+                _projectId = projectId.Value;
 
             var responseProject = await _mediator.Send(new GetProjectByIdForProjectTaskQuerry
             {
-                Id = ProjectId,
+                Id = _projectId,
                 LoggedUserId = GetUserId()
             });
 
             var projectTaskList = new ProjectTaskList
             {
-                ProjectId = ProjectId
+                ProjectId = _projectId
             };
 
             var model = new ProjectTaskDto

@@ -113,7 +113,7 @@ namespace ProjectManager.Presentation.Controllers
                 var errors = validatorResponse.Errors
                 .GroupBy(x => x.PropertyName)
                 .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
-                return Json(new { success = false, projectId, errors });
+                return Json(new { success = false, projectId, errors, message = "The data isn't valid" });
             }
 
             try

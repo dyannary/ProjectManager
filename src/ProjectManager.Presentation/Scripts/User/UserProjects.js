@@ -26,7 +26,8 @@ function handleCreateUpdateProject(response) {
         $('#modal').modal('hide');
         GetProjectCards(1);
     } else {
-        if (response.message !== null)
+        debugger;
+        if (response.message !== null || response.message !== "")
             toastr.error(response.message);
 
         $('span[data-valmsg-for]').text('');
