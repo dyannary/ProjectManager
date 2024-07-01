@@ -39,3 +39,57 @@ function openModalNoParam() {
    modal.find(".modal-content").html(response);
    modal.modal('show')
 };
+
+function reloadUserData() {
+    var table = $('#UserDatabase').DataTable();
+    table.ajax.reload();
+}
+
+//function handleCreateUpdateUser(response) {
+//    if (response.errors) {
+//        if (response.message !== null)
+//            toastr.error(response.message);
+//        $('span[data-valmsg-for]').text('');
+
+//        for (var key in response.errors) {
+//            var messages = response.errors[key];
+//            var errorElement = $('span[data-valmsg-for="' + key + '"]');
+//            errorElement.text(messages); 
+
+//            var inputElement = $('[name="' + key + '"]');
+//            inputElement.addClass('is-invalid');
+//        }
+
+//    } else {
+//        if (response.message !== null)
+//            toastr.success(response.message);
+//        $('#modal').modal('hide');
+//        reloadUserData();
+//    }
+//}
+
+
+debugger;
+function handleCreateUpdateUser(response) {
+    if (response.errors) {
+        $('span[data-valmsg-for]').text('');
+
+        $('.is-invalid').removeClass('is-invalid');
+
+        for (var key in response.errors) {
+            var messages = response.errors[key];
+            var errorElement = $('span[data-valmsg-for="' + key + '"]');
+            errorElement.text(messages);
+
+            var inputElement = $('[name="' + key + '"]');
+            inputElement.addClass('is-invalid');
+        }
+
+    } else {
+        if (response.message !== null) {
+            toastr.success(response.message);
+        }
+        $('#modal').modal('hide');
+        reloadUserData();
+    }
+}

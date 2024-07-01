@@ -24,17 +24,20 @@ namespace ProjectManager.Presentation.Controllers
         #region Private Fields
 
         private readonly IMediator _mediator;
-        private readonly IValidator<AddTaskDto> _addTaskValidator;
+        private readonly IValidator<AddUserDto> _userValidator;
+        private readonly IValidator<UserDto> _updateUserValidator;
 
         #endregion
 
         #region Constructor
 
         public AdminController(IMediator mediator,
-            IValidator<AddTaskDto> addTaskValidator)
+            IValidator<AddUserDto> userValidator,
+            IValidator<UserDto> updateUserValidator)
         {
             _mediator = mediator;
-            _addTaskValidator = addTaskValidator;
+            _userValidator = userValidator;
+            _updateUserValidator = updateUserValidator;
         }
 
         #endregion
@@ -99,25 +102,35 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> AddUser(AddUserDto data)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _userValidator.Validate(data);
+
+
+            if (!validationResult.IsValid)
             {
-                return Json(new { StatusCode = 500 });
+                var errors = validationResult.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, errors });
             }
             try
             {
-                var addedUser = await _mediator.Send(new AddUserCommand { Data = data });
+                var addedUser = await _mediator.Send(new AddUserCommand 
+                { 
+                    Data = data 
+                });
+
                 if (addedUser)
                 {
-                    return Json(new { StatusCode = 201 });
+                    return Json(new { StatusCode = 201, message = "User was successfully created." });
                 }
                 else
                 {
-                    return Json(new { StatusCode = 500 });
+                    return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
                 }
             }
             catch
             {
-                return Json(new { StatusCode = 500 });
+                return Json(new { success = false, message = "A problem on the server occured. Try again!" });
             }
         }
 
@@ -141,32 +154,43 @@ namespace ProjectManager.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateUser(UserDto data)
         {
-            if(!ModelState.IsValid)
+            var validationResult = _updateUserValidator.Validate(data);
+
+
+            if (!validationResult.IsValid)
             {
-                return Json(new { StatusCode = 500 });
+                var errors = validationResult.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, errors });
             }
             try
             {
-                var updatedUser = await _mediator.Send(new UpdateUserCommand { Data = data });
-                if (updatedUser)
+                var addedUser = await _mediator.Send(new UpdateUserCommand { Data = data });
+                if (addedUser)
                 {
-                    return Json(new { StatusCode = 201 });
+                    return Json(new { StatusCode = 201, message = "User was successfully updated." });
                 }
                 else
                 {
-                    return Json(new { StatusCode = 500 });
+                    return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
                 }
             }
-            catch 
+            catch
             {
-                return Json(new { StatusCode = 500 });
+                return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
             }
         }
 
         #endregion
 
         #region Delete User
-       
+
+        public ActionResult DisableUserModal(int id)
+        {
+            return PartialView("_DisableUserModal", id);
+        }
+
         [HttpPost]
         public async Task<ActionResult> DisableUser(int id)
         {

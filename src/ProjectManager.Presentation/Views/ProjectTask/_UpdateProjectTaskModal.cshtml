@@ -76,57 +76,49 @@
                 <div class="form-group row mb-2 px-4">
                     <div class="col-6 col-md-4">
                         @Html.LabelFor(model => model.Files, "Upload images", htmlAttributes: new { @class = "control-label" })
-                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger validation-message", data_valmsg_for = "Files" })
                     </div>
-                    <div class="col-12 col-md-8 align-content-center">
-                        <label class="control-label custom-label-upload" style="display: inline-block; border: 1px solid #ced4da; padding: 0.375rem 0.75rem; border-radius: 0.25rem;">
-                            Max file size 5MB.
-                        </label>
-                        <div id="file-size-error" class="text-danger" style="display: none;">
-                            File size exceeds the limit of 5 MB.
-                        </div>
-                        <button class="btn btn-primary">Upload</button>
-                    </div>
-               
-
-                    @*<div class="col-12 col-md-8">
-            <div class="container">
-                <label for="file-input">
-                    <i class="bi bi-upload upload-icon"></i><br>
-                </label>
-                <div id="file-size-error" class="text-danger" style="display: none;">
-                    File size exceeds the limit of 5 MB.
-                </div>
-            </div>
-        </div>*@
-                </div>
-
-                <div style="max-height: 255px; overflow-y: auto; overflow-x: hidden">
-                    <div id="images" class="image-container">
-                        <div class="row mt-3">
-                            @if (Model.PhotoPaths != null)
-                            {
-                                foreach (var photoPath in Model.PhotoPaths)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="square-image-container">
-                                            <img src="@Url.Content(photoPath)" class="img-fluid square-image" alt="Task Photo">
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            <div class="row mt-3">
-                                <div class="col-md-4">
-                                    <div class="square-image-container">
-                                        <input type="file" id="file-input" name="Files" class="form-control"
-                                               accept="image/*" style="display:none;" onchange="preview()" multiple />
-                                    </div>
-                                </div>
+                    <div class="col-12 col-md-8">
+                        <div class="container">
+                            <label for="file-input" class="upload-label">
+                                <i class="bi bi-upload upload-icon"></i><br>
+                            </label>
+                            <div id="file-size-error" class="text-danger" style="display: none;">
+                                File size exceeds the limit of 5 MB.
                             </div>
                         </div>
                     </div>
                 </div>
-       
+
+                <input type="file" id="file-input" name="Files" class="form-control"
+                       accept="image/*" style="display:none;" onchange="preview()" multiple />
+
+                <div style="max-height: 200px; overflow-y: auto">
+                    <div id="images" class="image-container row">
+                        @if (Model.PhotoPaths != null)
+                        {
+                            foreach (var photoPath in Model.PhotoPaths)
+                            {
+                                <div class="col-md-6">
+                                    <div class="square-image-container">
+                                        <img src="@Url.Content(photoPath)" class="img-fluid square-image" alt="Task Photo">
+                                        <button type="button" class="delete-btn" onclick="deleteImage(this)">X</button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div id="imageModal" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <img id="modalImage" src="" alt="Modal Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -135,38 +127,3 @@
         </div>
     }
 </div>
-
-
-<style>
-
-    .square-image-container {
-        width: 100%;
-        padding-top: 100%;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 1.5em;
-    }
-
-    .square-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    figcaption {
-        display: none;
-    }
-
-    .custom-primary {
-        margin: 5px;
-    }
-
-    .custom-label-upload {
-        width: 11.7em;
-    }
-
-</style>
-

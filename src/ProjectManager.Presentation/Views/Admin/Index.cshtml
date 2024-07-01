@@ -2,12 +2,13 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
 
-<div class="text">
-    <button type="button" class="btn btn-primary" onclick="openModal({url: '/Admin/AddUser', data: 0})" data-bs-toggle="modal" data-bs-target="#addUserModal">Add</button>
+
+<div class="d-flex justify-content-end mb-3">
+    <button type="button" class="btn btn-primary" onclick="openModal({url: '/Admin/AddUser', data: 0})" data-bs-toggle="modal" data-bs-target="#addUserModal">Register user</button>
 </div>
 
 
-<table id="UserDatabase" class="table-borderless row-border border-light"  width ="100%" cellspacing="0">
+<table id="UserDatabase" class="table-borderless row-border border-light" width="100%" cellspacing="0">
     <thead style="background-color: #2f3248; color: #ffffff" class="table-light">
         <tr>
             <th>Id</th>
@@ -24,22 +25,28 @@
 
 <style>
     .avatar {
-        width: 30px; 
-        height: 30px; 
-        border-radius: 50%; 
-        margin-right: 10px; 
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
     }
 
     .dt-center {
         text-align: center;
     }
-
 </style>
 
 @section scripts {
     <script>
         $(document).ready(function () {
             initializeUserDataTable();
+
+            var customButton = $('<button type="button" class="btn btn-primary">My Button</button>');
+            $(table.buttons().container()).prepend(customButton);
+
+            customButton.on('click', function () {
+                alert('Button activated');
+            });
         });
 
         function initializeUserDataTable() {
@@ -48,7 +55,7 @@
                 "serverSide": true,
                 "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>", // Includes search input box ("f") //f, r, t, l, 
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>", // Includes search input box ("f") //f, r, t, l,
                 "sProcessing": false,
                 "pageLength": 15,
                 "order": [[6, 'desc']],
@@ -65,12 +72,11 @@
                 },
                 "buttons": [
                     {
-                        text: 'Add User',
-                        action: function (e, dt, node, config) {
-                            alert('Add User button clicked');
+                        "text": 'My button',
+                        "action": function (e, dt, node, config) {
+                            alert('Button activated');
                         }
-                    },
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    }
                 ],
                 "columns": [
                     { "data": "Id", "title": "Id", "name": "Id", "visible": false },
@@ -109,7 +115,7 @@
                         "title": "Is Enabled",
                         "name": "IsEnabled",
                         "autoWidth": true,
-                        "className": "dt-center", 
+                        "className": "dt-center",
                         "render": function (data, type) {
                             if (type === 'display') {
                                 if (data === true || data === 'true') {
@@ -123,7 +129,7 @@
                     }
 
                 ],
-                "pagingType": "full_numbers", 
+                "pagingType": "full_numbers",
                 "language": {
                     "search": '<i class="bi bi-search"></i>',
                     "searchPlaceholder": "Search",
@@ -133,7 +139,7 @@
                         "next": "&raquo;",
                         "last": "Last"
                     },
-                    
+
                 },
             });
 
@@ -156,11 +162,10 @@
 
                 items: {
                     "Edit": { name: "Edit" },
-                    "Details": { name: "Details" },
-                    "Delete": { name: "Delete" }
+                    "Details": { name: "Details" }
                 }
             });
-
+            $("div.toolbar").html('<button type="button" class="btn btn-primary" onclick="openModal({url: \'/Admin/AddUser\', data: 0})" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>');
             return table;
         }
     </script>

@@ -132,7 +132,7 @@ namespace ProjectManager.Presentation.Controllers
                         ProjectId = projectId,
                         NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
-                    return Json(new { success = true, projectId, message = "Collaborator was added succesfuly" });
+                    return Json(new { success = true, projectId, message = "Collaborator was successfully added." });
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace ProjectManager.Presentation.Controllers
             }
             catch
             {
-                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again." });
             }
         }
 
@@ -168,7 +168,7 @@ namespace ProjectManager.Presentation.Controllers
                         ProjectId = projectId,
                         NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
-                    return Json(new { success = true, projectId, message = "Collborator was updated succesfuly" });
+                    return Json(new { success = true, projectId, message = "Collaborator was successfully updated." });
                 }
                 else
                 {
@@ -177,7 +177,7 @@ namespace ProjectManager.Presentation.Controllers
             }
             catch
             {
-                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again." });
             }
         }
 
@@ -201,7 +201,7 @@ namespace ProjectManager.Presentation.Controllers
                         ProjectId = projectId,
                         NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
-                    return Json(new { success = response, projectId, message = "Collaborator was removed succesfuly" });
+                    return Json(new { success = response, projectId, message = "Collaborator was successfully removed." });
                 }
                 else
                 {
@@ -210,7 +210,7 @@ namespace ProjectManager.Presentation.Controllers
             }
             catch
             {
-                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again." });
             }
         }
 
@@ -234,7 +234,7 @@ namespace ProjectManager.Presentation.Controllers
                         ProjectId = projectId,
                         NotificationType = Application.Enums.NotificationTypeEnum.Project_Collaborators
                     });
-                    return Json(new { success = response, projectId, message = "Project was transfered succesfuly!" });
+                    return Json(new { success = response, projectId, message = "Project was successfully transferred." });
                 }
                 else
                 {
@@ -243,7 +243,7 @@ namespace ProjectManager.Presentation.Controllers
             }
             catch
             {
-                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again" });
+                return Json(new { success = false, projectId, message = "A problem occured on the server. Try again." });
             }
         }
 
