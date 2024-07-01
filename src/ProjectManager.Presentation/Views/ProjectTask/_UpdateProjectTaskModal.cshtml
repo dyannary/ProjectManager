@@ -9,7 +9,7 @@
     @using (Ajax.BeginForm("UpdateTask", "ProjectTask", new AjaxOptions
     {
         HttpMethod = "POST",
-        OnSuccess = "reloadTaskData"
+        OnSuccess = "handleCreateUpdateTask"
     }, new { enctype = "multipart/form-data", id = "taskForm"}))
     {
         <div class="modal-body">
@@ -29,11 +29,11 @@
                 </div>
                 <div class="form-group row mb-2 px-4">
                     <div class="col-6 col-md-4">
-                        @Html.LabelFor(model => model.AssignedTo, "Assigned To", htmlAttributes: new { @class = "control-label col-form-label" })
+                        @Html.LabelFor(model => model.AssignedToId, "Assigned To", htmlAttributes: new { @class = "control-label col-form-label" })
                     </div>
                     <div class="col-12 col-md-8">
-                        @Html.EditorFor(model => model.AssignedTo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.AssignedToId, (SelectList)ViewBag.UsersInProject, "Assigned To", new { @class = "form-select dropdown-toggle" })
+                        @Html.ValidationMessageFor(model => model.AssignedToId, "", new { @class = "text-danger", data_valmsg_for = "AssignedTo" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.TaskStateId, (SelectList)ViewBag.TaskState, "Select state", new { @class = "form-select dropdown-toggle" })
-                        @Html.ValidationMessageFor(model => model.TaskStateId, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.TaskStateId, "", new { @class = "text-danger", data_valmsg_for = "TaskStateId" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.TaskTypeId, (SelectList)ViewBag.TaskType, "Select type", new { @class = "form-select dropdown-toggle" })
-                        @Html.ValidationMessageFor(model => model.TaskTypeId, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.TaskTypeId, "", new { @class = "text-danger", data_valmsg_for = "TaskTypeId" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.DropDownListFor(model => model.PriorityId, (SelectList)ViewBag.Priorities, "Select Priority", new { @class = "form-select dropdown-toggle" })
-                        @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger", data_valmsg_for = "PriorityId" })
                     </div>
                 </div>
                 <div class="form-group row mb-2 px-4">
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-12 col-md-8">
                         @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 100%; height: 100px;" })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", data_valmsg_for = "Description" })
                     </div>
                 </div>
 
@@ -102,7 +102,7 @@
                                 <div class="col-md-6">
                                     <div class="square-image-container">
                                         <img src="@Url.Content(photoPath)" class="img-fluid square-image" alt="Task Photo">
-                                        <button type="button" class="delete-btn" onclick="deleteImage(this)">X</button>
+                                        <button type="button" class="delete-btn" onclick="removeImage(this)">X</button>
                                     </div>
                                 </div>
                             }
@@ -122,8 +122,39 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary custom-primary" data-bs-dismiss="modal"><i class="bi bi-pencil"></i>  Modify</button>
+            <button type="submit" class="btn btn-primary custom-primary"><i class="bi bi-pencil"></i>  Modify</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         </div>
     }
 </div>
+
+<style>
+   
+    .image-container row {
+        width: 90%;
+        position: relative;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+        #images figure {
+            width: calc(50% - 1px);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 1;
+        }
+
+        #images img {
+            width: 100%;
+            object-fit: cover;
+        }
+
+    figcaption {
+        display: none;
+    }
+</style>

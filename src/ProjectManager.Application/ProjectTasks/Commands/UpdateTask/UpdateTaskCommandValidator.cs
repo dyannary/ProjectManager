@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using ProjectManager.Application.DataTransferObjects.ProjectTask;
 
-namespace ProjectManager.Application.ProjectTasks.Commands.CreateTask
+namespace ProjectManager.Application.ProjectTasks.Commands.UpdateTask
 {
-    public class CreateTaskCommandValidator : AbstractValidator<AddTaskDto>
+    internal class UpdateTaskCommandValidator : AbstractValidator<UpdateTaskDto>
     {
-        public CreateTaskCommandValidator() 
+        public UpdateTaskCommandValidator()
         {
             RuleFor(model => model.Name).NotEmpty().WithMessage("This field is required.")
                 .NotNull().WithMessage("This field is required.")
@@ -13,15 +13,15 @@ namespace ProjectManager.Application.ProjectTasks.Commands.CreateTask
                 .WithName("Name");
 
             RuleFor(model => model.TaskStateId).NotNull().WithMessage("This field is required.")
-                .InclusiveBetween(1, 3).WithMessage("This is not a valid state.")
+                .InclusiveBetween(1, 3).WithMessage("This is not a valid task state")
                 .WithName("Task state");
 
             RuleFor(model => model.TaskTypeId).NotNull().WithMessage("This field is required.")
-                .InclusiveBetween(1, 3).WithMessage("This is not a valid type.")
+                .InclusiveBetween(1, 3).WithMessage("This is not a valid task type")
                 .WithName("Task type");
 
             RuleFor(model => model.PriorityId).NotNull().WithMessage("This field is required.")
-                .InclusiveBetween(1, 3).WithMessage("This is not a valid priority.")
+                .InclusiveBetween(1, 3).WithMessage("This is not a valid priority type")
                 .WithName("Priority");
         }
     }

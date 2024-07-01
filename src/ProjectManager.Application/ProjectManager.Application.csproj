@@ -564,6 +564,8 @@
     <Compile Include="ProjectTasks\Commands\CreateTask\CreateTaskCommandValidator.cs" />
     <Compile Include="ProjectTasks\Commands\DeleteTask\DeleteTaskCommand.cs" />
     <Compile Include="ProjectTasks\Commands\UpdateTask\UpdateTaskCommand.cs" />
+    <Compile Include="ProjectTasks\Commands\UpdateTask\UpdateTaskCommandValidator.cs" />
+    <Compile Include="ProjectTasks\Queries\GetProjectByTaskIdQuery.cs" />
     <Compile Include="ProjectTasks\Queries\GetTaskByIdQuery.cs" />
     <Compile Include="ProjectTasks\Queries\GetTaskPriorityQuery.cs" />
     <Compile Include="ProjectTasks\Queries\GetTasksByProjectIdQuery.cs" />

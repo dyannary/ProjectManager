@@ -173,7 +173,7 @@ namespace ProjectManager.Presentation.Controllers
                 }
                 else
                 {
-                    return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
+                    return Json(new { StatusCode = 500, message = "User was not modified." });
                 }
             }
             catch

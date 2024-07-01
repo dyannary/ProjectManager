@@ -23,12 +23,16 @@ namespace ProjectManager.Presentation.Controllers
 
         private readonly IMediator _mediator;
         private readonly IValidator<AddTaskDto> _addTaskValidator;
+        private readonly IValidator<UpdateTaskDto> _updateTaskValidator;
 
         public ProjectTaskController(IMediator mediator,
-            IValidator<AddTaskDto> addTaskValidator)
+            IValidator<AddTaskDto> addTaskValidator,
+            IValidator<UpdateTaskDto> updateTaskValidator)
         {
             _mediator = mediator;
             _addTaskValidator = addTaskValidator;
+            _updateTaskValidator = updateTaskValidator;
+
         }
 
         #region CRUD Operations
@@ -189,6 +193,8 @@ namespace ProjectManager.Presentation.Controllers
 
             var responseTaskState = await _mediator.Send(new GetTaskStateQuery() { });
 
+            var responseUsers = await _mediator.Send(new GetProjectByTaskIdQuery() { Id = id });
+
 
             ViewBag.Priorities = new SelectList(resposeTaskPriorities, "Id", "Name");
 
@@ -196,27 +202,44 @@ namespace ProjectManager.Presentation.Controllers
 
             ViewBag.TaskState = new SelectList(responseTaskState, "Id", "Name");
 
+            ViewBag.UsersInProject = new SelectList(responseUsers, "Id", "Name");
+
             return PartialView("_UpdateProjectTaskModal", response);
         }
 
         [HttpPost]
         public async Task<ActionResult> UpdateTask(UpdateTaskDto data)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _updateTaskValidator.Validate(data);
+
+            if (!validationResult.IsValid)
             {
-                return Json(new { StatusCode = 500 });
+                var errors = validationResult.Errors
+                                .GroupBy(x => x.PropertyName)
+                                .ToDictionary(g => g.Key, g => g.First().ErrorMessage);
+                return Json(new { success = false, errors });
             }
+
             try
             {
                 var addedUser = await _mediator.Send(new UpdateTaskCommand { Data = data });
                 if (addedUser)
                 {
-                    return Json(new { StatusCode = 201, message = "Task was successfully updated." });
+
+                    await _mediator.Send(new SendNotificationCommand
+                    {
+                        ForUser_Username = data.AssignedTo,
+                        ProjectId = data.ProjectId,
+                        Message = "You are assigned to a new task for project: ",
+                        NotificationType = Application.Enums.NotificationTypeEnum.Task
+                    });
+
+                    return Json(new { StatusCode = 201, message = "Task was successfully created." });
                 }
                 else
                 {
-                    return Json(new { StatusCode = 500, message = "A problem on the server occured. Try again" });
-                }
+                    return Json(new { StatusCode = 500, message = "Task was not modified." });
+                    }
             }
             catch
             {

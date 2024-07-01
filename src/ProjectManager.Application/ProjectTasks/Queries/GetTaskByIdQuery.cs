@@ -48,6 +48,7 @@ namespace ProjectManager.Application.ProjectTasks.Queries
             if (task.UserProjectTasks.Any())
             {
                 taskDto.AssignedTo = task.UserProjectTasks.First().User.UserName;
+                taskDto.AssignedToId = task.UserProjectTasks.First().UserId;
             }
             else
             {
