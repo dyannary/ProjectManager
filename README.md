@@ -74,3 +74,9 @@ The **Project Manager** system features a robust role-based permission structure
   - Can remove users from the project.  
   - Acts as the owner of the project with the highest level of control over user permissions.
 
+**Technical Requirements:**
+- Platform: .NET Framework 4.8
+- Architecture: Layered Architecture (Application, Domain, Infrastructure, Presentation)
+- Web Framework: MVC (Model-View-Controller)
+- Frontend: jQuery for client-side interactivity
+- Database: SQL Server for data storage and management
